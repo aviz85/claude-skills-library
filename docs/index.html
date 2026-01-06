@@ -516,6 +516,30 @@
       font-size: 0.95rem;
     }
 
+    a.skill-card {
+      text-decoration: none;
+      display: block;
+    }
+
+    .skill-setup-link {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--green-primary);
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+
+    .skill-card:hover .skill-setup-link {
+      opacity: 1;
+    }
+
+    .skill-setup-link.skill-no-setup {
+      color: var(--text-secondary);
+    }
+
     .skill-tags {
       display: flex;
       flex-wrap: wrap;
@@ -896,7 +920,7 @@
         </p>
       </div>
       <div class="skills-grid">
-        <div class="skill-card reveal">
+        <a href="skills/whatsapp.html" class="skill-card reveal">
           <span class="skill-icon">📱</span>
           <h3>וואטסאפ <code>whatsapp</code></h3>
           <p>שלחו הודעות, תמונות והודעות קוליות בוואטסאפ. קבלו רשימת חברי קבוצה ושלחו הודעות לכולם.</p>
@@ -905,9 +929,10 @@
             <span class="skill-tag">הודעות</span>
             <span class="skill-tag">קבוצות</span>
           </div>
-        </div>
+          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
+        </a>
 
-        <div class="skill-card reveal">
+        <a href="skills/speech-generator.html" class="skill-card reveal">
           <span class="skill-icon">🎙️</span>
           <h3>יוצר דיבור <code>speech-generator</code></h3>
           <p>הפכו טקסט לקובץ אודיו עם קול אנושי. תומך בעברית עם הנחיות להבעה טבעית.</p>
@@ -916,9 +941,10 @@
             <span class="skill-tag">TTS</span>
             <span class="skill-tag">עברית</span>
           </div>
-        </div>
+          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
+        </a>
 
-        <div class="skill-card reveal">
+        <a href="skills/nano-banana-poster.html" class="skill-card reveal">
           <span class="skill-icon">🎨</span>
           <h3>יוצר פוסטרים <code>nano-banana-poster</code></h3>
           <p>צרו פוסטרים שיווקיים מרהיבים עם AI. הגדירו את המותג שלכם והפוסטרים יתאימו לסגנון.</p>
@@ -927,9 +953,10 @@
             <span class="skill-tag">עיצוב</span>
             <span class="skill-tag">שיווק</span>
           </div>
-        </div>
+          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
+        </a>
 
-        <div class="skill-card reveal">
+        <a href="skills/other-skills.html" class="skill-card reveal">
           <span class="skill-icon">📊</span>
           <h3>אדריכל מצגות <code>presentation-architect</code></h3>
           <p>הפכו רעיון למבנה מפורט של מצגת. מתאר כל שקופית עם תוכן, עיצוב וטיפוגרפיה.</p>
@@ -938,9 +965,10 @@
             <span class="skill-tag">תכנון</span>
             <span class="skill-tag">עיצוב</span>
           </div>
-        </div>
+          <div class="skill-setup-link skill-no-setup">✨ לא צריך הגדרה</div>
+        </a>
 
-        <div class="skill-card reveal">
+        <a href="skills/html-to-pdf.html" class="skill-card reveal">
           <span class="skill-icon">📄</span>
           <h3>HTML ל-PDF <code>html-to-pdf</code></h3>
           <p>המירו דפי HTML ל-PDF באיכות מושלמת. תמיכה מלאה בעברית ו-RTL!</p>
@@ -949,9 +977,10 @@
             <span class="skill-tag">RTL</span>
             <span class="skill-tag">PDF</span>
           </div>
-        </div>
+          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
+        </a>
 
-        <div class="skill-card reveal">
+        <a href="skills/other-skills.html" class="skill-card reveal">
           <span class="skill-icon">🚀</span>
           <h3>העלאה לאינטרנט <code>gh-pages-deploy</code></h3>
           <p>העלו אתרים סטטיים ל-GitHub Pages בקלות. הפכו פרויקט לאתר חי בכמה פקודות.</p>
@@ -960,9 +989,10 @@
             <span class="skill-tag">Deploy</span>
             <span class="skill-tag">אתרים</span>
           </div>
-        </div>
+          <div class="skill-setup-link">📖 מדריך התקנה ←</div>
+        </a>
 
-        <div class="skill-card reveal">
+        <a href="skills/other-skills.html" class="skill-card reveal">
           <span class="skill-icon">🗄️</span>
           <h3>עוזר Supabase <code>supabase-helper</code></h3>
           <p>עזרה בפיתוח עם Supabase - שאילתות, מיגרציות, RLS ו-Realtime.</p>
@@ -971,9 +1001,10 @@
             <span class="skill-tag">Backend</span>
             <span class="skill-tag">Auth</span>
           </div>
-        </div>
+          <div class="skill-setup-link">📖 מדריך התקנה ←</div>
+        </a>
 
-        <div class="skill-card reveal">
+        <a href="skills/other-skills.html" class="skill-card reveal">
           <span class="skill-icon">📅</span>
           <h3>יומן גוגל <code>calendar</code></h3>
           <p>בדקו את האירועים ביומן - היום, השבוע או טווח תאריכים מותאם.</p>
@@ -982,9 +1013,10 @@
             <span class="skill-tag">לוח שנה</span>
             <span class="skill-tag">פגישות</span>
           </div>
-        </div>
+          <div class="skill-setup-link">📖 מדריך התקנה ←</div>
+        </a>
 
-        <div class="skill-card reveal">
+        <a href="skills/other-skills.html" class="skill-card reveal">
           <span class="skill-icon">🛠️</span>
           <h3>יוצר סקילים <code>skill-creator</code></h3>
           <p>מדריך מקיף ליצירת סקילים חדשים. כולל תבניות, דוגמאות ושיטות עבודה מומלצות.</p>
@@ -993,7 +1025,8 @@
             <span class="skill-tag">תבניות</span>
             <span class="skill-tag">מתקדם</span>
           </div>
-        </div>
+          <div class="skill-setup-link skill-no-setup">✨ לא צריך הגדרה</div>
+        </a>
       </div>
     </div>
   </section>
