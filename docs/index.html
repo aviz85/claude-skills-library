@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ספריית Skills לקלוד | Claude Skills Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-primary: #22C55E;
+      --green-glow: rgba(34, 197, 94, 0.4);
+      --green-soft: rgba(34, 197, 94, 0.1);
+      --green-dark: #16A34A;
+      --bg-darkest: #0a0f0d;
+      --bg-dark: #111827;
+      --bg-card: #1a2332;
+      --bg-card-hover: #1f2d42;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-glow: rgba(34, 197, 94, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-darkest);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* Floating orbs background */
+    .bg-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
+      bottom: 20%;
+      left: -100px;
+      animation-delay: -7s;
+    }
+
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
+      top: 50%;
+      right: 10%;
+      animation-delay: -14s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -30px) scale(1.05); }
+      50% { transform: translate(-20px, 20px) scale(0.95); }
+      75% { transform: translate(20px, 10px) scale(1.02); }
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(10, 15, 13, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      padding: 12px 0;
+      background: rgba(10, 15, 13, 0.95);
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--green-primary) 0%, #4ade80 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--green-primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      right: 0;
+      width: 0;
+      height: 2px;
+      background: var(--green-primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 0 80px;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--green-soft);
+      border: 1px solid var(--border-glow);
+      border-radius: 100px;
+      font-size: 0.875rem;
+      color: var(--green-primary);
+      margin-bottom: 24px;
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    .hero-badge::before {
+      content: '✨';
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.8s ease 0.1s forwards;
+      opacity: 0;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--green-primary) 0%, #4ade80 50%, var(--green-primary) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      max-width: 600px;
+      animation: fadeInUp 0.8s ease 0.2s forwards;
+      opacity: 0;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.3s forwards;
+      opacity: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-dark) 100%);
+      color: white;
+      box-shadow: 0 4px 20px var(--green-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--green-glow);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-glow);
+    }
+
+    /* Hero Illustration */
+    .hero-visual {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 45%;
+      max-width: 500px;
+      opacity: 0;
+      animation: fadeInLeft 1s ease 0.5s forwards;
+    }
+
+    .hero-visual svg {
+      width: 100%;
+      height: auto;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translate(30px, -50%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(0, -50%);
+      }
+    }
+
+    /* Section Styles */
+    section {
+      padding: 100px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--green-soft);
+      border-radius: 100px;
+      font-size: 0.875rem;
+      color: var(--green-primary);
+      margin-bottom: 16px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.125rem;
+    }
+
+    /* Installation Steps */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      position: relative;
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+
+    .step-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--green-soft) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-glow);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .step-card:hover::before {
+      opacity: 1;
+    }
+
+    .step-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-dark) 100%);
+      border-radius: 12px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-card p {
+      color: var(--text-secondary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-code {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      font-family: 'Menlo', 'Monaco', monospace;
+      font-size: 0.875rem;
+      color: var(--green-primary);
+      direction: ltr;
+      text-align: left;
+      position: relative;
+      z-index: 1;
+      overflow-x: auto;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 28px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, var(--green-soft) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: var(--border-glow);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+    }
+
+    .skill-card:hover::after {
+      opacity: 1;
+    }
+
+    .skill-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .skill-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-card h3 code {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      background: var(--green-soft);
+      color: var(--green-primary);
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .skill-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .skill-tag {
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* FAQ Section */
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      cursor: pointer;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: color 0.2s ease;
+    }
+
+    .faq-question:hover {
+      color: var(--green-primary);
+    }
+
+    .faq-icon {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      flex-shrink: 0;
+      margin-right: 16px;
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-icon::before {
+      width: 14px;
+      height: 2px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-icon::after {
+      width: 2px;
+      height: 14px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-item.active .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding-bottom: 24px;
+    }
+
+    .faq-answer p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      text-align: center;
+      padding: 80px 0;
+    }
+
+    .cta-card {
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+      border: 1px solid var(--border-glow);
+      border-radius: 32px;
+      padding: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, var(--green-soft) 0%, transparent 50%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .cta-card h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-card p {
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      font-size: 1.125rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-card .btn {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--green-primary);
+    }
+
+    .footer-credit {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    .footer-credit a {
+      color: var(--green-primary);
+      text-decoration: none;
+    }
+
+    /* Scroll animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .cta-card {
+        padding: 40px 24px;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-darkest);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--bg-card);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--bg-card-hover);
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Orbs -->
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container nav-content">
+      <div class="logo">Claude Skills</div>
+      <ul class="nav-links">
+        <li><a href="#skills">הסקילים</a></li>
+        <li><a href="#install">התקנה</a></li>
+        <li><a href="#faq">שאלות נפוצות</a></li>
+        <li><a href="https://github.com/aviz85/claude-skills-library" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">קוד פתוח ובחינם</div>
+        <h1>
+          <span class="highlight">ספריית Skills</span><br>
+          לקלוד קוד
+        </h1>
+        <p>
+          אוסף של כלים חכמים שמרחיבים את היכולות של Claude Code.
+          שלחו הודעות בוואטסאפ, צרו פוסטרים עם AI, המירו HTML ל-PDF ועוד -
+          הכל בקלות ובעברית!
+        </p>
+        <div class="hero-buttons">
+          <a href="#install" class="btn btn-primary">
+            <span>📦</span>
+            התחילו עכשיו
+          </a>
+          <a href="#skills" class="btn btn-secondary">
+            <span>🔍</span>
+            גלו את הסקילים
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What are Skills -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">💡 מה זה בכלל?</span>
+        <h2>מה זה Skills?</h2>
+        <p>
+          Skills הם כמו "תוספים" לקלוד קוד. הם מלמדים אותו לעשות דברים חדשים
+          שהוא לא יודע לעשות מהקופסה.
+        </p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-number">🧠</div>
+          <h3>ידע מיוחד</h3>
+          <p>
+            כל Skill מכיל הוראות מפורטות שמלמדות את קלוד
+            איך לבצע משימה ספציפית בצורה הטובה ביותר.
+          </p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">🔧</div>
+          <h3>כלים מוכנים</h3>
+          <p>
+            סקריפטים וקוד מוכן מראש שקלוד יכול להשתמש בהם
+            בלי שתצטרכו לכתוב אותם בעצמכם.
+          </p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">⚡</div>
+          <h3>פעולה אוטומטית</h3>
+          <p>
+            קלוד מזהה אוטומטית מתי להשתמש בכל Skill לפי מה שאתם
+            מבקשים ממנו - בלי צורך בפקודות מיוחדות.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Installation Section -->
+  <section id="install" style="background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.02) 50%, transparent 100%);">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">🚀 התחלה מהירה</span>
+        <h2>איך להתקין?</h2>
+        <p>
+          שלושה צעדים פשוטים ואתם מוכנים!
+        </p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-number">1</div>
+          <h3>הורידו את הספרייה</h3>
+          <p>פתחו טרמינל והריצו את הפקודה הבאה:</p>
+          <div class="step-code">git clone https://github.com/aviz85/claude-skills-library.git</div>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">2</div>
+          <h3>העתיקו את הסקילים</h3>
+          <p>העתיקו את הסקילים שאתם רוצים לתיקיית הסקילים של קלוד:</p>
+          <div class="step-code">cp -r claude-skills-library/skills/SKILL_NAME ~/.claude/skills/</div>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">3</div>
+          <h3>הגדירו והפעילו</h3>
+          <p>הגדירו את קבצי ה-.env לפי ההוראות בכל Skill, הפעילו מחדש את קלוד קוד - וסיימתם!</p>
+          <div class="step-code">claude</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">🎨 הסקילים</span>
+        <h2>מה יש בספרייה?</h2>
+        <p>
+          אוסף של 9 סקילים שימושיים שיהפכו את קלוד לעוזר אישי אמיתי
+        </p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <span class="skill-icon">📱</span>
+          <h3>וואטסאפ <code>whatsapp</code></h3>
+          <p>שלחו הודעות, תמונות והודעות קוליות בוואטסאפ. קבלו רשימת חברי קבוצה ושלחו הודעות לכולם.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Green API</span>
+            <span class="skill-tag">הודעות</span>
+            <span class="skill-tag">קבוצות</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <span class="skill-icon">🎙️</span>
+          <h3>יוצר דיבור <code>speech-generator</code></h3>
+          <p>הפכו טקסט לקובץ אודיו עם קול אנושי. תומך בעברית עם הנחיות להבעה טבעית.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">ElevenLabs</span>
+            <span class="skill-tag">TTS</span>
+            <span class="skill-tag">עברית</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <span class="skill-icon">🎨</span>
+          <h3>יוצר פוסטרים <code>nano-banana-poster</code></h3>
+          <p>צרו פוסטרים שיווקיים מרהיבים עם AI. הגדירו את המותג שלכם והפוסטרים יתאימו לסגנון.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Gemini AI</span>
+            <span class="skill-tag">עיצוב</span>
+            <span class="skill-tag">שיווק</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <span class="skill-icon">📊</span>
+          <h3>אדריכל מצגות <code>presentation-architect</code></h3>
+          <p>הפכו רעיון למבנה מפורט של מצגת. מתאר כל שקופית עם תוכן, עיצוב וטיפוגרפיה.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">מצגות</span>
+            <span class="skill-tag">תכנון</span>
+            <span class="skill-tag">עיצוב</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <span class="skill-icon">📄</span>
+          <h3>HTML ל-PDF <code>html-to-pdf</code></h3>
+          <p>המירו דפי HTML ל-PDF באיכות מושלמת. תמיכה מלאה בעברית ו-RTL!</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Puppeteer</span>
+            <span class="skill-tag">RTL</span>
+            <span class="skill-tag">PDF</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <span class="skill-icon">🚀</span>
+          <h3>העלאה לאינטרנט <code>gh-pages-deploy</code></h3>
+          <p>העלו אתרים סטטיים ל-GitHub Pages בקלות. הפכו פרויקט לאתר חי בכמה פקודות.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Deploy</span>
+            <span class="skill-tag">אתרים</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <span class="skill-icon">🗄️</span>
+          <h3>עוזר Supabase <code>supabase-helper</code></h3>
+          <p>עזרה בפיתוח עם Supabase - שאילתות, מיגרציות, RLS ו-Realtime.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">Backend</span>
+            <span class="skill-tag">Auth</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <span class="skill-icon">📅</span>
+          <h3>יומן גוגל <code>calendar</code></h3>
+          <p>בדקו את האירועים ביומן - היום, השבוע או טווח תאריכים מותאם.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Google</span>
+            <span class="skill-tag">לוח שנה</span>
+            <span class="skill-tag">פגישות</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <span class="skill-icon">🛠️</span>
+          <h3>יוצר סקילים <code>skill-creator</code></h3>
+          <p>מדריך מקיף ליצירת סקילים חדשים. כולל תבניות, דוגמאות ושיטות עבודה מומלצות.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">פיתוח</span>
+            <span class="skill-tag">תבניות</span>
+            <span class="skill-tag">מתקדם</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" style="background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.02) 50%, transparent 100%);">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">❓ שאלות נפוצות</span>
+        <h2>יש שאלות?</h2>
+        <p>
+          התשובות לשאלות הנפוצות ביותר
+        </p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>האם זה בחינם?</span>
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-answer">
+            <p>כן! הספרייה היא קוד פתוח ובחינם לשימוש. חלק מהסקילים דורשים חשבונות חיצוניים (כמו Green API או ElevenLabs) שעשויים להיות בתשלום.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>מה זה קלוד קוד?</span>
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-answer">
+            <p>Claude Code הוא כלי שורת פקודה רשמי של Anthropic שמאפשר לעבוד עם קלוד ישירות מהטרמינל. הוא יכול לקרוא ולערוך קבצים, להריץ פקודות ולבצע משימות מורכבות.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>איך אני יודע איזה Skill להשתמש?</span>
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-answer">
+            <p>פשוט תבקשו מקלוד מה שאתם צריכים! הוא מזהה אוטומטית איזה Skill מתאים. למשל, אם תכתבו "שלח הודעה בוואטסאפ" - הוא ישתמש ב-whatsapp skill.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>אפשר ליצור סקילים משלי?</span>
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-answer">
+            <p>בהחלט! השתמשו ב-skill-creator שבספרייה. הוא מדריך אתכם צעד אחר צעד ביצירת סקילים חדשים עם כל מה שצריך - תבניות, דוגמאות ושיטות עבודה מומלצות.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>האם זה בטוח?</span>
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-answer">
+            <p>הקוד הוא קוד פתוח ואפשר לעיין בו. אף פעם אל תכניסו מפתחות API או סיסמאות לקבצים שאתם משתפים. השתמשו בקבצי .env לאחסון מידע רגיש.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card reveal">
+        <h2>מוכנים להתחיל?</h2>
+        <p>הורידו את הספרייה וגלו את הכוח האמיתי של קלוד קוד</p>
+        <a href="https://github.com/aviz85/claude-skills-library" target="_blank" class="btn btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          הורדה מ-GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-links">
+        <a href="https://github.com/aviz85/claude-skills-library" target="_blank">GitHub</a>
+        <a href="#skills">הסקילים</a>
+        <a href="#faq">שאלות נפוצות</a>
+      </div>
+      <p class="footer-credit">
+        נוצר באהבה עם <a href="https://claude.ai" target="_blank">Claude</a> 💚
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll animations
+    const reveals = document.querySelectorAll('.reveal');
+
+    const revealOnScroll = () => {
+      reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (top < windowHeight - 100) {
+          el.classList.add('visible');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Initial check
+
+    // Nav scroll effect
+    const nav = document.querySelector('nav');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // FAQ accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+
+        // Close all
+        faqItems.forEach(i => i.classList.remove('active'));
+
+        // Open clicked if wasn't active
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    // Stagger animations for cards
+    const cards = document.querySelectorAll('.skill-card, .step-card');
+    cards.forEach((card, index) => {
+      card.style.transitionDelay = `${index * 0.1}s`;
+    });
+  </script>
+</body>
+</html>
