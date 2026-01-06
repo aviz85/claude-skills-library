@@ -156,15 +156,15 @@
       counter-reset: step;
     }
 
-    .steps-list li {
+    .steps-list > li {
       position: relative;
       padding: 16px 48px 16px 0;
       border-bottom: 1px solid var(--border-subtle);
     }
 
-    .steps-list li:last-child { border-bottom: none; }
+    .steps-list > li:last-child { border-bottom: none; }
 
-    .steps-list li::before {
+    .steps-list > li::before {
       counter-increment: step;
       content: counter(step);
       position: absolute;
