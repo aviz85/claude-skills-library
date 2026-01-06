@@ -1,0 +1,16 @@
+{
+  "name": "speech-generator",
+  "version": "1.0.0",
+  "description": "Generate speech audio using ElevenLabs API",
+  "scripts": {
+    "generate": "ts-node generate_speech.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.2"
+  }
+}
