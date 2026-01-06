@@ -476,42 +476,43 @@
       </div>
     </div>
 
+    <!-- הערה חשובה על פרטיות -->
+    <div class="section" style="border: 2px solid var(--yellow); background: rgba(251, 191, 36, 0.05);">
+      <h2>⚠️ לפני שממשיכים - הגדרת פרטיות</h2>
+
+      <p>בשלב הבא תזינו מפתח API. זה כמו סיסמה, ולכן <strong>חשוב לוודא שהגדרות הפרטיות מוגדרות נכון</strong> בקלוד קוד.</p>
+
+      <div class="warning">
+        <span class="warning-icon">🔐</span>
+        <p>אם עדיין לא עשיתם את זה, עברו קודם למדריך <a href="../index.html#privacy" style="color: var(--yellow);">הגדרות פרטיות</a> וודאו שכיביתם את האפשרות לאנתרופיק להתאמן על השיחות שלכם.</p>
+      </div>
+    </div>
+
     <!-- הגדרת הסקיל -->
     <div class="section">
       <h2><span class="num">5</span> הגדרת הסקיל במחשב</h2>
 
-      <ol class="steps-list">
-        <li>
-          <strong>פתחו את תיקיית הסקיל</strong>
-          <div class="code-block">
-            <code>cd ~/.claude/skills/speech-generator/scripts</code>
-          </div>
-        </li>
+      <p><strong>הכי קל - לבקש מקלוד קוד לעשות את זה בשבילכם!</strong></p>
 
-        <li>
-          <strong>צרו קובץ .env</strong>
-          <p>הריצו את הפקודה (החליפו את הערכים שלכם):</p>
-          <div class="code-block">
-            <code><span class="comment"># צרו קובץ .env</span>
-cat > .env << 'EOF'
-<span class="key">ELEVENLABS_API_KEY</span>=<span class="value">sk_המפתח_שהעתקתם_מהאתר</span>
-<span class="key">DEFAULT_VOICE_ID</span>=<span class="value">dV1ee5wE1Ag5NSL6L2Z9</span>
-EOF</code>
-          </div>
-          <p style="font-size: 0.9rem; color: var(--text-muted);">* ה-DEFAULT_VOICE_ID הוא אופציונלי. אם לא תגדירו, תצטרכו לציין קול בכל פעם.</p>
-        </li>
+      <h3>🪄 הדרך הקלה - בקשו מקלוד</h3>
+      <p>פתחו את קלוד קוד ואמרו לו:</p>
+      <div class="code-block">
+        <code>צור קובץ .env בתיקייה ~/.claude/skills/speech-generator/scripts עם התוכן הבא:
+ELEVENLABS_API_KEY=<span class="value">sk_המפתח_שהעתקתם_מהאתר</span>
+DEFAULT_VOICE_ID=<span class="value">dV1ee5wE1Ag5NSL6L2Z9</span></code>
+      </div>
+      <p>קלוד ייצור את הקובץ במקום הנכון!</p>
+      <p style="font-size: 0.9rem; color: var(--text-secondary);">* ה-DEFAULT_VOICE_ID הוא אופציונלי. אם לא תגדירו, תצטרכו לציין קול בכל פעם.</p>
 
-        <li>
-          <strong>התקינו את הספריות</strong>
-          <div class="code-block">
-            <code>npm install</code>
-          </div>
-        </li>
-      </ol>
+      <h3>התקנת ספריות</h3>
+      <p>אחרי שהקובץ נוצר, בקשו מקלוד:</p>
+      <div class="code-block">
+        <code>הרץ npm install בתיקייה ~/.claude/skills/speech-generator/scripts</code>
+      </div>
 
       <div class="info">
         <span class="warning-icon">📝</span>
-        <p><strong>דוגמה לקובץ .env מלא:</strong></p>
+        <p><strong>דוגמה לערכים אמיתיים:</strong></p>
       </div>
 
       <div class="code-block">
