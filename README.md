@@ -24,6 +24,9 @@ git clone https://github.com/aviz/claude-skills-library.git
 ```
 
 2. Copy the skills you want to your Claude Code skills folder:
+
+> **Windows users:** Use **PowerShell** (not Command Prompt)
+
 ```bash
 cp -r claude-skills-library/skills/SKILL_NAME ~/.claude/skills/
 ```
