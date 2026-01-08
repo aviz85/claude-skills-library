@@ -444,7 +444,12 @@ async function convertImageMode(inputData, options) {
 
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--font-render-hinting=none',
+      '--disable-font-subpixel-positioning'
+    ]
   });
 
   try {
@@ -475,47 +480,91 @@ async function convertImageMode(inputData, options) {
     await page.evaluateHandle('document.fonts.ready');
     await new Promise(resolve => setTimeout(resolve, options.waitTime));
 
-    // Get page dimensions
-    const dimensions = await page.evaluate(() => ({
-      width: document.documentElement.scrollWidth,
-      height: document.documentElement.scrollHeight
-    }));
+    // Try to find slide sections first
+    const slideSelector = options.slidePerSelector || 'section, article, .slide, [data-slide]';
+    const sections = await page.$$eval(slideSelector, elements =>
+      elements.map(el => ({
+        top: el.getBoundingClientRect().top + window.scrollY,
+        height: el.getBoundingClientRect().height,
+        width: el.getBoundingClientRect().width
+      }))
+    );
 
-    // Calculate slides needed (split by viewport height)
-    const slideHeight = 1080;
-    const numSlides = Math.ceil(dimensions.height / slideHeight);
+    if (sections.length > 1) {
+      // Screenshot each section separately
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
 
-    for (let i = 0; i < numSlides; i++) {
-      // Scroll to position and take screenshot
-      await page.evaluate((y) => window.scrollTo(0, y), i * slideHeight);
-      await new Promise(resolve => setTimeout(resolve, 200));
+        // Scroll to section
+        await page.evaluate((y) => window.scrollTo(0, y), section.top);
+        await new Promise(resolve => setTimeout(resolve, 300));
 
-      const screenshot = await page.screenshot({
-        type: 'png',
-        clip: {
+        const screenshot = await page.screenshot({
+          type: 'png',
+          clip: {
+            x: 0,
+            y: 0,
+            width: Math.min(section.width || 1920, 1920),
+            height: Math.min(section.height || 1080, 1080)
+          }
+        });
+
+        const slide = pptx.addSlide();
+
+        if (options.background) {
+          slide.background = { color: options.background };
+        }
+
+        const base64 = screenshot.toString('base64');
+        slide.addImage({
+          data: `image/png;base64,${base64}`,
           x: 0,
           y: 0,
-          width: Math.min(dimensions.width, 1920),
-          height: Math.min(slideHeight, dimensions.height - i * slideHeight)
-        }
-      });
-
-      const slide = pptx.addSlide();
-
-      if (options.background) {
-        slide.background = { color: options.background };
+          w: '100%',
+          h: '100%',
+          sizing: { type: 'contain', w: '100%', h: '100%' }
+        });
       }
+    } else {
+      // Fallback: split by viewport height
+      const dimensions = await page.evaluate(() => ({
+        width: document.documentElement.scrollWidth,
+        height: document.documentElement.scrollHeight
+      }));
 
-      // Add screenshot as base64 image
-      const base64 = screenshot.toString('base64');
-      slide.addImage({
-        data: `image/png;base64,${base64}`,
-        x: 0,
-        y: 0,
-        w: '100%',
-        h: '100%',
-        sizing: { type: 'contain', w: '100%', h: '100%' }
-      });
+      const slideHeight = 1080;
+      const numSlides = Math.max(1, Math.ceil(dimensions.height / slideHeight));
+
+      for (let i = 0; i < numSlides; i++) {
+        await page.evaluate((y) => window.scrollTo(0, y), i * slideHeight);
+        await new Promise(resolve => setTimeout(resolve, 200));
+
+        const screenshot = await page.screenshot({
+          type: 'png',
+          clip: {
+            x: 0,
+            y: 0,
+            width: Math.min(dimensions.width, 1920),
+            height: Math.min(slideHeight, dimensions.height - i * slideHeight)
+          }
+        });
+
+        const slide = pptx.addSlide();
+
+        if (options.background) {
+          slide.background = { color: options.background };
+        }
+
+        const base64 = screenshot.toString('base64');
+        slide.addImage({
+          data: `image/png;base64,${base64}`,
+          x: 0,
+          y: 0,
+          w: '100%',
+          h: '100%',
+          sizing: { type: 'contain', w: '100%', h: '100%' }
+        });
+      }
     }
   } finally {
     await browser.close();
@@ -536,7 +585,12 @@ async function convertHtmlToPptx(options) {
     }
     const browser = await puppeteer.launch({
       headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--font-render-hinting=none',
+        '--disable-font-subpixel-positioning'
+      ]
     });
     try {
       const page = await browser.newPage();

@@ -10,7 +10,7 @@
     "pptxgenjs": "^4.0.1",
     "html2pptxgenjs": "^0.0.3",
     "cheerio": "^1.0.0",
-    "puppeteer": "^21.0.0"
+    "puppeteer": "^22.15.0"
   },
   "keywords": [
     "html",
