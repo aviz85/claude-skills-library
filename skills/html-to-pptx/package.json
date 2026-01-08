@@ -1,0 +1,25 @@
+{
+  "name": "html-to-pptx",
+  "version": "1.0.0",
+  "description": "HTML to PowerPoint converter with excellent Hebrew/RTL support",
+  "main": "scripts/html-to-pptx.js",
+  "scripts": {
+    "convert": "node scripts/html-to-pptx.js"
+  },
+  "dependencies": {
+    "pptxgenjs": "^4.0.1",
+    "html2pptxgenjs": "^0.0.3",
+    "cheerio": "^1.0.0",
+    "puppeteer": "^21.0.0"
+  },
+  "keywords": [
+    "html",
+    "pptx",
+    "powerpoint",
+    "hebrew",
+    "rtl",
+    "converter"
+  ],
+  "author": "AVIZ",
+  "license": "MIT"
+}

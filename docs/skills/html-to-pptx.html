@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML to PowerPoint Skill - מדריך התקנה מפורט</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-primary: #22C55E;
+      --green-glow: rgba(34, 197, 94, 0.4);
+      --green-soft: rgba(34, 197, 94, 0.1);
+      --bg-darkest: #0a0f0d;
+      --bg-dark: #111827;
+      --bg-card: #1a2332;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-glow: rgba(34, 197, 94, 0.3);
+      --yellow: #fbbf24;
+      --blue: #3b82f6;
+      --orange: #f97316;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-darkest);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--green-primary); }
+
+    .hero { text-align: center; margin-bottom: 48px; }
+    .skill-icon { font-size: 4rem; margin-bottom: 16px; }
+
+    h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; }
+    .subtitle { color: var(--text-secondary); font-size: 1.25rem; }
+
+    .difficulty {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--green-soft);
+      border-radius: 100px;
+      color: var(--green-primary);
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section h2 .num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--green-primary);
+      border-radius: 50%;
+      font-size: 1rem;
+    }
+
+    .section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 24px 0 12px;
+      color: var(--green-primary);
+    }
+
+    p { color: var(--text-secondary); margin-bottom: 16px; }
+
+    .highlight {
+      background: var(--green-soft);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--green-primary);
+      font-weight: 500;
+    }
+
+    .success-box {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .success-box p { margin: 0; color: var(--green-primary); }
+
+    .info {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .info p { margin: 0; color: var(--blue); }
+
+    .warning {
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .warning p { margin: 0; color: var(--orange); }
+
+    code {
+      background: var(--bg-dark);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Menlo', monospace;
+      font-size: 0.9rem;
+      color: var(--green-primary);
+      direction: ltr;
+      display: inline-block;
+    }
+
+    .code-block {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .code-block code {
+      background: none;
+      padding: 0;
+      display: block;
+      white-space: pre;
+      line-height: 1.6;
+    }
+
+    .code-block .comment { color: #6b7280; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green-primary) 0%, #16a34a 100%);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .cta-buttons { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .feature {
+      background: var(--bg-dark);
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .feature-icon { font-size: 2rem; margin-bottom: 8px; }
+    .feature-title { font-weight: 600; margin-bottom: 4px; }
+    .feature-desc { font-size: 0.85rem; color: var(--text-secondary); }
+
+    .modes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .mode-card {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .mode-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--green-primary);
+    }
+
+    .mode-card p {
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .mode-card ul {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding-right: 16px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 48px;
+    }
+
+    footer a { color: var(--green-primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">→ חזרה לדף הראשי</a>
+
+    <div class="hero">
+      <div class="skill-icon">📊</div>
+      <h1>HTML to PowerPoint</h1>
+      <p class="subtitle">המרת דפי HTML למצגות PowerPoint באיכות מושלמת עם תמיכה בעברית</p>
+      <div class="difficulty">⏱️ זמן התקנה: 2-3 דקות</div>
+    </div>
+
+    <div class="success-box">
+      <span style="font-size: 1.5rem;">🎉</span>
+      <p><strong>חדשות טובות!</strong> הסקיל הזה לא צריך מפתחות API! רק התקנה פשוטה ואתם מוכנים.</p>
+    </div>
+
+    <!-- מה הסקיל עושה -->
+    <div class="section">
+      <h2>מה הסקיל הזה עושה?</h2>
+      <p>הסקיל הזה ממיר דפי HTML (או אתרים) למצגות PowerPoint (.pptx). הוא תומך בשני מצבים - מצב טקסט (יוצר אלמנטים שניתנים לעריכה) ומצב תמונה (צילום מסך מושלם).</p>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🔤</div>
+          <div class="feature-title">תמיכה בעברית</div>
+          <div class="feature-desc">RTL מובנה עם פונט Heebo</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">✏️</div>
+          <div class="feature-title">טקסט ניתן לעריכה</div>
+          <div class="feature-desc">במצב טקסט - ערוך ב-PowerPoint</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🖼️</div>
+          <div class="feature-title">מצב תמונה</div>
+          <div class="feature-desc">Pixel-perfect לעיצובים מורכבים</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🌐</div>
+          <div class="feature-title">קבצים ו-URL</div>
+          <div class="feature-desc">ממירים גם אתרים מהרשת</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- מצבי המרה -->
+    <div class="section">
+      <h2>מצבי המרה</h2>
+      <p>הסקיל תומך בשלושה מצבים שונים להמרה:</p>
+
+      <div class="modes-grid">
+        <div class="mode-card">
+          <h4>📝 מצב טקסט (text)</h4>
+          <p>מנתח את ה-HTML ויוצר אלמנטים מקוריים של PowerPoint</p>
+          <ul>
+            <li>טקסט ניתן לעריכה</li>
+            <li>רשימות ותבליטים</li>
+            <li>מתאים ל-HTML פשוט</li>
+          </ul>
+        </div>
+        <div class="mode-card">
+          <h4>🖼️ מצב תמונה (image)</h4>
+          <p>מצלם את ה-HTML ומטמיע כתמונה</p>
+          <ul>
+            <li>עיצוב מושלם</li>
+            <li>תומך בכל CSS</li>
+            <li>מתאים לעיצובים מורכבים</li>
+          </ul>
+        </div>
+        <div class="mode-card">
+          <h4>🤖 אוטומטי (auto)</h4>
+          <p>מזהה אוטומטית את המצב המתאים</p>
+          <ul>
+            <li>ברירת מחדל</li>
+            <li>בוחר לפי מורכבות</li>
+            <li>מומלץ ברוב המקרים</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- התקנה -->
+    <div class="section">
+      <h2><span class="num">1</span> התקנה</h2>
+
+      <p>כל מה שצריך זה להתקין את הספריות. <strong>הכי קל - לבקש מקלוד!</strong></p>
+
+      <h3>🪄 הדרך הקלה - בקשו מקלוד</h3>
+      <p>פתחו את קלוד קוד ואמרו לו:</p>
+      <div class="code-block">
+        <code>הרץ npm install בתיקייה ~/.claude/skills/html-to-pptx</code>
+      </div>
+      <p style="margin-top: 8px;">זה יתקין את PptxGenJS, Cheerio ו-Puppeteer. עשוי לקחת 2-3 דקות.</p>
+
+      <div class="info">
+        <span style="font-size: 1.5rem;">💡</span>
+        <p><strong>זה הכל!</strong> אין צורך במפתחות API או הגדרות נוספות.</p>
+      </div>
+    </div>
+
+    <!-- בדיקה -->
+    <div class="section">
+      <h2><span class="num">2</span> בדיקה שהכל עובד</h2>
+
+      <p>נסו להמיר קובץ HTML פשוט:</p>
+
+      <div class="code-block">
+        <code><span class="comment"># בקשו מקלוד:</span>
+צור קובץ HTML עם הכותרת "שלום עולם", המר אותו ל-PowerPoint ופתח לי אותו</code>
+      </div>
+
+      <p>או נסו עם תוכן בעברית:</p>
+
+      <div class="code-block">
+        <code><span class="comment"># בקשו מקלוד:</span>
+צור מצגת HTML בעברית עם 3 שקופיות, המר ל-PPTX ותפתח לי</code>
+      </div>
+    </div>
+
+    <!-- דוגמאות -->
+    <div class="section">
+      <h2>דוגמאות לשימוש</h2>
+
+      <div class="code-block">
+        <code><span class="comment"># המרת קובץ HTML מקומי</span>
+"המר את הקובץ presentation.html ל-PowerPoint ופתח אותו"
+
+<span class="comment"># מצגת בעברית</span>
+"המר את המצגת hebrew.html ל-PPTX עם RTL"
+
+<span class="comment"># עיצוב מורכב - מצב תמונה</span>
+"המר את הדשבורד ל-PowerPoint במצב image כדי לשמור על העיצוב"
+
+<span class="comment"># חלוקה לשקופיות לפי sections</span>
+"המר את המסמך ל-PPTX, חלק לשקופיות לפי section"
+
+<span class="comment"># יצירה מאפס</span>
+"צור מצגת בעברית על יתרונות הבינה המלאכותית עם 5 שקופיות, והמר ל-PowerPoint"</code>
+      </div>
+
+      <h3>אפשרויות נוספות</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li><strong>--mode=text/image/auto</strong> - מצב ההמרה</li>
+        <li><strong>--rtl</strong> - כפיית כיוון עברית</li>
+        <li><strong>--font=Heebo</strong> - בחירת פונט</li>
+        <li><strong>--font-size=18</strong> - גודל פונט</li>
+        <li><strong>--layout=LAYOUT_16x9</strong> - יחס מסך</li>
+        <li><strong>--slide-per=section</strong> - חלוקה לפי סלקטור</li>
+        <li><strong>--background=FFFFFF</strong> - צבע רקע</li>
+      </ul>
+    </div>
+
+    <!-- טיפים לעברית -->
+    <div class="section">
+      <h2>🔤 טיפים לעברית מושלמת</h2>
+
+      <p>כדי שהמצגת תיראה מושלמת בעברית, הוסיפו ל-HTML:</p>
+
+      <div class="code-block">
+        <code>&lt;html lang="he" dir="rtl"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet"&gt;
+  &lt;style&gt;
+    body {
+      font-family: 'Heebo', sans-serif;
+      direction: rtl;
+      text-align: right;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;</code>
+      </div>
+
+      <div class="warning">
+        <span style="font-size: 1.5rem;">⚠️</span>
+        <p><strong>חשוב!</strong> תמיד השתמשו בדגל <code>--rtl</code> כשממירים תוכן בעברית.</p>
+      </div>
+    </div>
+
+    <!-- מבנה שקופיות -->
+    <div class="section">
+      <h2>📑 מבנה שקופיות</h2>
+
+      <p>הסקיל מזהה אוטומטית גבולות שקופיות לפי:</p>
+
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li><code>&lt;section&gt;</code> - אלמנטים</li>
+        <li><code>&lt;article&gt;</code> - אלמנטים</li>
+        <li><code>.slide</code> - קלאס</li>
+        <li><code>[data-slide]</code> - אטריביוט</li>
+        <li><code>&lt;hr&gt;</code> - קו הפרדה</li>
+      </ul>
+
+      <p>או הגדירו סלקטור מותאם:</p>
+
+      <div class="code-block">
+        <code><span class="comment"># חלוקה לפי div.page</span>
+"המר את המסמך ל-PowerPoint עם חלוקה לשקופיות לפי div.page"</code>
+      </div>
+    </div>
+
+    <div class="cta-buttons" style="justify-content: center; margin-top: 48px;">
+      <a href="../index.html" class="btn btn-secondary">← חזרה לדף הראשי</a>
+    </div>
+
+    <footer>
+      <p>יש שאלות? פתחו Issue ב-<a href="https://github.com/aviz85/claude-skills-library" target="_blank">GitHub</a></p>
+    </footer>
+  </div>
+</body>
+</html>
