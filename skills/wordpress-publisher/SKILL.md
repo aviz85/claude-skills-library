@@ -1,15 +1,15 @@
 ---
 name: wordpress-publisher
-description: "פרסום פוסטים לוורדפרס. השתמש כשמשתמש רוצה לפרסם תוכן, פוסטים או מאמרים לאתר הוורדפרס שלו."
+description: "Publish posts to WordPress. Use for: publish blog post, upload to WordPress, פרסם בבלוג."
 ---
 
 # WordPress Publisher
 
-פרסום תוכן לאתרי וורדפרס עם תהליך דו-שלבי: קודם טיוטה, אחר כך פרסום לאחר אישור.
+Publish content to WordPress with a two-step flow: draft first, then publish after user confirmation.
 
-## הגדרות
+## Configuration
 
-צור קובץ `.env` בתיקיית הסקיל:
+Create `.env` file in the skill directory:
 
 ```bash
 # ~/.claude/skills/wordpress-publisher/.env
@@ -18,117 +18,95 @@ WP_USERNAME=your_username
 WP_APP_PASSWORD=YourApplicationPasswordNoSpaces
 ```
 
-**יצירת סיסמת אפליקציה:**
-1. לך ל-WordPress Admin → Users → Profile
-2. גלול ל-"Application Passwords"
-3. הזן שם (למשל "Claude Code") ולחץ "Add New"
-4. העתק את הסיסמה והסר את כל הרווחים
+**Creating Application Password:**
+1. Go to WordPress Admin → Users → Profile
+2. Scroll to "Application Passwords"
+3. Enter a name (e.g., "Claude Code") and click "Add New"
+4. Copy the password and **remove all spaces**
 
-## תהליך עבודה
+## Usage
 
-### שלב 1: יצירת טיוטה
-
-```bash
-node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js create "כותרת הפוסט" content.html
-```
-
-**תוצאה:**
-```json
-{
-  "id": 123,
-  "status": "draft",
-  "editLink": "https://your-site.com/wp-admin/post.php?post=123&action=edit",
-  "previewLink": "https://your-site.com/?p=123"
-}
-```
-
-### שלב 2: פרסום (לאחר אישור המשתמש)
+### Create Draft
 
 ```bash
-node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js publish 123
+node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js create "Post Title" content.html
 ```
 
-**תוצאה:**
-```json
-{
-  "id": 123,
-  "status": "publish",
-  "link": "https://your-site.com/post-slug/"
-}
-```
+### Create with Featured Image
 
-## שימוש מהיר
-
-### יצירת טיוטה מקובץ HTML:
 ```bash
-node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js create "כותרת" article.html
+node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js create "Post Title" content.html --image=cover.jpg
 ```
 
-### יצירה ופרסום מיידי:
+### Create and Publish Immediately
+
 ```bash
-node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js create "כותרת" article.html --publish
+node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js create "Post Title" content.html --publish
 ```
 
-### יצירה עם תמונה ראשית (Featured Image):
+### Publish Existing Draft
+
 ```bash
-node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js create "כותרת" article.html --image=cover.jpg
+node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js publish POST_ID
 ```
 
-### קריאה מ-stdin (pipe):
+### Check Post Status
+
 ```bash
-echo "<h1>שלום עולם</h1>" | node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js create "שלום" -
+node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js status POST_ID
 ```
 
-### בדיקת סטטוס פוסט:
+### Read from stdin
+
 ```bash
-node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js status 123
+echo "<h1>Hello</h1>" | node ~/.claude/skills/wordpress-publisher/scripts/wp-publish.js create "Hello" -
 ```
 
-## אפשרויות
+## Options
 
-| אפשרות | תיאור |
-|--------|-------|
-| `--publish` | פרסום מיידי (ברירת מחדל: טיוטה) |
-| `--image=<path>` | תמונה ראשית (מועלית לספריית המדיה) |
-| `--excerpt=<text>` | הוספת תקציר |
-| `--categories=<ids>` | מזהי קטגוריות (מופרדים בפסיק) |
-| `--tags=<ids>` | מזהי תגיות (מופרדים בפסיק) |
+| Option | Description |
+|--------|-------------|
+| `--publish` | Publish immediately (default: draft) |
+| `--image=<path>` | Featured image (uploaded to media library) |
+| `--excerpt=<text>` | Add excerpt |
+| `--categories=<ids>` | Category IDs (comma-separated) |
+| `--tags=<ids>` | Tag IDs (comma-separated) |
 
-## פורמט תשובה
+## Response Format
 
-### לאחר יצירת טיוטה:
+### After Creating Draft:
 ```
-הטיוטה נוצרה בהצלחה!
+Draft created!
 
-**מזהה פוסט:** 123
-**עריכה בוורדפרס:** https://your-site.com/wp-admin/post.php?post=123&action=edit
-**תצוגה מקדימה:** https://your-site.com/?p=123
+**Post ID:** 123
+**Edit in WordPress:** https://your-site.com/wp-admin/post.php?post=123&action=edit
+**Preview:** https://your-site.com/?p=123
 
-האם לפרסם עכשיו, או שתרצה לעיין קודם?
-```
-
-### לאחר פרסום:
-```
-הפוסט עלה לאוויר!
-
-**כתובת:** https://your-site.com/your-post-slug/
+Publish now or review first?
 ```
 
-## טיפול בשגיאות
+### After Publishing:
+```
+Post is live!
 
-| שגיאה | סיבה | פתרון |
-|-------|------|-------|
-| 401 Unauthorized | פרטי התחברות שגויים | בדוק WP_USERNAME ו-WP_APP_PASSWORD |
-| 403 Forbidden | אין הרשאות | ודא שלמשתמש יש תפקיד עורך/מנהל |
-| 404 Not Found | כתובת שגויה או API מושבת | בדוק WP_URL, הפעל REST API |
+**URL:** https://your-site.com/your-post-slug/
+```
 
-## מתי להשתמש
+## Error Handling
 
-- משתמש מבקש לפרסם פוסט בבלוג
-- משתמש רוצה להעלות תוכן לוורדפרס
-- משתמש משתף טקסט/markdown ואומר "פרסם את זה"
-- משתמש מזכיר את אתר הוורדפרס שלו
+| Error | Cause | Solution |
+|-------|-------|----------|
+| 401 Unauthorized | Wrong credentials | Check WP_USERNAME and WP_APP_PASSWORD |
+| 403 Forbidden | No permissions | Ensure user has Editor/Admin role |
+| 404 Not Found | Wrong URL or API disabled | Check WP_URL, enable REST API |
 
-## מידע נוסף
+## Hebrew/RTL Content
 
-- [מדריך API מפורט](references/api-reference.md) - תיעוד מלא של ה-REST API
+For Hebrew content, wrap in RTL container:
+
+```html
+<article dir="rtl" lang="he">
+  <!-- Hebrew content here -->
+</article>
+```
+

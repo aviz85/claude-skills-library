@@ -80,7 +80,7 @@ function wpRequest(method, endpoint, data = null) {
       headers: {
         'Authorization': `Basic ${auth}`,
         'Content-Type': 'application/json',
-        'User-Agent': 'Claude-WordPress-Publisher/1.0'
+        'User-Agent': 'curl/8.7.1'
       }
     };
 
@@ -163,7 +163,7 @@ function uploadMedia(imagePath) {
         'Content-Type': contentType,
         'Content-Disposition': `attachment; filename="${filename}"`,
         'Content-Length': imageData.length,
-        'User-Agent': 'Claude-WordPress-Publisher/1.0'
+        'User-Agent': 'curl/8.7.1'
       }
     };
 
