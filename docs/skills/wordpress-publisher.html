@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WordPress Publisher Skill - Installation Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-primary: #0073aa;
+      --blue-glow: rgba(0, 115, 170, 0.4);
+      --blue-soft: rgba(0, 115, 170, 0.1);
+      --bg-darkest: #0a0f14;
+      --bg-dark: #111827;
+      --bg-card: #1a2332;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-glow: rgba(0, 115, 170, 0.3);
+      --yellow: #fbbf24;
+      --green: #22C55E;
+      --red: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-darkest);
+      color: var(--text-primary);
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--blue-primary); }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .skill-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--blue-primary), #00a0d2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+    }
+
+    .difficulty {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--blue-soft);
+      border-radius: 100px;
+      color: var(--blue-primary);
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section h2 .num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--blue-primary);
+      border-radius: 50%;
+      font-size: 1rem;
+    }
+
+    .section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 24px 0 12px;
+      color: var(--blue-primary);
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .highlight {
+      background: var(--blue-soft);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--blue-primary);
+      font-weight: 500;
+    }
+
+    .warning {
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .warning-icon { font-size: 1.5rem; }
+    .warning p { margin: 0; color: var(--yellow); }
+
+    .info {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .info-icon { font-size: 1.5rem; }
+    .info p { margin: 0; color: #60a5fa; }
+
+    .success {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .success-icon { font-size: 1.5rem; }
+    .success p { margin: 0; color: var(--green); }
+
+    pre {
+      background: #0d1117;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+    code {
+      font-family: 'Fira Code', 'Monaco', monospace;
+      font-size: 0.9rem;
+      color: #e6edf3;
+    }
+
+    .inline-code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    ol, ul {
+      margin: 16px 0 16px 24px;
+      color: var(--text-secondary);
+    }
+
+    li {
+      margin-bottom: 12px;
+    }
+
+    .step-list {
+      list-style: none;
+      margin-left: 0;
+      counter-reset: step;
+    }
+
+    .step-list li {
+      counter-increment: step;
+      padding-left: 48px;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .step-list li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      background: var(--blue-soft);
+      border: 2px solid var(--blue-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--blue-primary);
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+      margin: 24px 0;
+    }
+
+    .workflow-step {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .workflow-step.active {
+      border-color: var(--blue-primary);
+      box-shadow: 0 0 20px var(--blue-glow);
+    }
+
+    .workflow-arrow {
+      font-size: 2rem;
+      color: var(--blue-primary);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .feature {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .feature-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .feature-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--blue-soft);
+      border: 1px solid var(--border-glow);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: var(--blue-primary);
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--blue-primary);
+      color: white;
+    }
+
+    .code-block {
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      .section { padding: 24px; }
+      .workflow {
+        grid-template-columns: 1fr;
+      }
+      .workflow-arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Back to Skills Library
+    </a>
+
+    <div class="hero">
+      <div class="skill-icon">📝</div>
+      <h1>WordPress Publisher</h1>
+      <p class="subtitle">Publish content to WordPress with a two-step draft & publish workflow</p>
+      <div class="difficulty">⚡ Easy Setup • 5 minutes</div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">1</span> Prerequisites</h2>
+      <p>Before installing this skill, make sure you have:</p>
+      <ul>
+        <li><strong>Claude Code</strong> installed on your machine</li>
+        <li>A <strong>WordPress site</strong> with REST API enabled (enabled by default)</li>
+        <li><strong>Administrator access</strong> to your WordPress site</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">2</span> Create Application Password</h2>
+      <p>WordPress Application Passwords allow secure API access without exposing your main password.</p>
+
+      <ol class="step-list">
+        <li>Log in to your <strong>WordPress Admin Dashboard</strong></li>
+        <li>Go to <span class="highlight">Users → Profile</span></li>
+        <li>Scroll down to <strong>Application Passwords</strong> section</li>
+        <li>Enter a name like <code class="inline-code">Claude Code</code></li>
+        <li>Click <span class="highlight">Add New Application Password</span></li>
+        <li>Copy the generated password (shown with spaces)</li>
+      </ol>
+
+      <div class="warning">
+        <span class="warning-icon">⚠️</span>
+        <p><strong>Important:</strong> Remove all spaces from the password before using it. For example: <code>LPOo ZaEi kJLf</code> becomes <code>LPOoZaEikJLf</code></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">3</span> Install the Skill</h2>
+
+      <h3>Option A: Clone from GitHub</h3>
+      <div class="code-block">
+        <pre><code># Clone the skill
+git clone https://github.com/aviz85/claude-skills-library.git
+cp -r claude-skills-library/skills/wordpress-publisher ~/.claude/skills/</code></pre>
+      </div>
+
+      <h3>Option B: Manual Installation</h3>
+      <div class="code-block">
+        <pre><code># Create skill directory
+mkdir -p ~/.claude/skills/wordpress-publisher
+
+# Download SKILL.md (or copy from this page)
+curl -o ~/.claude/skills/wordpress-publisher/SKILL.md \
+  https://raw.githubusercontent.com/aviz85/claude-skills-library/main/skills/wordpress-publisher/SKILL.md</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">4</span> Configure Credentials</h2>
+      <p>Create a <code class="inline-code">.env</code> file in the skill directory with your credentials:</p>
+
+      <div class="code-block">
+        <pre><code># ~/.claude/skills/wordpress-publisher/.env
+
+# Your WordPress site URL (no trailing slash)
+WP_URL=https://your-site.com
+
+# WordPress username
+WP_USERNAME=your_username
+
+# Application Password (no spaces!)
+WP_APP_PASSWORD=YourAppPasswordNoSpaces</code></pre>
+      </div>
+
+      <div class="success">
+        <span class="success-icon">✅</span>
+        <p>The <code>.env</code> file is automatically gitignored, so your credentials stay private.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">5</span> How It Works</h2>
+      <p>The skill uses a safe two-step workflow:</p>
+
+      <div class="workflow">
+        <div class="workflow-step">
+          <div style="font-size: 2rem; margin-bottom: 8px;">📄</div>
+          <strong>1. Create Draft</strong>
+          <p style="font-size: 0.85rem; margin-top: 8px;">Content is published as draft first</p>
+        </div>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-step">
+          <div style="font-size: 2rem; margin-bottom: 8px;">👀</div>
+          <strong>2. Review</strong>
+          <p style="font-size: 0.85rem; margin-top: 8px;">You get a direct link to preview</p>
+        </div>
+      </div>
+
+      <div class="workflow" style="margin-top: 0;">
+        <div class="workflow-step">
+          <div style="font-size: 2rem; margin-bottom: 8px;">✅</div>
+          <strong>3. Confirm</strong>
+          <p style="font-size: 0.85rem; margin-top: 8px;">Say "publish it" when ready</p>
+        </div>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-step active">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🌐</div>
+          <strong>4. Live!</strong>
+          <p style="font-size: 0.85rem; margin-top: 8px;">Post goes public</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">6</span> Usage Examples</h2>
+
+      <h3>Publish Markdown Content</h3>
+      <div class="code-block">
+        <pre><code>You: Publish this article to my WordPress site:
+
+# My Amazing Article
+This is the content of my article...
+
+Claude: Draft created successfully!
+Post ID: 123
+Preview: https://your-site.com/?p=123
+
+Would you like me to publish it now?
+
+You: Yes, publish it
+
+Claude: Post is now live!
+URL: https://your-site.com/my-amazing-article/</code></pre>
+      </div>
+
+      <h3>Publish from File</h3>
+      <div class="code-block">
+        <pre><code>You: Publish the file ~/blog/my-post.md to WordPress
+
+Claude: I'll read the file and publish it as a draft first...</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Features</h2>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">📝</div>
+          <div class="feature-title">Markdown Support</div>
+          <div class="feature-desc">Converts MD to HTML automatically</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔒</div>
+          <div class="feature-title">Safe Workflow</div>
+          <div class="feature-desc">Draft first, publish on confirm</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">👁️</div>
+          <div class="feature-title">Preview Links</div>
+          <div class="feature-desc">Direct admin edit links</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔐</div>
+          <div class="feature-title">Secure Auth</div>
+          <div class="feature-desc">Uses Application Passwords</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Troubleshooting</h2>
+
+      <h3>401 Unauthorized</h3>
+      <p>Check that your username and application password are correct. Make sure there are no spaces in the password.</p>
+
+      <h3>403 Forbidden</h3>
+      <p>Your WordPress user might not have Editor or Administrator role. Only users with publishing permissions can use this skill.</p>
+
+      <h3>404 Not Found</h3>
+      <p>Check that your WP_URL is correct and the WordPress REST API is enabled. Some security plugins disable the REST API.</p>
+
+      <h3>Connection Refused</h3>
+      <p>Make sure your WordPress site is accessible and uses HTTPS.</p>
+    </div>
+
+    <div class="info" style="margin-top: 32px;">
+      <span class="info-icon">💡</span>
+      <p>Need help? Open an issue on <a href="https://github.com/aviz85/claude-skills-library" style="color: var(--blue-primary);">GitHub</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Copy button functionality
+    document.querySelectorAll('.code-block').forEach(block => {
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copy';
+      btn.onclick = () => {
+        const code = block.querySelector('code').textContent;
+        navigator.clipboard.writeText(code);
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      };
+      block.style.position = 'relative';
+      block.appendChild(btn);
+    });
+  </script>
+</body>
+</html>
