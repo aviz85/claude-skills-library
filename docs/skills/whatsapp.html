@@ -413,6 +413,31 @@
       <h3>טלפון עם וואטסאפ</h3>
       <p>צריך טלפון נייד עם וואטסאפ מחובר לאינטרנט. הטלפון צריך להישאר מחובר כדי שההודעות יישלחו.</p>
 
+      <h3>🎤 להודעות קוליות: התקנת ffmpeg</h3>
+      <p>כדי לשלוח הודעות קוליות, צריך להתקין את <span class="highlight">ffmpeg</span> במחשב. זה כלי שממיר קבצי שמע לפורמט OGG שמתאים לוואטסאפ.</p>
+
+      <div class="code-block">
+        <code><span class="comment"># macOS (עם Homebrew)</span>
+brew install ffmpeg
+
+<span class="comment"># Ubuntu/Debian</span>
+sudo apt update && sudo apt install ffmpeg
+
+<span class="comment"># Windows (עם Chocolatey)</span>
+choco install ffmpeg
+
+<span class="comment"># Windows (עם winget)</span>
+winget install ffmpeg
+
+<span class="comment"># בדיקה שההתקנה הצליחה</span>
+ffmpeg -version</code>
+      </div>
+
+      <div class="info">
+        <span class="warning-icon">💡</span>
+        <p><strong>טיפ:</strong> אם אין לכם Homebrew (ב-macOS), התקינו אותו קודם עם הפקודה שבאתר <a href="https://brew.sh" target="_blank" style="color: var(--blue);">brew.sh</a></p>
+      </div>
+
       <div class="warning">
         <span class="warning-icon">⚠️</span>
         <p><strong>שימו לב:</strong> השירות הזה שולח הודעות מחשבון הוואטסאפ האישי שלכם. השתמשו בו באחריות ואל תשלחו ספאם!</p>
@@ -648,6 +673,13 @@ GREEN_API_TOKEN=<span class="value">הטוקן_הארוך_שהעתקתם</span><
       <ul style="color: var(--text-secondary); padding-right: 20px;">
         <li>נסו להיות יותר ספציפיים בבקשה מקלוד</li>
         <li>ציינו בדיוק מה רוצים שיהיה כתוב בהודעה</li>
+      </ul>
+
+      <h3>🎤 הודעות קוליות לא עובדות</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>וודאו ש-ffmpeg מותקן במחשב (הריצו <code>ffmpeg -version</code> לבדיקה)</li>
+        <li>אם לא מותקן, עקבו אחרי הוראות ההתקנה בסעיף "דרישות מקדימות"</li>
+        <li>לאחר התקנת ffmpeg, נסו שוב לשלוח את ההודעה הקולית</li>
       </ul>
     </div>
 

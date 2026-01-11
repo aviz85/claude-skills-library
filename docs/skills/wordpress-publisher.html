@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WordPress Publisher Skill - Installation Guide</title>
+  <title>WordPress Publisher Skill - מדריך התקנה מפורט</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --blue-primary: #0073aa;
@@ -27,7 +27,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Heebo', sans-serif;
       background: var(--bg-darkest);
       color: var(--text-primary);
       line-height: 1.8;
@@ -176,65 +176,127 @@
     .success-icon { font-size: 1.5rem; }
     .success p { margin: 0; color: var(--green); }
 
-    pre {
-      background: #0d1117;
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 20px;
-      overflow-x: auto;
-      margin: 16px 0;
-    }
-
-    code {
-      font-family: 'Fira Code', 'Monaco', monospace;
-      font-size: 0.9rem;
-      color: #e6edf3;
-    }
-
-    .inline-code {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-    }
-
-    ol, ul {
-      margin: 16px 0 16px 24px;
-      color: var(--text-secondary);
-    }
-
-    li {
-      margin-bottom: 12px;
-    }
-
-    .step-list {
+    .steps-list {
       list-style: none;
-      margin-left: 0;
       counter-reset: step;
     }
 
-    .step-list li {
-      counter-increment: step;
-      padding-left: 48px;
+    .steps-list > li {
       position: relative;
-      margin-bottom: 20px;
+      padding: 16px 0;
+      padding-inline-start: 48px;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
-    .step-list li::before {
+    .steps-list > li:last-child { border-bottom: none; }
+
+    .steps-list > li::before {
+      counter-increment: step;
       content: counter(step);
       position: absolute;
-      left: 0;
-      width: 32px;
-      height: 32px;
-      background: var(--blue-soft);
+      inset-inline-start: 0;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      background: var(--bg-dark);
       border: 2px solid var(--blue-primary);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
+      text-align: center;
+      line-height: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
       color: var(--blue-primary);
     }
+
+    code {
+      background: var(--bg-dark);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Menlo', monospace;
+      font-size: 0.9rem;
+      color: var(--blue-primary);
+      direction: ltr;
+      display: inline-block;
+    }
+
+    .code-block {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .code-block code {
+      background: none;
+      padding: 0;
+      display: block;
+      white-space: pre;
+      line-height: 1.6;
+    }
+
+    .code-block .comment { color: #6b7280; }
+    .code-block .key { color: var(--yellow); }
+    .code-block .value { color: var(--green); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue-primary) 0%, #005a87 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--blue-glow);
+    }
+
+    .btn-secondary {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .feature {
+      background: var(--bg-dark);
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .feature-icon { font-size: 2rem; margin-bottom: 8px; }
+    .feature-title { font-weight: 600; margin-bottom: 4px; }
+    .feature-desc { font-size: 0.85rem; color: var(--text-secondary); }
 
     .workflow {
       display: grid;
@@ -262,58 +324,17 @@
       color: var(--blue-primary);
     }
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .feature {
-      background: var(--bg-dark);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 20px;
+    footer {
       text-align: center;
-    }
-
-    .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    .feature-title {
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-
-    .feature-desc {
-      font-size: 0.85rem;
+      padding: 40px 0;
       color: var(--text-secondary);
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 48px;
     }
 
-    .copy-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: var(--blue-soft);
-      border: 1px solid var(--border-glow);
-      border-radius: 8px;
-      padding: 8px 12px;
+    footer a {
       color: var(--blue-primary);
-      cursor: pointer;
-      font-size: 0.8rem;
-      transition: all 0.2s;
-    }
-
-    .copy-btn:hover {
-      background: var(--blue-primary);
-      color: white;
-    }
-
-    .code-block {
-      position: relative;
+      text-decoration: none;
     }
 
     @media (max-width: 768px) {
@@ -331,218 +352,263 @@
 <body>
   <div class="container">
     <a href="../index.html" class="back-link">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M19 12H5M12 19l-7-7 7-7"/>
-      </svg>
-      Back to Skills Library
+      → חזרה לדף הראשי
     </a>
 
     <div class="hero">
       <div class="skill-icon">📝</div>
       <h1>WordPress Publisher</h1>
-      <p class="subtitle">Publish content to WordPress with a two-step draft & publish workflow</p>
-      <div class="difficulty">⚡ Easy Setup • 5 minutes</div>
+      <p class="subtitle">פרסמו תוכן לאתר הוורדפרס שלכם ישירות מקלוד קוד</p>
+      <div class="difficulty">⏱️ זמן התקנה: 5 דקות</div>
     </div>
 
+    <!-- מה הסקיל עושה -->
     <div class="section">
-      <h2><span class="num">1</span> Prerequisites</h2>
-      <p>Before installing this skill, make sure you have:</p>
-      <ul>
-        <li><strong>Claude Code</strong> installed on your machine</li>
-        <li>A <strong>WordPress site</strong> with REST API enabled (enabled by default)</li>
-        <li><strong>Administrator access</strong> to your WordPress site</li>
+      <h2>מה הסקיל הזה עושה?</h2>
+      <p>הסקיל הזה מאפשר לקלוד לפרסם פוסטים באתר הוורדפרס שלכם. אתם כותבים את התוכן, קלוד יוצר טיוטה, ואחרי שאתם מאשרים - הפוסט עולה לאוויר!</p>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">📄</div>
+          <div class="feature-title">תמיכה ב-Markdown</div>
+          <div class="feature-desc">כתבו ב-Markdown והסקיל ימיר ל-HTML</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔒</div>
+          <div class="feature-title">תהליך בטוח</div>
+          <div class="feature-desc">קודם טיוטה, אחר כך פרסום</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">👁️</div>
+          <div class="feature-title">תצוגה מקדימה</div>
+          <div class="feature-desc">קישור ישיר לעריכה בוורדפרס</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔐</div>
+          <div class="feature-title">אימות מאובטח</div>
+          <div class="feature-desc">משתמש ב-Application Passwords</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- דרישות מקדימות -->
+    <div class="section">
+      <h2><span class="num">1</span> מה צריך לפני שמתחילים?</h2>
+
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li><strong>קלוד קוד</strong> מותקן במחשב</li>
+        <li><strong>אתר וורדפרס</strong> עם REST API מופעל (מופעל כברירת מחדל)</li>
+        <li><strong>הרשאות מנהל</strong> או עורך באתר הוורדפרס</li>
       </ul>
+
+      <div class="info">
+        <span class="info-icon">💡</span>
+        <p>הסקיל עובד עם כל אתר וורדפרס - גם וורדפרס.קום וגם אתרים מאוחסנים עצמאית.</p>
+      </div>
     </div>
 
+    <!-- יצירת Application Password -->
     <div class="section">
-      <h2><span class="num">2</span> Create Application Password</h2>
-      <p>WordPress Application Passwords allow secure API access without exposing your main password.</p>
+      <h2><span class="num">2</span> יצירת סיסמת אפליקציה בוורדפרס</h2>
 
-      <ol class="step-list">
-        <li>Log in to your <strong>WordPress Admin Dashboard</strong></li>
-        <li>Go to <span class="highlight">Users → Profile</span></li>
-        <li>Scroll down to <strong>Application Passwords</strong> section</li>
-        <li>Enter a name like <code class="inline-code">Claude Code</code></li>
-        <li>Click <span class="highlight">Add New Application Password</span></li>
-        <li>Copy the generated password (shown with spaces)</li>
+      <p>וורדפרס מאפשר ליצור "סיסמאות אפליקציה" שנותנות גישה ל-API בלי לחשוף את הסיסמה הראשית שלכם. זה הרבה יותר בטוח!</p>
+
+      <ol class="steps-list">
+        <li>
+          <strong>היכנסו לפאנל הניהול של וורדפרס</strong>
+          <p>גלשו לכתובת האתר שלכם עם <code>/wp-admin</code> בסוף והתחברו.</p>
+        </li>
+
+        <li>
+          <strong>עברו להגדרות המשתמש</strong>
+          <p>בתפריט הצד לחצו על <span class="highlight">משתמשים</span> ואז על <span class="highlight">הפרופיל שלך</span> (או Users → Profile באנגלית).</p>
+        </li>
+
+        <li>
+          <strong>גללו למטה לחלק "סיסמאות אפליקציה"</strong>
+          <p>תמצאו שם סעיף שנקרא <span class="highlight">Application Passwords</span> או "סיסמאות אפליקציה".</p>
+        </li>
+
+        <li>
+          <strong>תנו שם לסיסמה החדשה</strong>
+          <p>בשדה "שם סיסמת האפליקציה החדשה" כתבו שם כמו <code>Claude Code</code> - זה רק לזיהוי שלכם.</p>
+        </li>
+
+        <li>
+          <strong>לחצו על "הוסף סיסמת אפליקציה חדשה"</strong>
+          <p>לחצו על הכפתור <span class="highlight">Add New Application Password</span> או "הוסף סיסמת אפליקציה חדשה".</p>
+        </li>
+
+        <li>
+          <strong>העתיקו את הסיסמה</strong>
+          <p>תקבלו סיסמה שנראית ככה: <code>LPOo ZaEi kJLf bNmQ</code></p>
+          <p><strong>חשוב!</strong> העתיקו אותה עכשיו - לא תוכלו לראות אותה שוב!</p>
+        </li>
       </ol>
 
       <div class="warning">
         <span class="warning-icon">⚠️</span>
-        <p><strong>Important:</strong> Remove all spaces from the password before using it. For example: <code>LPOo ZaEi kJLf</code> becomes <code>LPOoZaEikJLf</code></p>
+        <p><strong>חשוב מאוד:</strong> כשתשתמשו בסיסמה, <strong>מחקו את כל הרווחים!</strong> הסיסמה צריכה להיות רציפה.<br>
+        לדוגמה: <code>LPOo ZaEi kJLf bNmQ</code> הופך ל-<code>LPOoZaEikJLfbNmQ</code></p>
+      </div>
+
+      <div class="info">
+        <span class="info-icon">📌</span>
+        <p><strong>לא רואים את האפשרות?</strong> וודאו שאתם משתמשים בחשבון עם הרשאות עורך או מנהל. משתמשים רגילים לא יכולים ליצור סיסמאות אפליקציה.</p>
       </div>
     </div>
 
-    <div class="section">
-      <h2><span class="num">3</span> Install the Skill</h2>
+    <!-- הערה חשובה על פרטיות -->
+    <div class="section" style="border: 2px solid var(--yellow); background: rgba(251, 191, 36, 0.05);">
+      <h2>⚠️ לפני שממשיכים - הגדרת פרטיות</h2>
 
-      <h3>Option A: Clone from GitHub</h3>
-      <div class="code-block">
-        <pre><code># Clone the skill
-git clone https://github.com/aviz85/claude-skills-library.git
-cp -r claude-skills-library/skills/wordpress-publisher ~/.claude/skills/</code></pre>
-      </div>
+      <p>בשלב הבא תזינו מפתחות API. אלה כמו סיסמאות, ולכן <strong>חשוב לוודא שהגדרות הפרטיות מוגדרות נכון</strong> בקלוד קוד.</p>
 
-      <h3>Option B: Manual Installation</h3>
-      <div class="code-block">
-        <pre><code># Create skill directory
-mkdir -p ~/.claude/skills/wordpress-publisher
-
-# Download SKILL.md (or copy from this page)
-curl -o ~/.claude/skills/wordpress-publisher/SKILL.md \
-  https://raw.githubusercontent.com/aviz85/claude-skills-library/main/skills/wordpress-publisher/SKILL.md</code></pre>
+      <div class="warning">
+        <span class="warning-icon">🔐</span>
+        <p>אם עדיין לא עשיתם את זה, עברו קודם למדריך <a href="../index.html#privacy" style="color: var(--yellow);">הגדרות פרטיות</a> וודאו שכיביתם את האפשרות לאנתרופיק להתאמן על השיחות שלכם.</p>
       </div>
     </div>
 
+    <!-- הגדרת הסקיל -->
     <div class="section">
-      <h2><span class="num">4</span> Configure Credentials</h2>
-      <p>Create a <code class="inline-code">.env</code> file in the skill directory with your credentials:</p>
+      <h2><span class="num">3</span> הגדרת הסקיל במחשב</h2>
+
+      <p>עכשיו נגדיר את הסקיל עם הפרטים שלכם. <strong>הכי קל - לבקש מקלוד קוד לעשות את זה בשבילכם!</strong></p>
+
+      <h3>🪄 הדרך הקלה - בקשו מקלוד</h3>
+      <p>פתחו את קלוד קוד ואמרו לו:</p>
+      <div class="code-block">
+        <code>צור קובץ .env בתיקייה ~/.claude/skills/wordpress-publisher עם התוכן הבא:
+WP_URL=<span class="value">https://your-site.com</span>
+WP_USERNAME=<span class="value">שם_המשתמש_שלכם</span>
+WP_APP_PASSWORD=<span class="value">הסיסמה_בלי_רווחים</span></code>
+      </div>
+      <p>קלוד ייצור את הקובץ במקום הנכון!</p>
+
+      <div class="info">
+        <span class="info-icon">📝</span>
+        <p><strong>דוגמה לערכים אמיתיים:</strong></p>
+      </div>
 
       <div class="code-block">
-        <pre><code># ~/.claude/skills/wordpress-publisher/.env
-
-# Your WordPress site URL (no trailing slash)
-WP_URL=https://your-site.com
-
-# WordPress username
-WP_USERNAME=your_username
-
-# Application Password (no spaces!)
-WP_APP_PASSWORD=YourAppPasswordNoSpaces</code></pre>
+        <code><span class="key">WP_URL</span>=<span class="value">https://myblog.co.il</span>
+<span class="key">WP_USERNAME</span>=<span class="value">admin</span>
+<span class="key">WP_APP_PASSWORD</span>=<span class="value">LPOoZaEikJLfbNmQ</span></code>
       </div>
 
       <div class="success">
         <span class="success-icon">✅</span>
-        <p>The <code>.env</code> file is automatically gitignored, so your credentials stay private.</p>
+        <p>קובץ ה-<code>.env</code> מוגן ב-gitignore, כך שהסיסמאות שלכם לא יעלו ל-GitHub.</p>
       </div>
     </div>
 
+    <!-- איך זה עובד -->
     <div class="section">
-      <h2><span class="num">5</span> How It Works</h2>
-      <p>The skill uses a safe two-step workflow:</p>
+      <h2><span class="num">4</span> איך זה עובד?</h2>
+      <p>הסקיל עובד בתהליך דו-שלבי בטוח:</p>
 
       <div class="workflow">
         <div class="workflow-step">
           <div style="font-size: 2rem; margin-bottom: 8px;">📄</div>
-          <strong>1. Create Draft</strong>
-          <p style="font-size: 0.85rem; margin-top: 8px;">Content is published as draft first</p>
+          <strong>1. יצירת טיוטה</strong>
+          <p style="font-size: 0.85rem; margin-top: 8px;">התוכן נשמר כטיוטה</p>
         </div>
-        <div class="workflow-arrow">→</div>
+        <div class="workflow-arrow">←</div>
         <div class="workflow-step">
           <div style="font-size: 2rem; margin-bottom: 8px;">👀</div>
-          <strong>2. Review</strong>
-          <p style="font-size: 0.85rem; margin-top: 8px;">You get a direct link to preview</p>
+          <strong>2. תצוגה מקדימה</strong>
+          <p style="font-size: 0.85rem; margin-top: 8px;">מקבלים קישור לעריכה</p>
         </div>
       </div>
 
       <div class="workflow" style="margin-top: 0;">
         <div class="workflow-step">
           <div style="font-size: 2rem; margin-bottom: 8px;">✅</div>
-          <strong>3. Confirm</strong>
-          <p style="font-size: 0.85rem; margin-top: 8px;">Say "publish it" when ready</p>
+          <strong>3. אישור</strong>
+          <p style="font-size: 0.85rem; margin-top: 8px;">אומרים "פרסם"</p>
         </div>
-        <div class="workflow-arrow">→</div>
+        <div class="workflow-arrow">←</div>
         <div class="workflow-step active">
           <div style="font-size: 2rem; margin-bottom: 8px;">🌐</div>
-          <strong>4. Live!</strong>
-          <p style="font-size: 0.85rem; margin-top: 8px;">Post goes public</p>
+          <strong>4. באוויר!</strong>
+          <p style="font-size: 0.85rem; margin-top: 8px;">הפוסט פורסם</p>
         </div>
       </div>
     </div>
 
+    <!-- בדיקה -->
     <div class="section">
-      <h2><span class="num">6</span> Usage Examples</h2>
+      <h2><span class="num">5</span> בדיקה שהכל עובד</h2>
 
-      <h3>Publish Markdown Content</h3>
+      <p>הפעילו מחדש את קלוד קוד ונסו לפרסם פוסט בדיקה:</p>
+
       <div class="code-block">
-        <pre><code>You: Publish this article to my WordPress site:
-
-# My Amazing Article
-This is the content of my article...
-
-Claude: Draft created successfully!
-Post ID: 123
-Preview: https://your-site.com/?p=123
-
-Would you like me to publish it now?
-
-You: Yes, publish it
-
-Claude: Post is now live!
-URL: https://your-site.com/my-amazing-article/</code></pre>
+        <code><span class="comment"># פתחו שיחה חדשה עם קלוד ואמרו:</span>
+פרסם פוסט בדיקה בוורדפרס עם הכותרת "פוסט בדיקה" והתוכן "זהו פוסט בדיקה"</code>
       </div>
 
-      <h3>Publish from File</h3>
+      <p>קלוד ייצור טיוטה ויתן לכם קישור לבדוק אותה. אם הכל עובד - מזל טוב! 🎉</p>
+    </div>
+
+    <!-- דוגמאות שימוש -->
+    <div class="section">
+      <h2>דוגמאות לשימוש</h2>
+
+      <p>הנה כמה דברים שתוכלו לבקש מקלוד:</p>
+
       <div class="code-block">
-        <pre><code>You: Publish the file ~/blog/my-post.md to WordPress
+        <code><span class="comment"># פרסום תוכן פשוט</span>
+"פרסם את המאמר הזה בוורדפרס:
+# כותרת המאמר שלי
+זה התוכן של המאמר..."
 
-Claude: I'll read the file and publish it as a draft first...</code></pre>
+<span class="comment"># פרסום מקובץ</span>
+"פרסם את הקובץ ~/blog/post.md לוורדפרס"
+
+<span class="comment"># אישור פרסום</span>
+"כן, תפרסם את הטיוטה"</code>
       </div>
     </div>
 
+    <!-- פתרון בעיות -->
     <div class="section">
-      <h2>Features</h2>
-      <div class="features">
-        <div class="feature">
-          <div class="feature-icon">📝</div>
-          <div class="feature-title">Markdown Support</div>
-          <div class="feature-desc">Converts MD to HTML automatically</div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">🔒</div>
-          <div class="feature-title">Safe Workflow</div>
-          <div class="feature-desc">Draft first, publish on confirm</div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">👁️</div>
-          <div class="feature-title">Preview Links</div>
-          <div class="feature-desc">Direct admin edit links</div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">🔐</div>
-          <div class="feature-title">Secure Auth</div>
-          <div class="feature-desc">Uses Application Passwords</div>
-        </div>
-      </div>
+      <h2>🔧 פתרון בעיות נפוצות</h2>
+
+      <h3>שגיאת 401 Unauthorized</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>וודאו ששם המשתמש נכון</li>
+        <li>וודאו שהסיסמה הועתקה <strong>בלי רווחים</strong></li>
+        <li>נסו ליצור סיסמת אפליקציה חדשה</li>
+      </ul>
+
+      <h3>שגיאת 403 Forbidden</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>המשתמש צריך הרשאות עורך או מנהל</li>
+        <li>בדקו שלמשתמש יש הרשאה לפרסם פוסטים</li>
+      </ul>
+
+      <h3>שגיאת 404 Not Found</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>וודאו שכתובת האתר נכונה (בלי / בסוף)</li>
+        <li>בדקו ש-REST API מופעל (חלק מתוספי אבטחה מכבים אותו)</li>
+      </ul>
+
+      <h3>לא רואים "סיסמאות אפליקציה" בוורדפרס</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>וודאו שאתם מחוברים כמנהל או עורך</li>
+        <li>האפשרות זמינה רק אם האתר תומך ב-HTTPS</li>
+        <li>חלק מתוספי אבטחה מסתירים את האפשרות הזו</li>
+      </ul>
     </div>
 
-    <div class="section">
-      <h2>Troubleshooting</h2>
-
-      <h3>401 Unauthorized</h3>
-      <p>Check that your username and application password are correct. Make sure there are no spaces in the password.</p>
-
-      <h3>403 Forbidden</h3>
-      <p>Your WordPress user might not have Editor or Administrator role. Only users with publishing permissions can use this skill.</p>
-
-      <h3>404 Not Found</h3>
-      <p>Check that your WP_URL is correct and the WordPress REST API is enabled. Some security plugins disable the REST API.</p>
-
-      <h3>Connection Refused</h3>
-      <p>Make sure your WordPress site is accessible and uses HTTPS.</p>
+    <div class="cta-buttons" style="justify-content: center; margin-top: 48px;">
+      <a href="../index.html" class="btn btn-secondary">← חזרה לדף הראשי</a>
     </div>
 
-    <div class="info" style="margin-top: 32px;">
-      <span class="info-icon">💡</span>
-      <p>Need help? Open an issue on <a href="https://github.com/aviz85/claude-skills-library" style="color: var(--blue-primary);">GitHub</a></p>
-    </div>
+    <footer>
+      <p>יש שאלות? פתחו Issue ב-<a href="https://github.com/aviz85/claude-skills-library" target="_blank">GitHub</a></p>
+    </footer>
   </div>
-
-  <script>
-    // Copy button functionality
-    document.querySelectorAll('.code-block').forEach(block => {
-      const btn = document.createElement('button');
-      btn.className = 'copy-btn';
-      btn.textContent = 'Copy';
-      btn.onclick = () => {
-        const code = block.querySelector('code').textContent;
-        navigator.clipboard.writeText(code);
-        btn.textContent = 'Copied!';
-        setTimeout(() => btn.textContent = 'Copy', 2000);
-      };
-      block.style.position = 'relative';
-      block.appendChild(btn);
-    });
-  </script>
 </body>
 </html>
