@@ -623,11 +623,15 @@ DEFAULT_VOICE_ID=<span class="value">dV1ee5wE1Ag5NSL6L2Z9</span></code>
   </div>
 
   <script>
-    // Download skill function - uses download-directory.github.io
+    // Download skill function - downloads pre-built ZIP from downloads folder
     function downloadSkill(skillName) {
-      const repoUrl = `https://github.com/aviz85/claude-skills-library/tree/main/skills/${skillName}`;
-      const downloadUrl = `https://download-directory.github.io/?url=${encodeURIComponent(repoUrl)}`;
-      window.open(downloadUrl, '_blank');
+      const downloadUrl = `../downloads/${skillName}.zip`;
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `${skillName}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   </script>
 </body>

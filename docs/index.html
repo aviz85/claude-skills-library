@@ -1151,22 +1151,6 @@
         </div>
 
         <div class="skill-card reveal">
-          <button class="skill-download-corner" onclick="downloadSkill('agentic-app-builder')" title="הורדה">⬇️</button>
-          <span class="skill-icon">🏗️</span>
-          <h3>בונה אפליקציות סוכניות <code>agentic-app-builder</code></h3>
-          <p>בנו אפליקציות שלמות מרכיבי Claude Code - בלי קוד מסורתי. CLAUDE.md, סקילים, פקודות וסוכנים.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">ארכיטקטורה</span>
-            <span class="skill-tag">No-Code</span>
-            <span class="skill-tag">מתקדם</span>
-          </div>
-          <div class="skill-actions">
-            <button class="skill-action-btn download" onclick="downloadSkill('agentic-app-builder')">⬇️ הורדה</button>
-            <a href="skills/other-skills.html" class="skill-action-btn guide">📖 מדריך</a>
-          </div>
-        </div>
-
-        <div class="skill-card reveal">
           <button class="skill-download-corner" onclick="downloadSkill('wordpress-publisher')" title="הורדה">⬇️</button>
           <span class="skill-icon">📝</span>
           <h3>מפרסם וורדפרס <code>wordpress-publisher</code></h3>
@@ -1349,11 +1333,15 @@
       card.style.transitionDelay = `${index * 0.1}s`;
     });
 
-    // Download skill function - uses download-directory.github.io
+    // Download skill function - downloads pre-built ZIP from downloads folder
     function downloadSkill(skillName) {
-      const repoUrl = `https://github.com/aviz85/claude-skills-library/tree/main/skills/${skillName}`;
-      const downloadUrl = `https://download-directory.github.io/?url=${encodeURIComponent(repoUrl)}`;
-      window.open(downloadUrl, '_blank');
+      const downloadUrl = `downloads/${skillName}.zip`;
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `${skillName}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   </script>
 </body>
