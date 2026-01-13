@@ -354,3 +354,58 @@ After testing the skill, users may request improvements. Often this happens righ
 2. Notice struggles or inefficiencies
 3. Identify how SKILL.md or bundled resources should be updated
 4. Implement changes and test again
+
+## AVIZ Skills Library Conventions
+
+When creating skills for the AVIZ Skills Library (https://github.com/aviz85/claude-skills-library), follow these additional conventions:
+
+### Required for Library Submission
+
+1. **SKILL.md** - Standard skill file in `skills/{skill-name}/`
+
+2. **Documentation Page** - HTML page at `docs/skills/{skill-name}.html` with:
+   - What the skill does
+   - Prerequisites (API keys, npm packages, etc.)
+   - Step-by-step setup instructions in Hebrew
+   - Usage examples
+   - Troubleshooting section
+
+### File Structure for Library Skills
+
+```
+skills/{skill-name}/
+├── SKILL.md              # Required
+├── scripts/
+│   ├── main-script.ts    # Executable code
+│   ├── package.json      # npm dependencies (if needed)
+│   └── .env.example      # API key template (if needed)
+├── references/           # Additional docs (optional)
+└── assets/               # Static files (optional)
+```
+
+### API Keys and Secrets
+
+- Create `.env.example` with placeholder values
+- **Never** commit actual `.env` files
+- Document how to obtain API keys in the docs page
+
+### npm Dependencies
+
+- Include `package.json` in `scripts/` folder
+- The `aviz-skills-installer` auto-runs `npm install`
+- List any special setup requirements in docs
+
+### After Adding to Library
+
+1. Add skill to `skills/` directory
+2. Create docs page at `docs/skills/{skill-name}.html`
+3. Update `docs/index.html` skills grid
+4. Commit and push
+
+The installer fetches skills dynamically from the website - no manual update needed!
+
+### Library Links
+
+- Website: https://aviz.github.io/claude-skills-library/
+- GitHub: https://github.com/aviz85/claude-skills-library
+- Conventions: See CONTRIBUTING.md in repository
