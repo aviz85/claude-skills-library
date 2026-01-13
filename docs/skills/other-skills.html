@@ -147,6 +147,16 @@
       font-family: inherit;
     }
 
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green-primary) 0%, #16a34a 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--green-glow);
+    }
+
     .btn-secondary {
       background: var(--bg-dark);
       color: var(--text-primary);
@@ -169,7 +179,7 @@
     <a href="../index.html" class="back-link">→ חזרה לדף הראשי</a>
 
     <h1>סקילים נוספים</h1>
-    <p class="subtitle">סקילים שלא צריכים הגדרה מורכבת</p>
+    <p class="subtitle">סקילים שלא דורשים הגדרה מורכבת</p>
 
     <!-- GH Pages Deploy -->
     <div class="skill-section">
@@ -184,8 +194,11 @@
       <p>אם עדיין לא התקנתם את GitHub CLI:</p>
 
       <div class="code-block">
-        <code># התקנה ב-Mac
+        <code># Mac
 brew install gh
+
+# Windows
+winget install GitHub.cli
 
 # התחברות
 gh auth login</code>
@@ -195,93 +208,36 @@ gh auth login</code>
 
       <h3>שימוש</h3>
       <div class="code-block">
-        <code># בקשו מקלוד:
-"העלה את האתר הזה ל-GitHub Pages"
-"פרסם את הפרויקט באינטרנט"</code>
+        <code>"העלה את האתר הזה ל-GitHub Pages"
+"פרסם את הפרויקט באינטרנט"
+"תעלה את index.html לאתר ציבורי"</code>
       </div>
-    </div>
-
-    <!-- Calendar -->
-    <div class="skill-section">
-      <h2>📅 calendar</h2>
-      <p>בדיקת האירועים ביומן Google.</p>
-
-      <div class="needs-setup">
-        ⚙️ דרישה: צריך להגדיר Google Apps Script
-      </div>
-
-      <h3>התקנה</h3>
-      <p>הסקיל הזה דורש יצירת Google Apps Script אישי:</p>
-
-      <ol style="color: var(--text-secondary); padding-right: 20px;">
-        <li>היכנסו ל-<a href="https://script.google.com" target="_blank" style="color: var(--green-primary);">Google Apps Script</a></li>
-        <li>צרו פרויקט חדש</li>
-        <li>הוסיפו קוד שקורא מהיומן</li>
-        <li>פרסמו כ-Web App</li>
-        <li>העתיקו את ה-URL והטוקן לקובץ SKILL.md</li>
-      </ol>
-
-      <p>זה קצת מורכב - צרו קשר אם צריכים עזרה!</p>
-    </div>
-
-    <!-- Supabase Helper -->
-    <div class="skill-section">
-      <h2>🗄️ supabase-helper</h2>
-      <p>עזרה בפיתוח עם Supabase (בסיס נתונים).</p>
-
-      <div class="needs-setup">
-        ⚙️ דרישה: צריך פרויקט Supabase
-      </div>
-
-      <h3>מה זה Supabase?</h3>
-      <p>Supabase הוא שירות שנותן לכם בסיס נתונים וסיסטם אימות מוכן. זה כמו Firebase של גוגל, רק עם PostgreSQL.</p>
-
-      <h3>התקנה</h3>
-      <ol style="color: var(--text-secondary); padding-right: 20px;">
-        <li>צרו חשבון ב-<a href="https://supabase.com" target="_blank" style="color: var(--green-primary);">Supabase</a></li>
-        <li>צרו פרויקט חדש</li>
-        <li>העתיקו את ה-URL וה-API Key מהגדרות הפרויקט</li>
-      </ol>
-
-      <p>הסקיל עוזר עם שאילתות SQL, מיגרציות, ו-RLS - שימושי אם אתם בונים אפליקציות עם Supabase.</p>
     </div>
 
     <!-- Presentation Architect -->
     <div class="skill-section">
       <h2>📊 presentation-architect</h2>
-      <p>יצירת מבנה מפורט למצגות.</p>
+      <p>יצירת מבנה מפורט למצגות מקצועיות.</p>
 
       <div class="no-setup">
         ✨ לא צריך הגדרה! הסקיל עובד מהקופסה.
       </div>
 
-      <h3>שימוש</h3>
-      <div class="code-block">
-        <code># בקשו מקלוד:
-"תכנן לי מצגת על AI ב-10 שקופיות"
-"צור מבנה למצגת הדרכה לעובדים חדשים"</code>
-      </div>
-
-      <p>הסקיל ייצור מסמך מפורט עם כל שקופית - תוכן, עיצוב, פונטים, צבעים והכל.</p>
-    </div>
-
-    <!-- Skill Creator -->
-    <div class="skill-section">
-      <h2>🛠️ skill-creator</h2>
-      <p>מדריך ליצירת סקילים חדשים.</p>
-
-      <div class="no-setup">
-        ✨ לא צריך הגדרה! זה מדריך.
-      </div>
+      <h3>מה הסקיל עושה?</h3>
+      <p>הסקיל יוצר תסריט מפורט למצגת - לא את המצגת עצמה, אלא תכנון מדויק של כל שקופית:</p>
+      <ul style="color: var(--text-secondary); padding-right: 20px; margin-bottom: 16px;">
+        <li>תוכן וטקסט לכל שקופית</li>
+        <li>הנחיות עיצוב (צבעים, פריסה)</li>
+        <li>המלצות טיפוגרפיה</li>
+        <li>הצעות לאלמנטים ויזואליים</li>
+      </ul>
 
       <h3>שימוש</h3>
       <div class="code-block">
-        <code># בקשו מקלוד:
-"עזור לי ליצור סקיל חדש ל-X"
-"אני רוצה לבנות סקיל שעושה Y"</code>
+        <code>"תכנן לי מצגת על AI ב-10 שקופיות"
+"צור מבנה למצגת הדרכה לעובדים חדשים"
+"תכתוב לי תסריט למצגת מכירות"</code>
       </div>
-
-      <p>הסקיל יעזור לכם להבין את המבנה הנכון ויצור את כל הקבצים הדרושים.</p>
     </div>
 
     <!-- Agentic App Builder -->
@@ -297,7 +253,7 @@ gh auth login</code>
       <p>אפליקציה סוכנית היא מערכת שלמה שבנויה רק מרכיבי Claude Code:</p>
       <ul style="color: var(--text-secondary); padding-right: 20px; margin-bottom: 16px;">
         <li><strong>CLAUDE.md</strong> - הגדרות האפליקציה (תפקיד, חוקים, מבנה נתונים)</li>
-        <li><strong>Skills</strong> - יכולות אוטומטיות</li>
+        <li><strong>Skills</strong> - יכולות אוטומטיות שמופעלות לפי הקשר</li>
         <li><strong>Commands</strong> - פקודות שהמשתמש מפעיל (/command)</li>
         <li><strong>Agents</strong> - סוכנים למשימות מורכבות</li>
         <li><strong>Data Files</strong> - קבצי מידע ב-Markdown</li>
@@ -305,8 +261,7 @@ gh auth login</code>
 
       <h3>שימוש</h3>
       <div class="code-block">
-        <code># בקשו מקלוד:
-"בנה לי אפליקציה סוכנית לניהול משימות"
+        <code>"בנה לי אפליקציה סוכנית לניהול משימות"
 "עזור לי ליצור מערכת CRM עם Claude Code"
 "מה זו אפליקציה סוכנית?"</code>
       </div>
