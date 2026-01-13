@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AVIZ Skills Installer - מדריך שימוש</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-primary: #22C55E;
+      --green-glow: rgba(34, 197, 94, 0.4);
+      --green-soft: rgba(34, 197, 94, 0.1);
+      --bg-darkest: #0a0f0d;
+      --bg-dark: #111827;
+      --bg-card: #1a2332;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-glow: rgba(34, 197, 94, 0.3);
+      --yellow: #fbbf24;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --purple: #a855f7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-darkest);
+      color: var(--text-primary);
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--green-primary); }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .skill-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+    }
+
+    .difficulty {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--green-soft);
+      border-radius: 100px;
+      color: var(--green-primary);
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section h2 .num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--green-primary);
+      border-radius: 50%;
+      font-size: 1rem;
+    }
+
+    .section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 24px 0 12px;
+      color: var(--green-primary);
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .highlight {
+      background: var(--green-soft);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--green-primary);
+      font-weight: 500;
+    }
+
+    .warning {
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .warning-icon { font-size: 1.5rem; }
+    .warning p { margin: 0; color: var(--yellow); }
+
+    .info {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .info p { margin: 0; color: var(--blue); }
+
+    .steps-list {
+      list-style: none;
+      counter-reset: step;
+    }
+
+    .steps-list > li {
+      position: relative;
+      padding: 16px 0;
+      padding-inline-start: 48px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .steps-list > li:last-child { border-bottom: none; }
+
+    .steps-list > li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      inset-inline-start: 0;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      background: var(--bg-dark);
+      border: 2px solid var(--green-primary);
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--green-primary);
+    }
+
+    code {
+      background: var(--bg-dark);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Menlo', monospace;
+      font-size: 0.9rem;
+      color: var(--green-primary);
+      direction: ltr;
+      display: inline-block;
+    }
+
+    .code-block {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .code-block code {
+      background: none;
+      padding: 0;
+      display: block;
+      white-space: pre;
+      line-height: 1.6;
+    }
+
+    .code-block .comment { color: #6b7280; }
+    .code-block .key { color: var(--yellow); }
+    .code-block .value { color: var(--green-primary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green-primary) 0%, #16a34a 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--green-glow);
+    }
+
+    .btn-secondary {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .skill-card {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+
+    .skill-card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+    }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .skill-card-icon {
+      font-size: 1.5rem;
+    }
+
+    .skill-card-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .skill-card-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .skill-card-link {
+      color: var(--green-primary);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    .skill-card-link:hover {
+      text-decoration: underline;
+    }
+
+    .scope-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .scope-card {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .scope-card.recommended {
+      border-color: var(--green-primary);
+      background: linear-gradient(135deg, var(--green-soft), transparent);
+    }
+
+    .scope-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scope-card .badge {
+      font-size: 0.7rem;
+      background: var(--green-primary);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+
+    .scope-card p {
+      font-size: 0.9rem;
+    }
+
+    .scope-card ul {
+      margin-top: 12px;
+      padding-right: 20px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .scope-card ul li {
+      margin-bottom: 4px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: right;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    th {
+      background: var(--bg-dark);
+      font-weight: 600;
+    }
+
+    td code {
+      font-size: 0.8rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 48px;
+    }
+
+    footer a {
+      color: var(--green-primary);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">
+      → חזרה לדף הראשי
+    </a>
+
+    <div class="hero">
+      <div class="skill-icon">📦</div>
+      <h1>AVIZ Skills Installer</h1>
+      <p class="subtitle">התקינו סקילים מספריית AVIZ בשיחה פשוטה עם קלוד</p>
+      <div class="difficulty">⚡ התקנה מהירה ופשוטה</div>
+    </div>
+
+    <!-- מה הסקיל עושה -->
+    <div class="section">
+      <h2>מה הסקיל הזה עושה?</h2>
+      <p>הסקיל הזה עוזר לכם להתקין סקילים מספריית AVIZ Skills Library בצורה קלה ושיחתית. במקום לזכור פקודות git ונתיבי תיקיות - פשוט אמרו לקלוד מה אתם רוצים והוא יעשה את כל העבודה!</p>
+
+      <div class="info">
+        <span class="warning-icon">💡</span>
+        <p><strong>דוגמה:</strong> "אני רוצה להתקין את הסקיל של וואטסאפ" - וקלוד ידריך אתכם בכל התהליך!</p>
+      </div>
+    </div>
+
+    <!-- סקילים זמינים -->
+    <div class="section">
+      <h2>סקילים זמינים להתקנה</h2>
+      <p>הנה כל הסקילים שתוכלו להתקין:</p>
+
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">📱</span>
+            <span class="skill-card-name">whatsapp</span>
+          </div>
+          <p class="skill-card-desc">שליחת הודעות, תמונות והקלטות קוליות בוואטסאפ</p>
+          <a href="whatsapp.html" class="skill-card-link">מדריך התקנה מפורט →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">🎤</span>
+            <span class="skill-card-name">speech-generator</span>
+          </div>
+          <p class="skill-card-desc">יצירת הקלטות קוליות עם ElevenLabs TTS</p>
+          <a href="speech-generator.html" class="skill-card-link">מדריך התקנה מפורט →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">🎨</span>
+            <span class="skill-card-name">nano-banana-poster</span>
+          </div>
+          <p class="skill-card-desc">יצירת תמונות עם Google Gemini</p>
+          <a href="nano-banana-poster.html" class="skill-card-link">מדריך התקנה מפורט →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">📄</span>
+            <span class="skill-card-name">html-to-pdf</span>
+          </div>
+          <p class="skill-card-desc">המרת HTML ל-PDF עם תמיכה בעברית</p>
+          <a href="html-to-pdf.html" class="skill-card-link">מדריך התקנה מפורט →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">📊</span>
+            <span class="skill-card-name">html-to-pptx</span>
+          </div>
+          <p class="skill-card-desc">המרת HTML למצגת PowerPoint</p>
+          <a href="html-to-pptx.html" class="skill-card-link">מדריך התקנה מפורט →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">📝</span>
+            <span class="skill-card-name">wordpress-publisher</span>
+          </div>
+          <p class="skill-card-desc">פרסום פוסטים לוורדפרס</p>
+          <a href="wordpress-publisher.html" class="skill-card-link">מדריך התקנה מפורט →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">🎬</span>
+            <span class="skill-card-name">presentation-architect</span>
+          </div>
+          <p class="skill-card-desc">יצירת תסריטי מצגות מובנים</p>
+          <a href="other-skills.html" class="skill-card-link">מידע נוסף →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">🚀</span>
+            <span class="skill-card-name">gh-pages-deploy</span>
+          </div>
+          <p class="skill-card-desc">פריסה ל-GitHub Pages</p>
+          <a href="other-skills.html" class="skill-card-link">מידע נוסף →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">📅</span>
+            <span class="skill-card-name">calendar</span>
+          </div>
+          <p class="skill-card-desc">אינטגרציה עם Google Calendar</p>
+          <a href="other-skills.html" class="skill-card-link">מידע נוסף →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">🗄️</span>
+            <span class="skill-card-name">supabase-helper</span>
+          </div>
+          <p class="skill-card-desc">עזרה בעבודה עם Supabase</p>
+          <a href="other-skills.html" class="skill-card-link">מידע נוסף →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">🛠️</span>
+            <span class="skill-card-name">skill-creator</span>
+          </div>
+          <p class="skill-card-desc">מדריך ליצירת סקילים חדשים</p>
+          <a href="other-skills.html" class="skill-card-link">מידע נוסף →</a>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-card-icon">🤖</span>
+            <span class="skill-card-name">agentic-app-builder</span>
+          </div>
+          <p class="skill-card-desc">בניית אפליקציות אגנטיות</p>
+          <a href="other-skills.html" class="skill-card-link">מידע נוסף →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- סוגי התקנה -->
+    <div class="section">
+      <h2><span class="num">1</span> בחירת סוג ההתקנה</h2>
+      <p>יש שתי דרכים להתקין סקילים - קלוד ישאל אתכם איזו מתאימה לכם:</p>
+
+      <div class="scope-cards">
+        <div class="scope-card recommended">
+          <h4>
+            💾 User-Based (אישי)
+            <span class="badge">מומלץ</span>
+          </h4>
+          <p>הסקיל יותקן בתיקייה הביתית שלכם ויהיה זמין בכל הפרויקטים.</p>
+          <ul>
+            <li>נתיב: <code>~/.claude/skills/</code></li>
+            <li>זמין בכל מקום</li>
+            <li>לא משותף ב-git</li>
+            <li>מתאים לשימוש אישי</li>
+          </ul>
+        </div>
+
+        <div class="scope-card">
+          <h4>📁 Project-Based (פרויקט)</h4>
+          <p>הסקיל יותקן בתיקיית הפרויקט הנוכחי וישותף עם הצוות.</p>
+          <ul>
+            <li>נתיב: <code>.claude/skills/</code></li>
+            <li>זמין רק בפרויקט זה</li>
+            <li>משותף דרך git</li>
+            <li>מתאים לעבודת צוות</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- איך להתקין -->
+    <div class="section">
+      <h2><span class="num">2</span> התקנת סקיל</h2>
+      <p>פשוט פתחו שיחה עם קלוד ואמרו:</p>
+
+      <div class="code-block">
+        <code><span class="comment"># אפשרות 1: בקשה ישירה</span>
+"אני רוצה להתקין את הסקיל של וואטסאפ"
+
+<span class="comment"># אפשרות 2: לראות את כל האפשרויות</span>
+"הראה לי אילו סקילים יש בספרייה של AVIZ"
+
+<span class="comment"># אפשרות 3: לקבל עזרה</span>
+"עזור לי להתקין סקיל"</code>
+      </div>
+
+      <p>קלוד יעשה את כל העבודה בשבילכם:</p>
+      <ol class="steps-list">
+        <li>
+          <strong>ישאל מה אתם רוצים להתקין</strong>
+          <p>או יציע לכם את רשימת הסקילים הזמינים</p>
+        </li>
+        <li>
+          <strong>ישאל לאן להתקין</strong>
+          <p>User-Based (אישי) או Project-Based (פרויקט)</p>
+        </li>
+        <li>
+          <strong>יוריד ויתקין</strong>
+          <p>קלונינג מ-GitHub והעתקה לתיקייה הנכונה</p>
+        </li>
+        <li>
+          <strong>יתקין תלויות</strong>
+          <p>npm install אם צריך</p>
+        </li>
+        <li>
+          <strong>יפנה לתיעוד</strong>
+          <p>יתן קישור למדריך ההגדרה המפורט</p>
+        </li>
+      </ol>
+    </div>
+
+    <!-- התקנה ידנית -->
+    <div class="section">
+      <h2>🔧 התקנה ידנית (אופציונלי)</h2>
+      <p>אם אתם מעדיפים להתקין ידנית, הנה הפקודות:</p>
+
+      <h3>User-Based (אישי)</h3>
+      <div class="code-block">
+        <code><span class="comment"># הורידו את הספרייה</span>
+git clone https://github.com/aviz/claude-skills-library.git /tmp/skills-lib
+
+<span class="comment"># העתיקו את הסקיל הרצוי</span>
+cp -r /tmp/skills-lib/skills/<span class="value">SKILL_NAME</span> ~/.claude/skills/
+
+<span class="comment"># התקינו תלויות (אם יש)</span>
+cd ~/.claude/skills/<span class="value">SKILL_NAME</span>/scripts && npm install
+
+<span class="comment"># נקו</span>
+rm -rf /tmp/skills-lib</code>
+      </div>
+
+      <h3>Project-Based (פרויקט)</h3>
+      <div class="code-block">
+        <code><span class="comment"># מתוך תיקיית הפרויקט</span>
+git clone https://github.com/aviz/claude-skills-library.git /tmp/skills-lib
+
+<span class="comment"># העתיקו את הסקיל</span>
+mkdir -p .claude/skills
+cp -r /tmp/skills-lib/skills/<span class="value">SKILL_NAME</span> .claude/skills/
+
+<span class="comment"># התקינו תלויות</span>
+cd .claude/skills/<span class="value">SKILL_NAME</span>/scripts && npm install
+
+<span class="comment"># הוסיפו ל-git</span>
+git add .claude/skills/<span class="value">SKILL_NAME</span>
+git commit -m "Add <span class="value">SKILL_NAME</span> skill"
+
+<span class="comment"># נקו</span>
+rm -rf /tmp/skills-lib</code>
+      </div>
+    </div>
+
+    <!-- סקילים עם הגדרות -->
+    <div class="section">
+      <h2>⚙️ סקילים שדורשים הגדרות</h2>
+      <p>חלק מהסקילים דורשים מפתחות API. הנה הרשימה:</p>
+
+      <table>
+        <tr>
+          <th>סקיל</th>
+          <th>שירות</th>
+          <th>משתני סביבה</th>
+        </tr>
+        <tr>
+          <td><code>whatsapp</code></td>
+          <td>Green API</td>
+          <td><code>GREEN_API_ID</code>, <code>GREEN_API_TOKEN</code></td>
+        </tr>
+        <tr>
+          <td><code>speech-generator</code></td>
+          <td>ElevenLabs</td>
+          <td><code>ELEVENLABS_API_KEY</code></td>
+        </tr>
+        <tr>
+          <td><code>nano-banana-poster</code></td>
+          <td>Google Gemini</td>
+          <td><code>GEMINI_API_KEY</code></td>
+        </tr>
+        <tr>
+          <td><code>wordpress-publisher</code></td>
+          <td>WordPress</td>
+          <td><code>WP_URL</code>, <code>WP_USERNAME</code>, <code>WP_PASSWORD</code></td>
+        </tr>
+      </table>
+
+      <div class="warning">
+        <span class="warning-icon">🔒</span>
+        <p><strong>חשוב:</strong> לעולם אל תשתפו מפתחות API! וודאו שקובץ <code>.env</code> לא נכלל ב-git.</p>
+      </div>
+    </div>
+
+    <!-- פתרון בעיות -->
+    <div class="section">
+      <h2>🔧 פתרון בעיות</h2>
+
+      <h3>הסקיל לא מופיע אחרי ההתקנה</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>הפעילו מחדש את קלוד קוד</li>
+        <li>וודאו שקובץ SKILL.md קיים בתיקייה הנכונה</li>
+        <li>בדקו שה-YAML frontmatter תקין</li>
+      </ul>
+
+      <h3>npm install נכשל</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>וודאו ש-Node.js מותקן: <code>node --version</code></li>
+        <li>נסו עם <code>npm install --legacy-peer-deps</code></li>
+      </ul>
+
+      <h3>שגיאת הרשאות</h3>
+      <div class="code-block">
+        <code>chmod -R u+rwX ~/.claude/skills/SKILL_NAME</code>
+      </div>
+    </div>
+
+    <div class="cta-buttons" style="justify-content: center; margin-top: 48px;">
+      <a href="../index.html" class="btn btn-secondary">← חזרה לדף הראשי</a>
+      <a href="https://github.com/aviz85/claude-skills-library" target="_blank" class="btn btn-primary">🔗 ספריית הסקילים ב-GitHub</a>
+    </div>
+
+    <footer>
+      <p>יש שאלות? פתחו Issue ב-<a href="https://github.com/aviz85/claude-skills-library" target="_blank">GitHub</a></p>
+    </footer>
+  </div>
+</body>
+</html>
