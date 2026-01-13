@@ -516,28 +516,51 @@
       font-size: 0.95rem;
     }
 
-    a.skill-card {
-      text-decoration: none;
-      display: block;
-    }
-
-    .skill-setup-link {
+    .skill-actions {
+      display: flex;
+      gap: 12px;
       margin-top: 16px;
       padding-top: 12px;
       border-top: 1px solid var(--border-subtle);
-      font-size: 0.85rem;
+    }
+
+    .skill-action-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
       font-weight: 600;
-      color: var(--green-primary);
-      opacity: 0.8;
-      transition: opacity 0.2s;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
     }
 
-    .skill-card:hover .skill-setup-link {
-      opacity: 1;
-    }
-
-    .skill-setup-link.skill-no-setup {
+    .skill-action-btn.download {
+      background: var(--bg-dark);
       color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .skill-action-btn.download:hover {
+      background: var(--green-soft);
+      color: var(--green-primary);
+      border-color: var(--border-glow);
+    }
+
+    .skill-action-btn.guide {
+      background: var(--green-soft);
+      color: var(--green-primary);
+    }
+
+    .skill-action-btn.guide:hover {
+      background: var(--green-primary);
+      color: white;
     }
 
     .skill-tags {
@@ -974,7 +997,7 @@
         </p>
       </div>
       <div class="skills-grid">
-        <a href="skills/whatsapp.html" class="skill-card reveal">
+        <div class="skill-card reveal">
           <span class="skill-icon">📱</span>
           <h3>וואטסאפ <code>whatsapp</code></h3>
           <p>שלחו הודעות, תמונות והודעות קוליות בוואטסאפ. קבלו רשימת חברי קבוצה ושלחו הודעות לכולם.</p>
@@ -983,10 +1006,13 @@
             <span class="skill-tag">הודעות</span>
             <span class="skill-tag">קבוצות</span>
           </div>
-          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('whatsapp')">⬇️ הורדה</button>
+            <a href="skills/whatsapp.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
 
-        <a href="skills/speech-generator.html" class="skill-card reveal">
+        <div class="skill-card reveal">
           <span class="skill-icon">🎙️</span>
           <h3>יוצר דיבור <code>speech-generator</code></h3>
           <p>הפכו טקסט לקובץ אודיו עם קול אנושי. תומך בעברית עם הנחיות להבעה טבעית.</p>
@@ -995,10 +1021,13 @@
             <span class="skill-tag">TTS</span>
             <span class="skill-tag">עברית</span>
           </div>
-          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('speech-generator')">⬇️ הורדה</button>
+            <a href="skills/speech-generator.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
 
-        <a href="skills/nano-banana-poster.html" class="skill-card reveal">
+        <div class="skill-card reveal">
           <span class="skill-icon">🎨</span>
           <h3>יוצר פוסטרים <code>nano-banana-poster</code></h3>
           <p>צרו פוסטרים שיווקיים מרהיבים עם AI. הגדירו את המותג שלכם והפוסטרים יתאימו לסגנון.</p>
@@ -1007,10 +1036,13 @@
             <span class="skill-tag">עיצוב</span>
             <span class="skill-tag">שיווק</span>
           </div>
-          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('nano-banana-poster')">⬇️ הורדה</button>
+            <a href="skills/nano-banana-poster.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
 
-        <a href="skills/other-skills.html" class="skill-card reveal">
+        <div class="skill-card reveal">
           <span class="skill-icon">📊</span>
           <h3>אדריכל מצגות <code>presentation-architect</code></h3>
           <p>הפכו רעיון למבנה מפורט של מצגת. מתאר כל שקופית עם תוכן, עיצוב וטיפוגרפיה.</p>
@@ -1019,10 +1051,13 @@
             <span class="skill-tag">תכנון</span>
             <span class="skill-tag">עיצוב</span>
           </div>
-          <div class="skill-setup-link skill-no-setup">✨ לא צריך הגדרה</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('presentation-architect')">⬇️ הורדה</button>
+            <a href="skills/other-skills.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
 
-        <a href="skills/html-to-pdf.html" class="skill-card reveal">
+        <div class="skill-card reveal">
           <span class="skill-icon">📄</span>
           <h3>HTML ל-PDF <code>html-to-pdf</code></h3>
           <p>המירו דפי HTML ל-PDF באיכות מושלמת. תמיכה מלאה בעברית ו-RTL!</p>
@@ -1031,10 +1066,13 @@
             <span class="skill-tag">RTL</span>
             <span class="skill-tag">PDF</span>
           </div>
-          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('html-to-pdf')">⬇️ הורדה</button>
+            <a href="skills/html-to-pdf.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
 
-        <a href="skills/html-to-pptx.html" class="skill-card reveal">
+        <div class="skill-card reveal">
           <span class="skill-icon">📊</span>
           <h3>HTML ל-PowerPoint <code>html-to-pptx</code></h3>
           <p>המירו דפי HTML למצגות PowerPoint. תמיכה מלאה בעברית ו-RTL עם מצב טקסט ומצב תמונה!</p>
@@ -1043,10 +1081,13 @@
             <span class="skill-tag">RTL</span>
             <span class="skill-tag">PPTX</span>
           </div>
-          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('html-to-pptx')">⬇️ הורדה</button>
+            <a href="skills/html-to-pptx.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
 
-        <a href="skills/other-skills.html" class="skill-card reveal">
+        <div class="skill-card reveal">
           <span class="skill-icon">🚀</span>
           <h3>העלאה לאינטרנט <code>gh-pages-deploy</code></h3>
           <p>העלו אתרים סטטיים ל-GitHub Pages בקלות. הפכו פרויקט לאתר חי בכמה פקודות.</p>
@@ -1055,10 +1096,13 @@
             <span class="skill-tag">Deploy</span>
             <span class="skill-tag">אתרים</span>
           </div>
-          <div class="skill-setup-link">📖 מדריך התקנה ←</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('gh-pages-deploy')">⬇️ הורדה</button>
+            <a href="skills/other-skills.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
 
-        <a href="skills/calendar.html" class="skill-card reveal">
+        <div class="skill-card reveal">
           <span class="skill-icon">📅</span>
           <h3>יומן גוגל <code>calendar</code></h3>
           <p>בדקו והוסיפו אירועים ליומן גוגל עם Apps Script ו-clasp.</p>
@@ -1067,10 +1111,13 @@
             <span class="skill-tag">clasp</span>
             <span class="skill-tag">פגישות</span>
           </div>
-          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('calendar')">⬇️ הורדה</button>
+            <a href="skills/calendar.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
 
-        <a href="skills/other-skills.html" class="skill-card reveal">
+        <div class="skill-card reveal">
           <span class="skill-icon">🏗️</span>
           <h3>בונה אפליקציות סוכניות <code>agentic-app-builder</code></h3>
           <p>בנו אפליקציות שלמות מרכיבי Claude Code - בלי קוד מסורתי. CLAUDE.md, סקילים, פקודות וסוכנים.</p>
@@ -1079,10 +1126,13 @@
             <span class="skill-tag">No-Code</span>
             <span class="skill-tag">מתקדם</span>
           </div>
-          <div class="skill-setup-link skill-no-setup">✨ לא צריך הגדרה</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('agentic-app-builder')">⬇️ הורדה</button>
+            <a href="skills/other-skills.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
 
-        <a href="skills/wordpress-publisher.html" class="skill-card reveal">
+        <div class="skill-card reveal">
           <span class="skill-icon">📝</span>
           <h3>מפרסם וורדפרס <code>wordpress-publisher</code></h3>
           <p>פרסמו תוכן לוורדפרס בקלות. תמיכה ב-Markdown, זרימת עבודה בטוחה - קודם טיוטה, אחר כך פרסום.</p>
@@ -1091,10 +1141,13 @@
             <span class="skill-tag">בלוג</span>
             <span class="skill-tag">פרסום</span>
           </div>
-          <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('wordpress-publisher')">⬇️ הורדה</button>
+            <a href="skills/wordpress-publisher.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
 
-        <a href="skills/aviz-skills-installer.html" class="skill-card reveal" style="border: 2px solid var(--green-primary); background: linear-gradient(135deg, var(--green-soft), var(--bg-card));">
+        <div class="skill-card reveal" style="border: 2px solid var(--green-primary); background: linear-gradient(135deg, var(--green-soft), var(--bg-card));">
           <span class="skill-icon">📦</span>
           <h3>מתקין סקילים <code>aviz-skills-installer</code></h3>
           <p>התקינו סקילים בשיחה פשוטה עם קלוד! הוא ידריך אתכם בכל התהליך ויעזור בהגדרה.</p>
@@ -1103,8 +1156,11 @@
             <span class="skill-tag">אוטומציה</span>
             <span class="skill-tag">מומלץ</span>
           </div>
-          <div class="skill-setup-link skill-no-setup">✨ זה הסקיל הראשון שצריך!</div>
-        </a>
+          <div class="skill-actions">
+            <button class="skill-action-btn download" onclick="downloadSkill('aviz-skills-installer')">⬇️ הורדה</button>
+            <a href="skills/aviz-skills-installer.html" class="skill-action-btn guide">📖 מדריך</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1256,6 +1312,13 @@
     cards.forEach((card, index) => {
       card.style.transitionDelay = `${index * 0.1}s`;
     });
+
+    // Download skill function - uses download-directory.github.io
+    function downloadSkill(skillName) {
+      const repoUrl = `https://github.com/aviz85/claude-skills-library/tree/main/skills/${skillName}`;
+      const downloadUrl = `https://download-directory.github.io/?url=${encodeURIComponent(repoUrl)}`;
+      window.open(downloadUrl, '_blank');
+    }
   </script>
 </body>
 </html>

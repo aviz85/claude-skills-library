@@ -248,6 +248,24 @@
       border: 1px solid var(--border-subtle);
     }
 
+    .btn-secondary:hover {
+      background: var(--green-soft);
+      border-color: var(--border-glow);
+    }
+
+    .btn-download {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-download:hover {
+      background: var(--green-soft);
+      color: var(--green-primary);
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+    }
+
     .cta-buttons {
       display: flex;
       gap: 16px;
@@ -329,6 +347,11 @@
       <h1>Speech Generator</h1>
       <p class="subtitle">הפכו טקסט לקובץ אודיו עם קול אנושי וטבעי</p>
       <div class="difficulty">⏱️ זמן התקנה: 5-10 דקות</div>
+      <div class="cta-buttons" style="justify-content: center; margin-top: 24px;">
+        <button onclick="downloadSkill('speech-generator')" class="btn btn-download">
+          ⬇️ הורדת הסקיל
+        </button>
+      </div>
     </div>
 
     <!-- מה הסקיל עושה -->
@@ -598,5 +621,14 @@ DEFAULT_VOICE_ID=<span class="value">dV1ee5wE1Ag5NSL6L2Z9</span></code>
       <p>יש שאלות? פתחו Issue ב-<a href="https://github.com/aviz85/claude-skills-library" target="_blank">GitHub</a></p>
     </footer>
   </div>
+
+  <script>
+    // Download skill function - uses download-directory.github.io
+    function downloadSkill(skillName) {
+      const repoUrl = `https://github.com/aviz85/claude-skills-library/tree/main/skills/${skillName}`;
+      const downloadUrl = `https://download-directory.github.io/?url=${encodeURIComponent(repoUrl)}`;
+      window.open(downloadUrl, '_blank');
+    }
+  </script>
 </body>
 </html>
