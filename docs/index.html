@@ -487,6 +487,31 @@
       opacity: 1;
     }
 
+    .skill-download-corner {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 2;
+      font-size: 1rem;
+    }
+
+    .skill-download-corner:hover {
+      background: var(--green-primary);
+      border-color: var(--green-primary);
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px var(--green-glow);
+    }
+
     .skill-icon {
       font-size: 2.5rem;
       margin-bottom: 16px;
@@ -998,6 +1023,7 @@
       </div>
       <div class="skills-grid">
         <div class="skill-card reveal">
+          <button class="skill-download-corner" onclick="downloadSkill('whatsapp')" title="הורדה">⬇️</button>
           <span class="skill-icon">📱</span>
           <h3>וואטסאפ <code>whatsapp</code></h3>
           <p>שלחו הודעות, תמונות והודעות קוליות בוואטסאפ. קבלו רשימת חברי קבוצה ושלחו הודעות לכולם.</p>
@@ -1013,6 +1039,7 @@
         </div>
 
         <div class="skill-card reveal">
+          <button class="skill-download-corner" onclick="downloadSkill('speech-generator')" title="הורדה">⬇️</button>
           <span class="skill-icon">🎙️</span>
           <h3>יוצר דיבור <code>speech-generator</code></h3>
           <p>הפכו טקסט לקובץ אודיו עם קול אנושי. תומך בעברית עם הנחיות להבעה טבעית.</p>
@@ -1028,6 +1055,7 @@
         </div>
 
         <div class="skill-card reveal">
+          <button class="skill-download-corner" onclick="downloadSkill('nano-banana-poster')" title="הורדה">⬇️</button>
           <span class="skill-icon">🎨</span>
           <h3>יוצר פוסטרים <code>nano-banana-poster</code></h3>
           <p>צרו פוסטרים שיווקיים מרהיבים עם AI. הגדירו את המותג שלכם והפוסטרים יתאימו לסגנון.</p>
@@ -1043,6 +1071,7 @@
         </div>
 
         <div class="skill-card reveal">
+          <button class="skill-download-corner" onclick="downloadSkill('presentation-architect')" title="הורדה">⬇️</button>
           <span class="skill-icon">📊</span>
           <h3>אדריכל מצגות <code>presentation-architect</code></h3>
           <p>הפכו רעיון למבנה מפורט של מצגת. מתאר כל שקופית עם תוכן, עיצוב וטיפוגרפיה.</p>
@@ -1058,6 +1087,7 @@
         </div>
 
         <div class="skill-card reveal">
+          <button class="skill-download-corner" onclick="downloadSkill('html-to-pdf')" title="הורדה">⬇️</button>
           <span class="skill-icon">📄</span>
           <h3>HTML ל-PDF <code>html-to-pdf</code></h3>
           <p>המירו דפי HTML ל-PDF באיכות מושלמת. תמיכה מלאה בעברית ו-RTL!</p>
@@ -1073,6 +1103,7 @@
         </div>
 
         <div class="skill-card reveal">
+          <button class="skill-download-corner" onclick="downloadSkill('html-to-pptx')" title="הורדה">⬇️</button>
           <span class="skill-icon">📊</span>
           <h3>HTML ל-PowerPoint <code>html-to-pptx</code></h3>
           <p>המירו דפי HTML למצגות PowerPoint. תמיכה מלאה בעברית ו-RTL עם מצב טקסט ומצב תמונה!</p>
@@ -1088,6 +1119,7 @@
         </div>
 
         <div class="skill-card reveal">
+          <button class="skill-download-corner" onclick="downloadSkill('gh-pages-deploy')" title="הורדה">⬇️</button>
           <span class="skill-icon">🚀</span>
           <h3>העלאה לאינטרנט <code>gh-pages-deploy</code></h3>
           <p>העלו אתרים סטטיים ל-GitHub Pages בקלות. הפכו פרויקט לאתר חי בכמה פקודות.</p>
@@ -1103,6 +1135,7 @@
         </div>
 
         <div class="skill-card reveal">
+          <button class="skill-download-corner" onclick="downloadSkill('calendar')" title="הורדה">⬇️</button>
           <span class="skill-icon">📅</span>
           <h3>יומן גוגל <code>calendar</code></h3>
           <p>בדקו והוסיפו אירועים ליומן גוגל עם Apps Script ו-clasp.</p>
@@ -1118,6 +1151,7 @@
         </div>
 
         <div class="skill-card reveal">
+          <button class="skill-download-corner" onclick="downloadSkill('agentic-app-builder')" title="הורדה">⬇️</button>
           <span class="skill-icon">🏗️</span>
           <h3>בונה אפליקציות סוכניות <code>agentic-app-builder</code></h3>
           <p>בנו אפליקציות שלמות מרכיבי Claude Code - בלי קוד מסורתי. CLAUDE.md, סקילים, פקודות וסוכנים.</p>
@@ -1133,6 +1167,7 @@
         </div>
 
         <div class="skill-card reveal">
+          <button class="skill-download-corner" onclick="downloadSkill('wordpress-publisher')" title="הורדה">⬇️</button>
           <span class="skill-icon">📝</span>
           <h3>מפרסם וורדפרס <code>wordpress-publisher</code></h3>
           <p>פרסמו תוכן לוורדפרס בקלות. תמיכה ב-Markdown, זרימת עבודה בטוחה - קודם טיוטה, אחר כך פרסום.</p>
@@ -1148,6 +1183,7 @@
         </div>
 
         <div class="skill-card reveal" style="border: 2px solid var(--green-primary); background: linear-gradient(135deg, var(--green-soft), var(--bg-card));">
+          <button class="skill-download-corner" onclick="downloadSkill('aviz-skills-installer')" title="הורדה">⬇️</button>
           <span class="skill-icon">📦</span>
           <h3>מתקין סקילים <code>aviz-skills-installer</code></h3>
           <p>התקינו סקילים בשיחה פשוטה עם קלוד! הוא ידריך אתכם בכל התהליך ויעזור בהגדרה.</p>
