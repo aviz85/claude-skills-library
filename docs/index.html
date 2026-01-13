@@ -876,14 +876,63 @@
     </div>
   </section>
 
-  <!-- Installation Section -->
-  <section id="install" style="background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.02) 50%, transparent 100%);">
+  <!-- Auto-Install Section -->
+  <section id="auto-install" style="background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.05) 50%, transparent 100%);">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-badge">🚀 התחלה מהירה</span>
-        <h2>איך להתקין?</h2>
+        <span class="section-badge">⚡ התקנה אוטומטית</span>
+        <h2>הדרך הקלה להתקנה</h2>
         <p>
-          שלושה צעדים פשוטים ואתם מוכנים!
+          התקינו את סקיל ההתקנה וקלוד ידריך אתכם בהתקנת כל הסקילים האחרים!
+        </p>
+      </div>
+      <div class="steps-grid">
+        <!-- Claude Code CLI -->
+        <div class="step-card reveal" style="border: 2px solid var(--green-primary);">
+          <div class="step-number" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🖥️</div>
+          <h3>Claude Code (CLI)</h3>
+          <p>התקינו את הפלאגין ישירות מהטרמינל:</p>
+          <div class="step-code" style="margin-bottom: 12px;">/plugin marketplace add aviz85/claude-skills-library</div>
+          <div class="step-code">/plugin install aviz-skills-installer</div>
+          <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
+            אחרי ההתקנה, פשוט אמרו לקלוד "אני רוצה להתקין סקיל" והוא ידריך אתכם!
+          </p>
+        </div>
+
+        <!-- Claude Desktop App -->
+        <div class="step-card reveal">
+          <div class="step-number" style="background: linear-gradient(135deg, #f59e0b, #d97706);">📦</div>
+          <h3>Claude Desktop App</h3>
+          <p>הורידו את הסקיל כקובץ ZIP וחלצו לתיקייה:</p>
+          <a href="downloads/aviz-skills-installer.zip" download class="btn btn-primary" style="margin-top: 12px; padding: 12px 24px; display: inline-flex;">
+            ⬇️ הורדת ZIP
+          </a>
+          <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
+            חלצו לתיקייה <code style="font-size: 0.8rem;">~/.claude/skills/</code> והפעילו מחדש
+          </p>
+        </div>
+
+        <!-- Manual Install -->
+        <div class="step-card reveal">
+          <div class="step-number" style="background: linear-gradient(135deg, #64748b, #475569);">⚙️</div>
+          <h3>התקנה ידנית</h3>
+          <p>מעדיפים לעשות הכל בעצמכם? גללו למטה למדריך המלא.</p>
+          <a href="#install" class="btn btn-secondary" style="margin-top: 12px; padding: 12px 24px;">
+            📖 למדריך הידני
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Installation Section -->
+  <section id="install">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">🔧 התקנה ידנית</span>
+        <h2>התקנה צעד אחר צעד</h2>
+        <p>
+          שלושה צעדים פשוטים להתקנה ידנית
         </p>
       </div>
       <div class="steps-grid">
@@ -1062,6 +1111,18 @@
             <span class="skill-tag">פרסום</span>
           </div>
           <div class="skill-setup-link">📖 מדריך התקנה מפורט ←</div>
+        </a>
+
+        <a href="skills/aviz-skills-installer.html" class="skill-card reveal" style="border: 2px solid var(--green-primary); background: linear-gradient(135deg, var(--green-soft), var(--bg-card));">
+          <span class="skill-icon">📦</span>
+          <h3>מתקין סקילים <code>aviz-skills-installer</code></h3>
+          <p>התקינו סקילים בשיחה פשוטה עם קלוד! הוא ידריך אתכם בכל התהליך ויעזור בהגדרה.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">התקנה</span>
+            <span class="skill-tag">אוטומציה</span>
+            <span class="skill-tag">מומלץ</span>
+          </div>
+          <div class="skill-setup-link skill-no-setup">✨ זה הסקיל הראשון שצריך!</div>
         </a>
       </div>
     </div>

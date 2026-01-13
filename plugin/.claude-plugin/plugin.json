@@ -1,0 +1,14 @@
+{
+  "name": "aviz-skills-installer",
+  "version": "1.0.0",
+  "description": "Install and manage skills from the AVIZ Skills Library - WhatsApp, Speech Generator, Image Generator, and more",
+  "author": {
+    "name": "aviz",
+    "url": "https://github.com/aviz85"
+  },
+  "homepage": "https://aviz.github.io/claude-skills-library/",
+  "repository": "https://github.com/aviz85/claude-skills-library",
+  "license": "MIT",
+  "keywords": ["skills", "installer", "whatsapp", "tts", "ai", "automation"],
+  "skills": "./skills/"
+}

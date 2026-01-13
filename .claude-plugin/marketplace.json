@@ -1,0 +1,21 @@
+{
+  "name": "AVIZ Skills Library",
+  "owner": {
+    "name": "aviz",
+    "url": "https://github.com/aviz85"
+  },
+  "plugins": [
+    {
+      "name": "aviz-skills-installer",
+      "source": "./plugin",
+      "description": "Install and manage skills from the AVIZ Skills Library - WhatsApp, Speech Generator, Image Generator, and more",
+      "version": "1.0.0",
+      "author": {
+        "name": "aviz",
+        "url": "https://github.com/aviz85"
+      },
+      "homepage": "https://aviz.github.io/claude-skills-library/",
+      "license": "MIT"
+    }
+  ]
+}
