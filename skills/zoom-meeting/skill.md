@@ -5,86 +5,41 @@ enhancedBy:
   - get-contact: "Auto-lookup contact by name. Without it: ask user for email/phone directly"
   - calendar: "Check conflicts and send invites. Without it: create Zoom only"
   - whatsapp: "Notify contact to check email. Without it: skip notification"
+setup: "./SETUP.md"
 ---
 
 # Zoom Meeting Scheduler
 
 Schedule Zoom meetings and send calendar invites automatically.
 
-## When User Says "Zoom meeting with [name]"
+## Workflow
 
-Do ALL of these automatically:
+When user says "Zoom meeting with [name]":
 
-1. **Find contact** using `get-contact` skill (if available)
-   - If not found → ask user for email
-   - If multiple found → ask user to choose
-   - If one found → confirm with user before proceeding
-2. **Check if meeting already exists** - search calendar for customer name. If found, ask before duplicate
-3. **Check calendar** for conflicts at requested time
+1. **Find contact** using `get-contact` (or ask user for email)
+2. **Check duplicates** - search calendar for existing meeting
+3. **Check conflicts** at requested time
 4. **Create Zoom meeting** → get join_url + password
-5. **Create Google Calendar event** with guest + Zoom link → invite sent automatically
-6. **Send WhatsApp** (optional) to contact: "שלחתי לך הזמנה לפגישה במייל, אשר בבקשה"
-7. **Confirm to user** with meeting details
+5. **Create calendar event** with guest + Zoom link
+6. **Send WhatsApp** (optional): "שלחתי לך הזמנה לפגישה במייל"
+7. **Confirm** to user with meeting details
 
-## Handling Multiple Contacts
+## Multiple Contacts
 
-If get-contact returns multiple results:
+If multiple found, ask user to choose:
 ```
-Found multiple contacts matching "יוסי":
-1. יוסי כהן (yossi.cohen@email.com)
-2. יוסי לוי (yossi.levi@email.com)
-
-Which one should I schedule with?
+Found multiple matching "יוסי":
+1. יוסי כהן (yossi@...)
+2. יוסי לוי (david@...)
+Which one?
 ```
-
-Wait for user selection before proceeding.
 
 ## Setup
 
-See [SETUP.md](./SETUP.md) for full setup guide (Zoom app, scopes, credentials).
+**First time?** See [SETUP.md](./SETUP.md) for Zoom app creation and credentials.
 
-**Quick:** Create `.env` in this folder:
-```
-ZOOM_ACCOUNT_ID=your_account_id
-ZOOM_CLIENT_ID=your_client_id
-ZOOM_CLIENT_SECRET=your_client_secret
-```
-
-## API Reference
-
-### Get Token
-```bash
-source .env
-TOKEN=$(curl -s -X POST "https://zoom.us/oauth/token" \
-  -H "Authorization: Basic $(echo -n "${ZOOM_CLIENT_ID}:${ZOOM_CLIENT_SECRET}" | base64 | tr -d '\n')" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "grant_type=account_credentials&account_id=${ZOOM_ACCOUNT_ID}" | jq -r '.access_token')
-```
-
-### Create Meeting
-```bash
-curl -s -X POST "https://api.zoom.us/v2/users/me/meetings" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "topic": "Meeting Title",
-    "type": 2,
-    "start_time": "2026-01-19T12:30:00",
-    "duration": 60,
-    "timezone": "Asia/Jerusalem"
-  }'
-```
-
-### Response Fields
-- `join_url` - Share with attendee
-- `password` - Meeting password
-- `id` - Meeting ID
+**Quick check:** `.env` file needs: `ZOOM_ACCOUNT_ID`, `ZOOM_CLIENT_ID`, `ZOOM_CLIENT_SECRET`
 
 ## Calendar Integration
 
-After Zoom meeting created, use calendar skill with `guests` param:
-```
-?action=create&title=TITLE&start=...&end=...&location=ZOOM_URL&guests=EMAIL
-```
-
-Guest receives calendar invite with Zoom link.
+After creating Zoom meeting, create calendar event with `guests` param to auto-send invite.

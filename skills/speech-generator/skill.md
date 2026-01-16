@@ -1,6 +1,7 @@
 ---
 name: speech-generator
 description: "Generate speech audio from text using ElevenLabs TTS. Use when user asks to 'send voice', 'send audio message', 'create voice', 'generate speech', 'say something', 'voice message', 'send me audio', or needs TTS/narration."
+setup: "./SETUP.md"
 ---
 
 # Speech Generator
