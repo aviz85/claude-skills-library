@@ -849,6 +849,7 @@
       <div class="logo">Claude Skills</div>
       <ul class="nav-links">
         <li><a href="#skills">הסקילים</a></li>
+        <li><a href="#combos">שילובים</a></li>
         <li><a href="#install">התקנה</a></li>
         <li><a href="#faq">שאלות נפוצות</a></li>
         <li><a href="https://github.com/aviz85/claude-skills-library" target="_blank">GitHub</a></li>
@@ -1032,6 +1033,10 @@
             <span class="skill-tag">הודעות</span>
             <span class="skill-tag">קבוצות</span>
           </div>
+          <div class="skill-combo" style="margin-top: 12px; padding: 8px 12px; background: rgba(34, 197, 94, 0.1); border-radius: 8px; font-size: 0.8rem;">
+            <span style="color: var(--green-primary);">🔗 עובד טוב יותר עם:</span>
+            <span style="color: var(--text-secondary);">get-contact, speech-generator</span>
+          </div>
           <div class="skill-actions">
             <button class="skill-action-btn download" onclick="downloadSkill('whatsapp')">⬇️ הורדה</button>
             <a href="skills/whatsapp.html" class="skill-action-btn guide">📖 מדריך</a>
@@ -1154,11 +1159,15 @@
           <button class="skill-download-corner" onclick="downloadSkill('zoom-meeting')" title="הורדה">⬇️</button>
           <span class="skill-icon">🎥</span>
           <h3>פגישות זום <code>zoom-meeting</code></h3>
-          <p>תזמנו פגישות זום ושלחו הזמנות ליומן אוטומטית. עובד לבד, ועוד יותר טוב עם: get-contact, calendar, whatsapp.</p>
+          <p>תזמנו פגישות זום ושלחו הזמנות ליומן אוטומטית. עובד לבד, ועוד יותר טוב עם סקילים משלימים.</p>
           <div class="skill-tags">
             <span class="skill-tag">Zoom API</span>
             <span class="skill-tag">פגישות</span>
             <span class="skill-tag">הזמנות</span>
+          </div>
+          <div class="skill-combo" style="margin-top: 12px; padding: 8px 12px; background: rgba(34, 197, 94, 0.1); border-radius: 8px; font-size: 0.8rem;">
+            <span style="color: var(--green-primary);">🔗 עובד טוב יותר עם:</span>
+            <span style="color: var(--text-secondary);">get-contact, calendar, whatsapp</span>
           </div>
           <div class="skill-actions">
             <button class="skill-action-btn download" onclick="downloadSkill('zoom-meeting')">⬇️ הורדה</button>
@@ -1214,6 +1223,54 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Skills Combo Section -->
+  <section id="combos" style="background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.03) 50%, transparent 100%);">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">🔗 שילובים חכמים</span>
+        <h2>סקילים שעובדים יחד</h2>
+        <p>
+          סקילים יכולים לעבוד לבד, אבל הם יותר חכמים כשמשלבים אותם
+        </p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-number">🎥</div>
+          <h3>תזמון פגישה מושלם</h3>
+          <p>
+            <strong>zoom-meeting</strong> + <strong>get-contact</strong> + <strong>calendar</strong> + <strong>whatsapp</strong>
+          </p>
+          <p style="margin-top: 12px; color: var(--text-secondary); font-size: 0.9rem;">
+            "קבע לי פגישה עם יוסי מחר ב-10" → קלוד מחפש את יוסי, בודק התנגשויות ביומן, יוצר פגישת זום, שולח הזמנה ליומן, ומודיע בוואטסאפ.
+          </p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">📱</div>
+          <h3>הודעה קולית אישית</h3>
+          <p>
+            <strong>whatsapp</strong> + <strong>speech-generator</strong> + <strong>get-contact</strong>
+          </p>
+          <p style="margin-top: 12px; color: var(--text-secondary); font-size: 0.9rem;">
+            "שלח הודעה קולית לדוד שהפגישה נדחתה" → קלוד מחפש את דוד, יוצר הקלטה קולית עם הטקסט, ושולח בוואטסאפ.
+          </p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">📊</div>
+          <h3>מצגת מקצועית</h3>
+          <p>
+            <strong>presentation-architect</strong> + <strong>nano-banana-poster</strong> + <strong>html-to-pptx</strong>
+          </p>
+          <p style="margin-top: 12px; color: var(--text-secondary); font-size: 0.9rem;">
+            "צור מצגת על AI" → קלוד מתכנן את המבנה, יוצר גרפיקות, ומייצר קובץ PowerPoint מוכן.
+          </p>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: 32px; color: var(--text-secondary);">
+        <strong style="color: var(--green-primary);">💡 טיפ:</strong> אין צורך להתקין את כל הסקילים. כל סקיל עובד לבד - הסקילים המשלימים רק מוסיפים יכולות.
+      </p>
     </div>
   </section>
 
@@ -1275,6 +1332,19 @@
           </div>
           <div class="faq-answer">
             <p>הקוד הוא קוד פתוח ואפשר לעיין בו. אף פעם אל תכניסו מפתחות API או סיסמאות לקבצים שאתם משתפים. השתמשו בקבצי .env לאחסון מידע רגיש.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>מה מבנה הקבצים בכל סקיל?</span>
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-answer">
+            <p>כל סקיל מכיל שני קבצים עיקריים:<br>
+            <strong>skill.md</strong> - הקובץ הראשי שמלמד את קלוד איך להשתמש בסקיל (קצר וממוקד).<br>
+            <strong>SETUP.md</strong> - מדריך הגדרה מפורט (נקרא רק כשצריך עזרה בהתקנה).<br>
+            ההפרדה הזו חוסכת "זיכרון" לקלוד ומאפשרת תגובות מהירות יותר.</p>
           </div>
         </div>
       </div>
