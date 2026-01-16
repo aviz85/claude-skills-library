@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Downloader Skill - מדריך התקנה מפורט</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-primary: #22C55E;
+      --green-glow: rgba(34, 197, 94, 0.4);
+      --green-soft: rgba(34, 197, 94, 0.1);
+      --bg-darkest: #0a0f0d;
+      --bg-dark: #111827;
+      --bg-card: #1a2332;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-glow: rgba(34, 197, 94, 0.3);
+      --yellow: #fbbf24;
+      --blue: #3b82f6;
+      --purple: #a855f7;
+      --red: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-darkest);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--green-primary); }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .skill-icon { font-size: 4rem; margin-bottom: 16px; }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+    }
+
+    .difficulty {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--green-soft);
+      border-radius: 100px;
+      color: var(--green-primary);
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section h2 .num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--green-primary);
+      border-radius: 50%;
+      font-size: 1rem;
+    }
+
+    .section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 24px 0 12px;
+      color: var(--green-primary);
+    }
+
+    p { color: var(--text-secondary); margin-bottom: 16px; }
+
+    .highlight {
+      background: var(--green-soft);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--green-primary);
+      font-weight: 500;
+    }
+
+    .warning {
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .warning-icon { font-size: 1.5rem; }
+    .warning p { margin: 0; color: var(--yellow); }
+
+    .info {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .info p { margin: 0; color: var(--blue); }
+
+    .steps-list {
+      list-style: none;
+      counter-reset: step;
+    }
+
+    .steps-list > li {
+      position: relative;
+      padding: 16px 0;
+      padding-inline-start: 48px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .steps-list > li:last-child { border-bottom: none; }
+
+    .steps-list > li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      inset-inline-start: 0;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      background: var(--bg-dark);
+      border: 2px solid var(--green-primary);
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--green-primary);
+    }
+
+    code {
+      background: var(--bg-dark);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Menlo', monospace;
+      font-size: 0.9rem;
+      color: var(--green-primary);
+      direction: ltr;
+      display: inline-block;
+    }
+
+    .code-block {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .code-block code {
+      background: none;
+      padding: 0;
+      display: block;
+      white-space: pre;
+      line-height: 1.6;
+    }
+
+    .code-block .comment { color: #6b7280; }
+    .code-block .key { color: var(--yellow); }
+    .code-block .value { color: var(--green-primary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green-primary) 0%, #16a34a 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--green-glow);
+    }
+
+    .btn-secondary {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background: var(--green-soft);
+      border-color: var(--border-glow);
+    }
+
+    .btn-download {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-download:hover {
+      background: var(--green-soft);
+      color: var(--green-primary);
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .feature {
+      background: var(--bg-dark);
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .feature-icon { font-size: 2rem; margin-bottom: 8px; }
+    .feature-title { font-weight: 600; margin-bottom: 4px; }
+    .feature-desc { font-size: 0.85rem; color: var(--text-secondary); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: right;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    th { background: var(--bg-dark); font-weight: 600; }
+
+    .quality-card {
+      background: var(--bg-dark);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 12px 0;
+    }
+
+    .quality-card h4 {
+      color: var(--purple);
+      margin-bottom: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 48px;
+    }
+
+    footer a { color: var(--green-primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">-> חזרה לדף הראשי</a>
+
+    <div class="hero">
+      <div class="skill-icon">📺</div>
+      <h1>YouTube Downloader</h1>
+      <p class="subtitle">הורידו סרטונים מיוטיוב באיכות שתבחרו</p>
+      <div class="difficulty">⏱️ זמן התקנה: 2-5 דקות</div>
+      <div class="cta-buttons" style="justify-content: center; margin-top: 24px;">
+        <button onclick="downloadSkill('youtube-downloader')" class="btn btn-download">
+          ⬇️ הורדת הסקיל
+        </button>
+      </div>
+    </div>
+
+    <!-- מה הסקיל עושה -->
+    <div class="section">
+      <h2>מה הסקיל הזה עושה?</h2>
+      <p>הסקיל הזה מאפשר לקלוד להוריד סרטונים מיוטיוב באיכויות שונות. מותאם במיוחד לשליחה בוואטסאפ!</p>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">📱</div>
+          <div class="feature-title">מותאם לוואטסאפ</div>
+          <div class="feature-desc">איכות מוקטנת לשליחה קלה</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎚️</div>
+          <div class="feature-title">4 רמות איכות</div>
+          <div class="feature-desc">מ-144p ועד הכי טוב</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎵</div>
+          <div class="feature-title">חילוץ אודיו</div>
+          <div class="feature-desc">הורדה כ-MP3 בלבד</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-title">מהיר ופשוט</div>
+          <div class="feature-desc">פקודה אחת וסיימתם</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- התקנת Python -->
+    <div class="section" style="border: 2px solid #3776AB; background: rgba(55, 118, 171, 0.05);">
+      <h2><span class="num">1</span> 🐍 התקנת Python</h2>
+
+      <p><strong>הסקיל הזה דורש Python מותקן על המחשב.</strong> בדקו אם יש לכם:</p>
+      <div class="code-block">
+        <code><span class="comment"># Mac/Linux:</span>
+python3 --version
+
+<span class="comment"># Windows:</span>
+python --version</code>
+      </div>
+
+      <p>אם מקבלים שגיאה או גרסה ישנה מ-3.9, התקינו לפי מערכת ההפעלה שלכם:</p>
+
+      <h3>🍎 macOS</h3>
+      <div class="code-block">
+        <code><span class="comment"># עם Homebrew (מומלץ):</span>
+brew install python
+
+<span class="comment"># או הורידו מהאתר הרשמי:</span>
+<span class="comment"># https://www.python.org/downloads/macos/</span></code>
+      </div>
+
+      <h3>🪟 Windows</h3>
+      <div class="info">
+        <span class="warning-icon">💡</span>
+        <p><strong>הדרך הכי קלה:</strong> פתחו את Microsoft Store וחפשו "Python 3.12" - לחצו "Get" וזהו!</p>
+      </div>
+      <p>או הורידו מ-<a href="https://www.python.org/downloads/windows/" target="_blank" style="color: var(--blue);">python.org/downloads</a></p>
+      <div class="warning">
+        <span class="warning-icon">⚠️</span>
+        <p><strong>חשוב!</strong> אם מורידים מהאתר - סמנו את "Add Python to PATH" בתחילת ההתקנה!</p>
+      </div>
+
+      <h3>🐧 Linux</h3>
+      <div class="code-block">
+        <code><span class="comment"># Ubuntu/Debian:</span>
+sudo apt update && sudo apt install python3 python3-pip
+
+<span class="comment"># Fedora:</span>
+sudo dnf install python3 python3-pip</code>
+      </div>
+    </div>
+
+    <!-- דרישות נוספות -->
+    <div class="section">
+      <h2><span class="num">2</span> התקנת כלים נוספים</h2>
+
+      <h3>yt-dlp</h3>
+      <p>ספריית Python להורדת סרטונים מיוטיוב (ומאתרים רבים אחרים).</p>
+      <div class="code-block">
+        <code>pip install yt-dlp</code>
+      </div>
+
+      <h3>ffmpeg</h3>
+      <p>כלי להמרת פורמטים. נדרש לחילוץ אודיו ומיזוג וידאו+אודיו.</p>
+
+      <div class="info">
+        <span class="warning-icon">💡</span>
+        <p><strong>התקנת ffmpeg:</strong><br>
+        Mac: <code>brew install ffmpeg</code><br>
+        Ubuntu: <code>sudo apt install ffmpeg</code><br>
+        Windows: <code>winget install FFmpeg</code> או הורידו מ-<a href="https://ffmpeg.org/download.html" target="_blank" style="color: var(--blue);">ffmpeg.org</a></p>
+      </div>
+    </div>
+
+    <!-- התקנה -->
+    <div class="section">
+      <h2><span class="num">3</span> התקנת הסקיל</h2>
+
+      <ol class="steps-list">
+        <li>
+          <strong>התקינו את התלויות</strong>
+          <div class="code-block">
+            <code>pip install yt-dlp</code>
+          </div>
+        </li>
+
+        <li>
+          <strong>וודאו ש-ffmpeg מותקן</strong>
+          <div class="code-block">
+            <code>ffmpeg -version</code>
+          </div>
+          <p>אם מקבלים שגיאה - התקינו לפי ההוראות למעלה.</p>
+        </li>
+
+        <li>
+          <strong>הורידו את הסקיל</strong>
+          <p>לחצו על כפתור ההורדה למעלה או השתמשו במתקין הסקילים.</p>
+        </li>
+      </ol>
+    </div>
+
+    <!-- איכויות -->
+    <div class="section">
+      <h2><span class="num">4</span> רמות איכות</h2>
+
+      <table>
+        <tr>
+          <th>Preset</th>
+          <th>רזולוציה</th>
+          <th>גודל משוער</th>
+          <th>שימוש</th>
+        </tr>
+        <tr>
+          <td><code>whatsapp</code></td>
+          <td>144p</td>
+          <td>~10MB</td>
+          <td>שליחה בוואטסאפ (ברירת מחדל)</td>
+        </tr>
+        <tr>
+          <td><code>standard</code></td>
+          <td>480p</td>
+          <td>~50MB</td>
+          <td>צפייה רגילה</td>
+        </tr>
+        <tr>
+          <td><code>high</code></td>
+          <td>720p</td>
+          <td>~100MB</td>
+          <td>איכות טובה</td>
+        </tr>
+        <tr>
+          <td><code>best</code></td>
+          <td>הכי טוב</td>
+          <td>משתנה</td>
+          <td>איכות מקסימלית</td>
+        </tr>
+      </table>
+
+      <div class="warning">
+        <span class="warning-icon">📱</span>
+        <p><strong>מגבלות וואטסאפ:</strong><br>
+        16MB - שליחה כווידאו רגיל<br>
+        2GB - שליחה כמסמך (שומר על איכות)</p>
+      </div>
+    </div>
+
+    <!-- דוגמאות -->
+    <div class="section">
+      <h2>דוגמאות לשימוש</h2>
+
+      <div class="code-block">
+        <code><span class="comment"># הורדה לוואטסאפ (ברירת מחדל)</span>
+"הורד את הסרטון הזה מיוטיוב: [URL]"
+
+<span class="comment"># הורדה באיכות גבוהה</span>
+"הורד את הסרטון באיכות high"
+
+<span class="comment"># חילוץ אודיו בלבד</span>
+"הורד רק את האודיו מהסרטון הזה כ-MP3"
+
+<span class="comment"># הורדה לתיקייה ספציפית</span>
+"הורד את הסרטון לתיקיית Downloads"
+
+<span class="comment"># הצגת פורמטים זמינים</span>
+"הצג את כל הפורמטים הזמינים לסרטון הזה"</code>
+      </div>
+
+      <h3>שילוב עם סקיל WhatsApp</h3>
+      <div class="code-block">
+        <code><span class="comment"># הורדה ושליחה ישירה</span>
+"הורד את הסרטון הזה ושלח אותו לדני בוואטסאפ"</code>
+      </div>
+    </div>
+
+    <!-- פתרון בעיות -->
+    <div class="section">
+      <h2>🔧 פתרון בעיות נפוצות</h2>
+
+      <h3>שגיאת "yt-dlp not found"</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>התקינו עם <code>pip install yt-dlp</code></li>
+        <li>וודאו שאתם משתמשים באותו פייתון שהתקנתם בו</li>
+      </ul>
+
+      <h3>שגיאת "ffmpeg not found"</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>התקינו ffmpeg לפי ההוראות למעלה</li>
+        <li>וודאו שהוא נמצא ב-PATH</li>
+      </ul>
+
+      <h3>הסרטון לא יורד</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>וודאו שהקישור תקין</li>
+        <li>נסו לעדכן yt-dlp: <code>pip install -U yt-dlp</code></li>
+        <li>חלק מהסרטונים חסומים להורדה</li>
+      </ul>
+
+      <h3>קובץ גדול מדי לוואטסאפ</h3>
+      <ul style="color: var(--text-secondary); padding-right: 20px;">
+        <li>השתמשו באיכות <code>whatsapp</code> (ברירת מחדל)</li>
+        <li>שלחו כמסמך במקום כווידאו</li>
+      </ul>
+    </div>
+
+    <div class="cta-buttons" style="justify-content: center; margin-top: 48px;">
+      <a href="../index.html" class="btn btn-secondary">-> חזרה לדף הראשי</a>
+    </div>
+
+    <footer>
+      <p>יש שאלות? פתחו Issue ב-<a href="https://github.com/aviz85/claude-skills-library" target="_blank">GitHub</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // Download skill function - downloads pre-built ZIP from downloads folder
+    function downloadSkill(skillName) {
+      const downloadUrl = `../downloads/${skillName}.zip`;
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `${skillName}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
