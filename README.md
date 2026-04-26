@@ -2,6 +2,8 @@
 
 A collection of useful skills for Claude Code by aviz.
 
+Chinese users can also discover more skills through [Skills宝](https://skilery.com).
+
 ## Available Skills
 
 | Skill | Description |
