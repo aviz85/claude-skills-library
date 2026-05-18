@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Voice Session</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="header">
+    <h1 id="topicTitle">Quick Voice</h1>
+    <p id="topicSub">טוען…</p>
+  </div>
+
+  <div class="main">
+    <div class="status-bar">
+      <div class="status-dot" id="statusDot"></div>
+      <span class="status-text" id="statusText">מנותק</span>
+      <span class="status-mode" id="statusMode"></span>
+    </div>
+
+    <div class="action-row">
+      <button class="connect-btn start" id="connectBtn">התחל שיחה</button>
+      <button class="mute-btn" id="muteBtn" title="השתק">🎙️</button>
+      <button class="mute-btn" id="doneBtn" title="סיים שיחה">✓</button>
+    </div>
+
+    <div class="canvas" id="canvas">
+      <div class="canvas-header">
+        <span class="canvas-title" id="canvasTitle">קנבס</span>
+        <span class="canvas-toggle" id="canvasToggle">▼</span>
+      </div>
+      <div class="canvas-body" id="canvasBody">
+        <div class="canvas-empty" id="canvasEmpty">התוכן יופיע כאן במהלך השיחה</div>
+      </div>
+    </div>
+
+    <div class="transcript" id="transcript"></div>
+  </div>
+
+  <audio id="audioOutput" autoplay></audio>
+  <script src="app.js"></script>
+</body>
+</html>

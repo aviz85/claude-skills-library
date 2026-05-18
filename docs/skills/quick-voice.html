@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>quick-voice — AVIZ Skills Library</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; line-height: 1.6; padding: 0; }
+  .container { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 2.2rem; color: #fff; margin-bottom: 6px; }
+  .sub { color: #888; margin-bottom: 28px; font-size: 1rem; }
+  h2 { color: #fff; margin-top: 32px; margin-bottom: 12px; font-size: 1.3rem; border-bottom: 1px solid #222; padding-bottom: 6px; }
+  h3 { color: #ddd; margin-top: 18px; margin-bottom: 8px; font-size: 1.05rem; }
+  p { margin-bottom: 12px; }
+  ul, ol { padding-left: 24px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; }
+  code { background: #1a1a2e; padding: 2px 6px; border-radius: 4px; font-size: 0.88em; color: #a5d8ff; font-family: 'SF Mono', Consolas, monospace; }
+  pre { background: #0d0d1a; padding: 14px; border-radius: 8px; overflow-x: auto; margin: 10px 0 14px; }
+  pre code { background: none; padding: 0; color: #e0e0e0; font-size: 0.85em; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 0.92rem; }
+  th, td { padding: 8px 12px; border-bottom: 1px solid #222; text-align: left; }
+  th { color: #fff; background: #151515; }
+  a { color: #8b5cf6; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back { display: inline-block; margin-bottom: 22px; color: #666; }
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; background: #1e1033; color: #c4b5fd; margin-left: 8px; }
+  blockquote { border-left: 3px solid #8b5cf6; padding: 8px 14px; background: #1a1a2e; margin: 10px 0; color: #ccc; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="../" class="back">← All skills</a>
+  <h1>quick-voice <span class="pill">v1.0</span></h1>
+  <p class="sub">Instant browser voice session (OpenAI Realtime <code>gpt-realtime-2</code>) — close a topic in a short conversation instead of working through documents.</p>
+
+  <h2>What it does</h2>
+  <p>White-label voice-session generator. Each invocation spins up a per-session web app that opens a WebRTC channel to the OpenAI Realtime API with <strong>context-specific instructions, tools, and a generic canvas</strong>. Talk for 3 minutes instead of working for 30.</p>
+
+  <h3>Two modes</h3>
+  <table>
+    <tr><th>Mode</th><th>Tools</th><th>Output</th></tr>
+    <tr><td><strong>live</strong></td><td>File / JSON / bash tools — agent reads &amp; updates real data during the call</td><td>Summary of changes in <code>output.md</code></td></tr>
+    <tr><td><strong>distill</strong></td><td>No data-mutation tools — only canvas + notes</td><td>Long structured deliverable (decisions, action items)</td></tr>
+  </table>
+
+  <h3>Generic canvas (both modes)</h3>
+  <p>The agent can call <code>canvas_show({ type, source, content, title })</code> to display content live in the browser, then react to user feedback by voice. Supported types: <strong>image, markdown, html, code, json, video, audio, url (iframe), text</strong>. Local files are served through a sandboxed <code>/file</code> endpoint scoped to the session's working directory.</p>
+
+  <h2>Prerequisites</h2>
+  <ul>
+    <li>Node.js 18+ (uses native <code>fetch</code>)</li>
+    <li>OpenAI API key with Realtime API access</li>
+    <li>A modern browser (Chrome / Edge recommended for WebRTC)</li>
+  </ul>
+
+  <h2>Setup</h2>
+  <ol>
+    <li>Install: clone or copy the skill into <code>~/.claude/skills/quick-voice/</code></li>
+    <li>Add your key:
+      <pre><code>cp ~/.claude/skills/quick-voice/.env.example ~/.claude/skills/quick-voice/.env
+# Edit and set OPENAI_API_KEY=sk-...</code></pre>
+    </li>
+    <li>The launcher auto-runs <code>npm install</code> on first launch (express + dotenv).</li>
+  </ol>
+
+  <h2>How a session runs</h2>
+  <ol>
+    <li>You tell Claude: <em>"Let's close X in a voice call"</em> (or it infers from context).</li>
+    <li>Claude generates <code>runtime/&lt;id&gt;/config.json</code> with mode, instructions, tool whitelist, canvas hints, and output template.</li>
+    <li>Claude runs <code>node ~/.claude/skills/quick-voice/scripts/launch.js &lt;id&gt;</code>:
+      <ul>
+        <li>Finds a free port in <code>3031–3040</code> via <code>net.createServer</code></li>
+        <li>Spawns <code>server.js</code></li>
+        <li>Opens the default browser at <code>http://localhost:&lt;port&gt;</code></li>
+        <li>Waits until the session ends (close browser, click ✓, or the agent calls <code>end_session</code>)</li>
+      </ul>
+    </li>
+    <li>Launcher prints <code>output.md</code> back to Claude for follow-up.</li>
+  </ol>
+
+  <h2>Available tools (whitelist via <code>config.json.tools</code>)</h2>
+
+  <h3>Canvas + control (both modes)</h3>
+  <ul>
+    <li><code>canvas_show({ type, source, content, title?, language? })</code></li>
+    <li><code>canvas_clear()</code></li>
+    <li><code>save_note({ heading, content })</code> — appends to <code>output.md</code></li>
+    <li><code>end_session({ summary? })</code> — finalize + close</li>
+  </ul>
+
+  <h3>Data (live mode)</h3>
+  <ul>
+    <li><code>read_file</code>, <code>write_file</code>, <code>append_file</code></li>
+    <li><code>update_json</code> — shallow-merge into a JSON object root</li>
+    <li><code>array_update_json</code> — surgical update of one record in a JSON array (by match field)</li>
+    <li><code>list_dir</code>, <code>run_bash</code></li>
+  </ul>
+
+  <h2>Example configs</h2>
+
+  <h3>"Let's go over the images I just generated" (distill)</h3>
+  <pre><code>{
+  "mode": "distill",
+  "topic": "Image review",
+  "instructions": "Walk through each image. canvas_show → ask 'thoughts?' → listen → save_note('Image N — feedback', user_reply). Call end_session when all done.",
+  "voice": "ash",
+  "tools": ["canvas_show", "canvas_clear", "save_note", "end_session"],
+  "canvas_hints": [
+    { "type": "image", "source": "/abs/path/img-001.png", "title": "1" },
+    { "type": "image", "source": "/abs/path/img-002.png", "title": "2" }
+  ],
+  "output_template": "# Image feedback\n\n"
+}</code></pre>
+
+  <h3>"Review pending freelancer scores" (live)</h3>
+  <pre><code>{
+  "mode": "live",
+  "topic": "Freelancer review",
+  "instructions": "read_file freelancers.json. For each freelancer, canvas_show type=json, ask for new score, update via array_update_json. Log via save_note. end_session.",
+  "voice": "ash",
+  "cwd": "/Users/aviz/aviz-crm",
+  "tools": ["canvas_show", "save_note", "end_session", "read_file", "array_update_json"],
+  "output_template": "# Freelancer review\n\n## Updates\n\n"
+}</code></pre>
+
+  <h2>Use cases that pay off</h2>
+  <ul>
+    <li>🎨 Reviewing AI-generated images one by one</li>
+    <li>📋 Going through a list of open leads / tickets / PRs</li>
+    <li>🧠 Morning planning (distill: 5 minutes of voice → structured day plan)</li>
+    <li>📑 Reading a long doc/contract section-by-section, marking issues</li>
+    <li>🎬 Approving creative variants for a client</li>
+    <li>✍️ Brainstorming landing-page copy directions (distill)</li>
+    <li>📞 Closing 10 customers in a CRM pipeline in 8 minutes (live)</li>
+  </ul>
+
+  <h2>Architecture</h2>
+  <pre><code>quick-voice/
+├── SKILL.md
+├── package.json
+├── server.js              # Express, /token /config /tool/:name /file /done
+├── public/
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js             # WebRTC + canvas renderer + tool dispatch
+├── lib/
+│   ├── tool-defs.js       # OpenAI Realtime tool schemas
+│   └── tools.js           # Server-side tool implementations
+├── scripts/
+│   └── launch.js          # Cross-platform launcher (macOS/Linux/Windows)
+└── runtime/&lt;id&gt;/         # Per-session: config.json, output.md, server.log, done.flag</code></pre>
+
+  <h2>Anti-patterns</h2>
+  <ul>
+    <li>Don't bake the OpenAI key into config or HTML — keep it in <code>.env</code></li>
+    <li>Keep <code>instructions</code> ≤ 2KB. Realtime agents act on short, specific prompts.</li>
+    <li>Always set <code>cwd</code> when enabling file tools — it scopes the blast radius.</li>
+    <li>Enable <code>run_bash</code> only when truly needed. Prefer specific tools.</li>
+    <li>Don't auto-delete <code>runtime/&lt;id&gt;/</code> — the user may want to re-open or audit.</li>
+  </ul>
+
+  <h2>Troubleshooting</h2>
+  <ul>
+    <li><strong>"Server did not become ready in 8s"</strong> — check <code>runtime/&lt;id&gt;/server.log</code>; usually a bad <code>OPENAI_API_KEY</code> or missing dep.</li>
+    <li><strong>Browser doesn't open</strong> — the launcher prints the URL. Open manually.</li>
+    <li><strong>SDP error from OpenAI</strong> — verify your account has Realtime API access.</li>
+    <li><strong>Tool errors in transcript</strong> — open the browser devtools console and check the <code>server.log</code> for the matching error.</li>
+  </ul>
+
+  <p style="margin-top: 32px; color: #666; font-size: 0.85rem;">Part of <a href="https://github.com/aviz85/claude-skills-library">AVIZ Skills Library</a>.</p>
+</div>
+</body>
+</html>
