@@ -1,174 +1,602 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>quick-voice — AVIZ Skills Library</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; line-height: 1.6; padding: 0; }
-  .container { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
-  h1 { font-size: 2.2rem; color: #fff; margin-bottom: 6px; }
-  .sub { color: #888; margin-bottom: 28px; font-size: 1rem; }
-  h2 { color: #fff; margin-top: 32px; margin-bottom: 12px; font-size: 1.3rem; border-bottom: 1px solid #222; padding-bottom: 6px; }
-  h3 { color: #ddd; margin-top: 18px; margin-bottom: 8px; font-size: 1.05rem; }
-  p { margin-bottom: 12px; }
-  ul, ol { padding-left: 24px; margin-bottom: 12px; }
-  li { margin-bottom: 4px; }
-  code { background: #1a1a2e; padding: 2px 6px; border-radius: 4px; font-size: 0.88em; color: #a5d8ff; font-family: 'SF Mono', Consolas, monospace; }
-  pre { background: #0d0d1a; padding: 14px; border-radius: 8px; overflow-x: auto; margin: 10px 0 14px; }
-  pre code { background: none; padding: 0; color: #e0e0e0; font-size: 0.85em; }
-  table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 0.92rem; }
-  th, td { padding: 8px 12px; border-bottom: 1px solid #222; text-align: left; }
-  th { color: #fff; background: #151515; }
-  a { color: #8b5cf6; text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .back { display: inline-block; margin-bottom: 22px; color: #666; }
-  .pill { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; background: #1e1033; color: #c4b5fd; margin-left: 8px; }
-  blockquote { border-left: 3px solid #8b5cf6; padding: 8px 14px; background: #1a1a2e; margin: 10px 0; color: #ccc; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Voice Skill - מדריך התקנה מפורט</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-primary: #22C55E;
+      --green-glow: rgba(34, 197, 94, 0.4);
+      --green-soft: rgba(34, 197, 94, 0.1);
+      --bg-darkest: #0a0f0d;
+      --bg-dark: #111827;
+      --bg-card: #1a2332;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-glow: rgba(34, 197, 94, 0.3);
+      --yellow: #fbbf24;
+      --blue: #3b82f6;
+      --purple: #a855f7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-darkest);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--green-primary); }
+
+    .hero { text-align: center; margin-bottom: 48px; }
+    .skill-icon { font-size: 4rem; margin-bottom: 16px; }
+
+    h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; }
+    .subtitle { color: var(--text-secondary); font-size: 1.25rem; }
+
+    .difficulty {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--green-soft);
+      border-radius: 100px;
+      color: var(--green-primary);
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section h2 .num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--green-primary);
+      border-radius: 50%;
+      font-size: 1rem;
+    }
+
+    .section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 24px 0 12px;
+      color: var(--green-primary);
+    }
+
+    p { color: var(--text-secondary); margin-bottom: 16px; }
+    ul, ol { padding-inline-start: 24px; color: var(--text-secondary); margin-bottom: 16px; }
+    li { margin-bottom: 6px; }
+
+    .highlight {
+      background: var(--green-soft);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--green-primary);
+      font-weight: 500;
+    }
+
+    .warning {
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+    .warning-icon { font-size: 1.5rem; }
+    .warning p { margin: 0; color: var(--yellow); }
+
+    .info {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+    }
+    .info p { margin: 0; color: var(--blue); }
+
+    .steps-list { list-style: none; counter-reset: step; padding: 0; }
+    .steps-list > li {
+      position: relative;
+      padding: 16px 0;
+      padding-inline-start: 48px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .steps-list > li:last-child { border-bottom: none; }
+    .steps-list > li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      inset-inline-start: 0;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      background: var(--bg-dark);
+      border: 2px solid var(--green-primary);
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--green-primary);
+    }
+
+    code {
+      background: var(--bg-dark);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Menlo', monospace;
+      font-size: 0.9rem;
+      color: var(--green-primary);
+      direction: ltr;
+      display: inline-block;
+    }
+
+    .code-block {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+      direction: ltr;
+      text-align: left;
+    }
+    .code-block code {
+      background: none;
+      padding: 0;
+      display: block;
+      white-space: pre;
+      line-height: 1.6;
+    }
+    .code-block .comment { color: #6b7280; }
+    .code-block .key { color: var(--yellow); }
+    .code-block .value { color: var(--green-primary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green-primary) 0%, #16a34a 100%);
+      color: white;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--green-glow); }
+    .btn-download {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+    .btn-download:hover {
+      background: var(--green-soft);
+      color: var(--green-primary);
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .feature {
+      background: var(--bg-dark);
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .feature-icon { font-size: 2rem; margin-bottom: 8px; }
+    .feature-title { font-weight: 600; margin-bottom: 4px; }
+    .feature-desc { font-size: 0.85rem; color: var(--text-secondary); }
+
+    .pipeline-step {
+      background: var(--bg-dark);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 12px 0;
+      border-right: 4px solid var(--green-primary);
+    }
+    .pipeline-step h4 { color: var(--green-primary); margin-bottom: 8px; }
+
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { padding: 12px 16px; text-align: right; border-bottom: 1px solid var(--border-subtle); }
+    th { background: var(--bg-dark); font-weight: 600; }
+
+    .usecase {
+      background: var(--bg-dark);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin: 12px 0;
+      border-right: 4px solid var(--purple);
+    }
+    .usecase h4 { color: var(--purple); margin-bottom: 6px; font-size: 1rem; }
+    .usecase p { margin: 0; }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 48px;
+    }
+    footer a { color: var(--green-primary); text-decoration: none; }
+  </style>
 </head>
 <body>
-<div class="container">
-  <a href="../" class="back">← All skills</a>
-  <h1>quick-voice <span class="pill">v1.0</span></h1>
-  <p class="sub">Instant browser voice session (OpenAI Realtime <code>gpt-realtime-2</code>) — close a topic in a short conversation instead of working through documents.</p>
+  <div class="container">
+    <a href="../index.html" class="back-link">&#8594; חזרה לדף הראשי</a>
 
-  <h2>What it does</h2>
-  <p>White-label voice-session generator. Each invocation spins up a per-session web app that opens a WebRTC channel to the OpenAI Realtime API with <strong>context-specific instructions, tools, and a generic canvas</strong>. Talk for 3 minutes instead of working for 30.</p>
+    <div class="hero">
+      <div class="skill-icon">🎙️</div>
+      <h1>Quick Voice</h1>
+      <p class="subtitle">לדבר 3 דקות במקום לעבוד 30 — שיחה קולית מיידית עם הסוכן</p>
+      <div class="difficulty">⏱️ זמן התקנה: 3-5 דקות</div>
+      <div class="cta-buttons" style="justify-content: center; margin-top: 24px;">
+        <button onclick="window.parent.downloadSkill ? window.parent.downloadSkill('quick-voice') : (location.href='../downloads/quick-voice.zip')" class="btn btn-download">
+          ⬇️ הורדת הסקיל
+        </button>
+        <a href="https://github.com/aviz85/claude-skills-library/tree/main/skills/quick-voice" class="btn btn-download" target="_blank">
+          📦 קוד מקור
+        </a>
+      </div>
+    </div>
 
-  <h3>Two modes</h3>
-  <table>
-    <tr><th>Mode</th><th>Tools</th><th>Output</th></tr>
-    <tr><td><strong>live</strong></td><td>File / JSON / bash tools — agent reads &amp; updates real data during the call</td><td>Summary of changes in <code>output.md</code></td></tr>
-    <tr><td><strong>distill</strong></td><td>No data-mutation tools — only canvas + notes</td><td>Long structured deliverable (decisions, action items)</td></tr>
-  </table>
+    <!-- מה הסקיל עושה -->
+    <div class="section">
+      <h2>מה הסקיל הזה עושה?</h2>
+      <p>
+        אומרים לקלוד <span class="highlight">"תפעיל איתי שיחה קולית על X"</span> — והוא מקים לך תוך 3 שניות אפליקציית web פנימית עם שיחה ברילטיים מול
+        <code>gpt-realtime-2</code> של OpenAI. נפתח טאב בדפדפן, מדברים, סוגרים — ומקבלים בחזרה מסמך פלט מובנה עם החלטות, הערות ופעולות להמשך.
+      </p>
 
-  <h3>Generic canvas (both modes)</h3>
-  <p>The agent can call <code>canvas_show({ type, source, content, title })</code> to display content live in the browser, then react to user feedback by voice. Supported types: <strong>image, markdown, html, code, json, video, audio, url (iframe), text</strong>. Local files are served through a sandboxed <code>/file</code> endpoint scoped to the session's working directory.</p>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🎯</div>
+          <div class="feature-title">לבל-לבן</div>
+          <div class="feature-desc">כל סיטואציה, כל תהליך, כל קונפיג</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-title">Realtime API</div>
+          <div class="feature-desc">WebRTC ישיר מהדפדפן ל-OpenAI</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎨</div>
+          <div class="feature-title">קנבס גנרי</div>
+          <div class="feature-desc">תמונה, קוד, JSON, וידאו, אודיו</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📝</div>
+          <div class="feature-title">פלט מובנה</div>
+          <div class="feature-desc">output.md חוזר לקלוד אוטומטית</div>
+        </div>
+      </div>
+    </div>
 
-  <h2>Prerequisites</h2>
-  <ul>
-    <li>Node.js 18+ (uses native <code>fetch</code>)</li>
-    <li>OpenAI API key with Realtime API access</li>
-    <li>A modern browser (Chrome / Edge recommended for WebRTC)</li>
-  </ul>
+    <!-- שני מצבים -->
+    <div class="section">
+      <h2><span class="num">1</span>שני מצבים</h2>
 
-  <h2>Setup</h2>
-  <ol>
-    <li>Install: clone or copy the skill into <code>~/.claude/skills/quick-voice/</code></li>
-    <li>Add your key:
-      <pre><code>cp ~/.claude/skills/quick-voice/.env.example ~/.claude/skills/quick-voice/.env
-# Edit and set OPENAI_API_KEY=sk-...</code></pre>
-    </li>
-    <li>The launcher auto-runs <code>npm install</code> on first launch (express + dotenv).</li>
-  </ol>
+      <div class="pipeline-step">
+        <h4>Live — עבודה על דאטה אמיתי</h4>
+        <p>הסוכן באמת קורא ומעדכן קבצים בזמן השיחה. כלים פעילים: <code>read_file</code>, <code>write_file</code>, <code>append_file</code>, <code>update_json</code>, <code>array_update_json</code>, <code>list_dir</code>, <code>run_bash</code>.</p>
+        <p>שימוש לדוגמה: <strong>"עבור על כל הלידים הפתוחים, ספר לי על כל אחד, אני אגיד מה לעדכן"</strong> → הסוכן מעדכן את ה-CRM בזמן השיחה.</p>
+      </div>
 
-  <h2>How a session runs</h2>
-  <ol>
-    <li>You tell Claude: <em>"Let's close X in a voice call"</em> (or it infers from context).</li>
-    <li>Claude generates <code>runtime/&lt;id&gt;/config.json</code> with mode, instructions, tool whitelist, canvas hints, and output template.</li>
-    <li>Claude runs <code>node ~/.claude/skills/quick-voice/scripts/launch.js &lt;id&gt;</code>:
+      <div class="pipeline-step">
+        <h4>Distill — שיחה נקייה</h4>
+        <p>בלי כלי עדכון. רק שיחה. בסוף יוצא <span class="highlight">מסמך פלט מובנה</span> ארוך עם מסקנות, החלטות, ופעולות להמשך — חוזר ישירות לקלוד להמשך עבודה.</p>
+        <p>שימוש לדוגמה: <strong>"בוא נחשוב על הקופי לדף הנחיתה החדש"</strong> → 3 דקות שיחה חופשית → דוקיומנט מובנה עם 4 כיוונים, כל אחד עם hook ו-CTA.</p>
+      </div>
+    </div>
+
+    <!-- קנבס -->
+    <div class="section">
+      <h2><span class="num">2</span>הקנבס הגנרי</h2>
+      <p>הסוכן יכול לזרוק לקנבס בזמן השיחה תוכן מכל סוג — אתם רואים, מגיבים בקול, הוא ממשיך לפריט הבא:</p>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🖼️</div>
+          <div class="feature-title">תמונה</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📄</div>
+          <div class="feature-title">Markdown</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">💻</div>
+          <div class="feature-title">קוד</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔧</div>
+          <div class="feature-title">JSON</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎥</div>
+          <div class="feature-title">וידאו</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔊</div>
+          <div class="feature-title">אודיו</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🌐</div>
+          <div class="feature-title">אתר ב-iframe</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📝</div>
+          <div class="feature-title">HTML / טקסט</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- שימושים -->
+    <div class="section">
+      <h2><span class="num">3</span>איפה זה מציל את היום</h2>
+
+      <div class="usecase">
+        <h4>🎨 סקירת תמונות AI</h4>
+        <p>״בוא נעבור על התמונות שיצרת״ — הקנבס מציג אחת-אחת, אתם מגיבים בקול ״הזאת לא, השניה ועם פחות אור״, בסוף יש דוקיומנט שאומר איזו לבחור ומה לתקן.</p>
+      </div>
+
+      <div class="usecase">
+        <h4>📋 רוויו פרילנסרים</h4>
+        <p>Live mode. ״תפתח לי את freelancers.json, תעבור אחד-אחד, תשאל על השבועיים האחרונים, ותעדכן ציון״. 5 דקות → משימה שעות שנאתם — נסגרה.</p>
+      </div>
+
+      <div class="usecase">
+        <h4>✍️ קופי לדף נחיתה</h4>
+        <p>Distill. ״בוא נחשוב מה החזון של הדף״. 3 דקות שיחה חופשית. מסמך מובנה עם 4 כיוונים, hook ו-CTA לכל אחד.</p>
+      </div>
+
+      <div class="usecase">
+        <h4>📞 סגירת לידים בפייפליין</h4>
+        <p>״עבור על כל הלידים הפתוחים, ספר על כל אחד, אני אגיד מה לעדכן״. 12 לידים, 8 דקות, הכל ב-CRM.</p>
+      </div>
+
+      <div class="usecase">
+        <h4>🎬 רוויו קריאייטיב לקליינט</h4>
+        <p>הקנבס מציג כל וריאציה, אתם מגיבים ברפלקס בקול, הסוכן מתעד פידבק מסודר לכל אחת.</p>
+      </div>
+
+      <div class="usecase">
+        <h4>📑 קריאת חוזה</h4>
+        <p>הקנבס מציג סעיף סעיף, אתם מדברים עליהם, הסוכן מסמן בעיות. במקום לקרוא PDF 40 דקות.</p>
+      </div>
+
+      <div class="usecase">
+        <h4>🧠 תכנון יום</h4>
+        <p>Distill בוקר, 5 דקות שיחה, יוצא יום מתוכנן עם בלוקים, עדיפויות ופעולה ראשונה.</p>
+      </div>
+    </div>
+
+    <!-- דרישות -->
+    <div class="section">
+      <h2><span class="num">4</span>דרישות מקדימות</h2>
       <ul>
-        <li>Finds a free port in <code>3031–3040</code> via <code>net.createServer</code></li>
-        <li>Spawns <code>server.js</code></li>
-        <li>Opens the default browser at <code>http://localhost:&lt;port&gt;</code></li>
-        <li>Waits until the session ends (close browser, click ✓, or the agent calls <code>end_session</code>)</li>
+        <li><strong>Node.js 18+</strong> — בשביל <code>fetch</code> מובנה</li>
+        <li><strong>OpenAI API Key</strong> עם גישה ל-Realtime API</li>
+        <li><strong>דפדפן מודרני</strong> — Chrome / Edge (תמיכת WebRTC)</li>
+        <li><strong>מיקרופון</strong> + הרשאת דפדפן</li>
       </ul>
-    </li>
-    <li>Launcher prints <code>output.md</code> back to Claude for follow-up.</li>
-  </ol>
 
-  <h2>Available tools (whitelist via <code>config.json.tools</code>)</h2>
+      <div class="info">
+        <div class="warning-icon">💡</div>
+        <p>הסקיל קרוס-פלטפורם: מק / לינוקס / וינדוס. ה-launcher כתוב ב-Node ולא תלוי ב-bash.</p>
+      </div>
+    </div>
 
-  <h3>Canvas + control (both modes)</h3>
-  <ul>
-    <li><code>canvas_show({ type, source, content, title?, language? })</code></li>
-    <li><code>canvas_clear()</code></li>
-    <li><code>save_note({ heading, content })</code> — appends to <code>output.md</code></li>
-    <li><code>end_session({ summary? })</code> — finalize + close</li>
-  </ul>
+    <!-- התקנה -->
+    <div class="section">
+      <h2><span class="num">5</span>שלבי התקנה</h2>
+      <ol class="steps-list">
+        <li>
+          <strong>הורידו את הסקיל</strong>
+          <p>לחצו על כפתור ההורדה למעלה, או הריצו:</p>
+          <div class="code-block"><code>curl -L https://aviz85.github.io/claude-skills-library/downloads/quick-voice.zip -o /tmp/quick-voice.zip
+unzip /tmp/quick-voice.zip -d ~/.claude/skills/</code></div>
+        </li>
 
-  <h3>Data (live mode)</h3>
-  <ul>
-    <li><code>read_file</code>, <code>write_file</code>, <code>append_file</code></li>
-    <li><code>update_json</code> — shallow-merge into a JSON object root</li>
-    <li><code>array_update_json</code> — surgical update of one record in a JSON array (by match field)</li>
-    <li><code>list_dir</code>, <code>run_bash</code></li>
-  </ul>
+        <li>
+          <strong>הגדירו את ה-API Key</strong>
+          <div class="code-block"><code>cd ~/.claude/skills/quick-voice
+cp .env.example .env
+<span class="comment"># ערכו את הקובץ ושימו את המפתח שלכם:</span>
+<span class="comment"># OPENAI_API_KEY=sk-...</span></code></div>
+        </li>
 
-  <h2>Example configs</h2>
+        <li>
+          <strong>זהו, מוכן</strong>
+          <p>ה-launcher יתקין אוטומטית את התלויות (<code>express</code>, <code>dotenv</code>) בהפעלה הראשונה.</p>
+        </li>
+      </ol>
 
-  <h3>"Let's go over the images I just generated" (distill)</h3>
-  <pre><code>{
-  "mode": "distill",
-  "topic": "Image review",
-  "instructions": "Walk through each image. canvas_show → ask 'thoughts?' → listen → save_note('Image N — feedback', user_reply). Call end_session when all done.",
-  "voice": "ash",
-  "tools": ["canvas_show", "canvas_clear", "save_note", "end_session"],
-  "canvas_hints": [
-    { "type": "image", "source": "/abs/path/img-001.png", "title": "1" },
-    { "type": "image", "source": "/abs/path/img-002.png", "title": "2" }
+      <div class="warning">
+        <div class="warning-icon">🔑</div>
+        <p>צריך OpenAI API Key עם גישה ל-Realtime API. אם המפתח לא מורשה — תקבלו שגיאת SDP בדפדפן.</p>
+      </div>
+    </div>
+
+    <!-- איך זה רץ -->
+    <div class="section">
+      <h2><span class="num">6</span>איך השיחה רצה בפועל</h2>
+
+      <div class="pipeline-step">
+        <h4>1. אומרים לקלוד</h4>
+        <p>״תפעיל איתי שיחה קולית על [נושא]״ — או שקלוד מסיק מההקשר של השיחה הנוכחית.</p>
+      </div>
+
+      <div class="pipeline-step">
+        <h4>2. קלוד מייצר session</h4>
+        <p>יוצר <code>runtime/&lt;id&gt;/config.json</code> עם הוראות בעברית, מצב (live/distill), רשימת כלים מותרת ורמזי קנבס.</p>
+      </div>
+
+      <div class="pipeline-step">
+        <h4>3. ה-launcher עולה</h4>
+        <p><code>node scripts/launch.js &lt;id&gt;</code> — מוצא פורט פנוי בטווח 3031-3040, מעלה שרת, ופותח דפדפן.</p>
+      </div>
+
+      <div class="pipeline-step">
+        <h4>4. מדברים</h4>
+        <p>WebRTC ישיר מהדפדפן ל-OpenAI. הקנבס והכלים פעילים. הסוכן עובד בזמן אמת.</p>
+      </div>
+
+      <div class="pipeline-step">
+        <h4>5. סוגרים</h4>
+        <p>סגירת דפדפן / לחיצה על ✓ / קריאת <code>end_session</code> — והסקיל מחזיר את <code>output.md</code> לקלוד.</p>
+      </div>
+    </div>
+
+    <!-- דוגמת קונפיג -->
+    <div class="section">
+      <h2><span class="num">7</span>דוגמת קונפיג</h2>
+      <p>״בוא נעבור על התמונות שיצרת״ (distill + קנבס תמונות):</p>
+      <div class="code-block"><code>{
+  <span class="key">"mode"</span>: <span class="value">"distill"</span>,
+  <span class="key">"topic"</span>: <span class="value">"סקירת תמונות"</span>,
+  <span class="key">"instructions"</span>: <span class="value">"הצג כל תמונה ב-canvas_show, שאל 'מה דעתך?', שמור פידבק ב-save_note. בסוף end_session."</span>,
+  <span class="key">"voice"</span>: <span class="value">"ash"</span>,
+  <span class="key">"tools"</span>: [<span class="value">"canvas_show"</span>, <span class="value">"canvas_clear"</span>, <span class="value">"save_note"</span>, <span class="value">"end_session"</span>],
+  <span class="key">"canvas_hints"</span>: [
+    { <span class="key">"type"</span>: <span class="value">"image"</span>, <span class="key">"source"</span>: <span class="value">"/abs/path/img-1.png"</span>, <span class="key">"title"</span>: <span class="value">"1"</span> },
+    { <span class="key">"type"</span>: <span class="value">"image"</span>, <span class="key">"source"</span>: <span class="value">"/abs/path/img-2.png"</span>, <span class="key">"title"</span>: <span class="value">"2"</span> }
   ],
-  "output_template": "# Image feedback\n\n"
-}</code></pre>
+  <span class="key">"output_template"</span>: <span class="value">"# פידבק על תמונות\n\n"</span>
+}</code></div>
+    </div>
 
-  <h3>"Review pending freelancer scores" (live)</h3>
-  <pre><code>{
-  "mode": "live",
-  "topic": "Freelancer review",
-  "instructions": "read_file freelancers.json. For each freelancer, canvas_show type=json, ask for new score, update via array_update_json. Log via save_note. end_session.",
-  "voice": "ash",
-  "cwd": "/Users/aviz/aviz-crm",
-  "tools": ["canvas_show", "save_note", "end_session", "read_file", "array_update_json"],
-  "output_template": "# Freelancer review\n\n## Updates\n\n"
-}</code></pre>
+    <!-- כלים -->
+    <div class="section">
+      <h2><span class="num">8</span>הכלים הזמינים</h2>
 
-  <h2>Use cases that pay off</h2>
-  <ul>
-    <li>🎨 Reviewing AI-generated images one by one</li>
-    <li>📋 Going through a list of open leads / tickets / PRs</li>
-    <li>🧠 Morning planning (distill: 5 minutes of voice → structured day plan)</li>
-    <li>📑 Reading a long doc/contract section-by-section, marking issues</li>
-    <li>🎬 Approving creative variants for a client</li>
-    <li>✍️ Brainstorming landing-page copy directions (distill)</li>
-    <li>📞 Closing 10 customers in a CRM pipeline in 8 minutes (live)</li>
-  </ul>
+      <h3>קנבס + שליטה (זמינים בשני המצבים)</h3>
+      <table>
+        <tr><th>כלי</th><th>תיאור</th></tr>
+        <tr><td><code>canvas_show</code></td><td>מציג תוכן בקנבס (image/markdown/code/json/video/audio/url/html/text)</td></tr>
+        <tr><td><code>canvas_clear</code></td><td>נוקה את הקנבס</td></tr>
+        <tr><td><code>save_note</code></td><td>מוסיף סקציה ל-output.md</td></tr>
+        <tr><td><code>end_session</code></td><td>סוגר את השיחה ושומר סיכום סופי</td></tr>
+      </table>
 
-  <h2>Architecture</h2>
-  <pre><code>quick-voice/
-├── SKILL.md
-├── package.json
-├── server.js              # Express, /token /config /tool/:name /file /done
-├── public/
-│   ├── index.html
-│   ├── styles.css
-│   └── app.js             # WebRTC + canvas renderer + tool dispatch
-├── lib/
-│   ├── tool-defs.js       # OpenAI Realtime tool schemas
-│   └── tools.js           # Server-side tool implementations
-├── scripts/
-│   └── launch.js          # Cross-platform launcher (macOS/Linux/Windows)
-└── runtime/&lt;id&gt;/         # Per-session: config.json, output.md, server.log, done.flag</code></pre>
+      <h3>דאטה (Live mode בלבד)</h3>
+      <table>
+        <tr><th>כלי</th><th>תיאור</th></tr>
+        <tr><td><code>read_file</code></td><td>קורא קובץ (תחת cwd)</td></tr>
+        <tr><td><code>write_file</code></td><td>כותב קובץ</td></tr>
+        <tr><td><code>append_file</code></td><td>מוסיף לסוף קובץ</td></tr>
+        <tr><td><code>update_json</code></td><td>shallow-merge ל-JSON object</td></tr>
+        <tr><td><code>array_update_json</code></td><td>עדכון רשומה אחת לפי match field</td></tr>
+        <tr><td><code>list_dir</code></td><td>תכולת תיקייה</td></tr>
+        <tr><td><code>run_bash</code></td><td>פקודת shell (להשתמש בזהירות)</td></tr>
+      </table>
+    </div>
 
-  <h2>Anti-patterns</h2>
-  <ul>
-    <li>Don't bake the OpenAI key into config or HTML — keep it in <code>.env</code></li>
-    <li>Keep <code>instructions</code> ≤ 2KB. Realtime agents act on short, specific prompts.</li>
-    <li>Always set <code>cwd</code> when enabling file tools — it scopes the blast radius.</li>
-    <li>Enable <code>run_bash</code> only when truly needed. Prefer specific tools.</li>
-    <li>Don't auto-delete <code>runtime/&lt;id&gt;/</code> — the user may want to re-open or audit.</li>
-  </ul>
+    <!-- אנטי-פטרנים -->
+    <div class="section">
+      <h2><span class="num">9</span>אנטי-פטרנים — דברים שלא לעשות</h2>
+      <ul>
+        <li>❌ <strong>אל תטמיעו את ה-OPENAI_API_KEY ב-config או ב-HTML</strong> — תמיד מ-<code>.env</code></li>
+        <li>❌ <strong>אל תכתבו instructions ארוכים</strong> — מעל 2KB הסוכן מאבד מיקוד</li>
+        <li>❌ <strong>אל תפעילו file tools בלי cwd</strong> — בלי scope, ה-blast radius גדול מדי</li>
+        <li>❌ <strong>אל תפעילו run_bash אלא אם חייבים</strong> — תעדיפו כלים ספציפיים</li>
+        <li>❌ <strong>אל תמחקו אוטומטית את runtime/&lt;id&gt;/</strong> — לפעמים רוצים לחזור אליו</li>
+      </ul>
+    </div>
 
-  <h2>Troubleshooting</h2>
-  <ul>
-    <li><strong>"Server did not become ready in 8s"</strong> — check <code>runtime/&lt;id&gt;/server.log</code>; usually a bad <code>OPENAI_API_KEY</code> or missing dep.</li>
-    <li><strong>Browser doesn't open</strong> — the launcher prints the URL. Open manually.</li>
-    <li><strong>SDP error from OpenAI</strong> — verify your account has Realtime API access.</li>
-    <li><strong>Tool errors in transcript</strong> — open the browser devtools console and check the <code>server.log</code> for the matching error.</li>
-  </ul>
+    <!-- פתרון בעיות -->
+    <div class="section">
+      <h2><span class="num">10</span>פתרון בעיות</h2>
 
-  <p style="margin-top: 32px; color: #666; font-size: 0.85rem;">Part of <a href="https://github.com/aviz85/claude-skills-library">AVIZ Skills Library</a>.</p>
-</div>
+      <h3>"Server did not become ready in 8s"</h3>
+      <p>בדקו את <code>runtime/&lt;id&gt;/server.log</code>. בדרך כלל זה <code>OPENAI_API_KEY</code> שגוי או תלות חסרה.</p>
+
+      <h3>הדפדפן לא נפתח</h3>
+      <p>ה-launcher מדפיס את ה-URL לקונסול. פתחו ידנית.</p>
+
+      <h3>שגיאת SDP מ-OpenAI</h3>
+      <p>החשבון שלכם לא מורשה ל-Realtime API. בדקו ב-platform.openai.com שיש הרשאה.</p>
+
+      <h3>כלים מחזירים שגיאות</h3>
+      <p>פתחו DevTools בדפדפן ובדקו את ה-Console. את הצד-שרת תמצאו ב-<code>server.log</code> של ה-session.</p>
+    </div>
+
+    <!-- CTA סופי -->
+    <div class="section" style="text-align: center; background: linear-gradient(135deg, var(--green-soft) 0%, var(--bg-card) 100%); border-color: var(--border-glow);">
+      <h2 style="justify-content: center;">מוכנים להפסיק לעבוד על מסמכים ולהתחיל לדבר?</h2>
+      <p>quick-voice הופך כל משימה שאפשר לסגור בשיחה — לשיחה.</p>
+      <div class="cta-buttons" style="justify-content: center;">
+        <button onclick="window.parent.downloadSkill ? window.parent.downloadSkill('quick-voice') : (location.href='../downloads/quick-voice.zip')" class="btn btn-primary">
+          ⬇️ הורידו עכשיו
+        </button>
+        <a href="../index.html" class="btn btn-download">📚 סקילים נוספים</a>
+      </div>
+    </div>
+
+    <footer>
+      <p>חלק מ-<a href="https://github.com/aviz85/claude-skills-library">AVIZ Skills Library</a> · נבנה ב-Claude Code</p>
+    </footer>
+  </div>
 </body>
 </html>
