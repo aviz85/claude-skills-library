@@ -80,6 +80,16 @@ function resolveSource(src) {
   return "/file?path=" + encodeURIComponent(src);
 }
 
+// Fetch text content from a source path (e.g. /tmp/x.md). Used by canvas types
+// that take raw text (markdown, html, code, json, text).
+async function loadSourceText(src) {
+  if (!src) return "";
+  const url = resolveSource(src);
+  const r = await fetch(url);
+  if (!r.ok) throw new Error("fetch " + url + " -> " + r.status);
+  return await r.text();
+}
+
 function showInCanvas({ type, source, content, title, language }) {
   while (canvasBody.firstChild) canvasBody.removeChild(canvasBody.firstChild);
 
@@ -131,32 +141,64 @@ function showInCanvas({ type, source, content, title, language }) {
     case "markdown": {
       const md = document.createElement("div");
       md.className = "canvas-markdown";
-      md.innerHTML = renderMarkdown(content || "");
+      if (content) {
+        md.innerHTML = renderMarkdown(content);
+      } else if (source) {
+        md.textContent = "Loading…";
+        loadSourceText(source)
+          .then((t) => { md.innerHTML = renderMarkdown(t); })
+          .catch((e) => { md.textContent = "Failed to load: " + e.message; });
+      } else {
+        md.textContent = "";
+      }
       wrap.appendChild(md);
       break;
     }
     case "html": {
       const h = document.createElement("div");
-      h.innerHTML = content || "";
+      if (content) {
+        h.innerHTML = content;
+      } else if (source) {
+        h.textContent = "Loading…";
+        loadSourceText(source)
+          .then((t) => { h.innerHTML = t; })
+          .catch((e) => { h.textContent = "Failed to load: " + e.message; });
+      }
       wrap.appendChild(h);
       break;
     }
     case "code": {
       const c = document.createElement("pre");
       c.className = "canvas-code";
-      c.textContent = content || "";
       if (language) c.dataset.lang = language;
+      if (content) {
+        c.textContent = content;
+      } else if (source) {
+        c.textContent = "Loading…";
+        loadSourceText(source)
+          .then((t) => { c.textContent = t; })
+          .catch((e) => { c.textContent = "Failed to load: " + e.message; });
+      }
       wrap.appendChild(c);
       break;
     }
     case "json": {
       const j = document.createElement("pre");
       j.className = "canvas-json";
-      try {
-        const obj = typeof content === "string" ? JSON.parse(content) : content;
-        j.textContent = JSON.stringify(obj, null, 2);
-      } catch (e) {
-        j.textContent = String(content);
+      const renderJson = (raw) => {
+        try {
+          const obj = typeof raw === "string" ? JSON.parse(raw) : raw;
+          j.textContent = JSON.stringify(obj, null, 2);
+        } catch (e) {
+          j.textContent = String(raw);
+        }
+      };
+      if (content !== undefined) {
+        renderJson(content);
+      } else if (source) {
+        j.textContent = "Loading…";
+        loadSourceText(source).then(renderJson)
+          .catch((e) => { j.textContent = "Failed to load: " + e.message; });
       }
       wrap.appendChild(j);
       break;
@@ -165,7 +207,14 @@ function showInCanvas({ type, source, content, title, language }) {
     default: {
       const tx = document.createElement("div");
       tx.className = "canvas-text";
-      tx.textContent = content || source || "";
+      if (content) {
+        tx.textContent = content;
+      } else if (source) {
+        tx.textContent = "Loading…";
+        loadSourceText(source)
+          .then((t) => { tx.textContent = t; })
+          .catch((e) => { tx.textContent = "Failed to load: " + e.message; });
+      }
       wrap.appendChild(tx);
     }
   }

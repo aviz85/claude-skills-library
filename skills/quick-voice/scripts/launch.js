@@ -1,15 +1,21 @@
 #!/usr/bin/env node
 // quick-voice launcher (cross-platform: macOS, Linux, Windows).
-// Usage: node scripts/launch.js <session-id>
 //
-// Expects runtime/<session-id>/config.json to already exist.
+// Usage: node scripts/launch.js <runtime-dir>
+//
+// <runtime-dir> is the absolute path to a directory containing config.json.
+// The launcher writes output.md, server.log, done.flag into the SAME directory.
+// Pick the location per-session — typical choices:
+//   * Project-local:  /Users/.../<project>/.quick-voice/<id>/
+//   * Temp (no project): /tmp/quick-voice-<user>/<id>/
+//
 // 1. Verifies OPENAI_API_KEY (env or .env)
 // 2. Runs `npm install` once if node_modules is missing
 // 3. Finds a free port in 3031..3040
 // 4. Spawns server.js, waits for /config to respond
 // 5. Opens the default browser at http://localhost:<port>
 // 6. Waits until done.flag appears OR the server process exits
-// 7. Prints runtime/<id>/output.md and exits
+// 7. Prints <runtime-dir>/output.md and exits
 
 const fs = require("fs");
 const net = require("net");
@@ -18,14 +24,23 @@ const http = require("http");
 const { spawn, spawnSync } = require("child_process");
 
 const SKILL_DIR = path.resolve(__dirname, "..");
-const sessionId = process.argv[2];
+const arg = process.argv[2];
 
-if (!sessionId) {
-  console.error("Usage: node scripts/launch.js <session-id>");
+if (!arg) {
+  console.error("Usage: node scripts/launch.js <runtime-dir>");
+  console.error("  <runtime-dir> must be an absolute path containing config.json.");
+  console.error("  Place it inside your project (e.g. <project>/.quick-voice/<id>/)");
+  console.error("  or under /tmp if no project is involved.");
   process.exit(1);
 }
 
-const RUNTIME_DIR = path.join(SKILL_DIR, "runtime", sessionId);
+if (!path.isAbsolute(arg)) {
+  console.error("ERROR: runtime-dir must be an absolute path. Got:", arg);
+  process.exit(1);
+}
+
+const RUNTIME_DIR = arg;
+const sessionId = path.basename(RUNTIME_DIR);
 const CONFIG = path.join(RUNTIME_DIR, "config.json");
 const OUTPUT = path.join(RUNTIME_DIR, "output.md");
 const DONE_FLAG = path.join(RUNTIME_DIR, "done.flag");
@@ -160,6 +175,7 @@ function waitForServer(port, maxMs = 8000) {
       OPENAI_API_KEY,
       QV_PORT: String(port),
       QV_SESSION_ID: sessionId,
+      QV_RUNTIME_DIR: RUNTIME_DIR,
     },
     stdio: ["ignore", logStream, logStream],
   });

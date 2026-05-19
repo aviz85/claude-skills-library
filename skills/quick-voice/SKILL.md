@@ -33,11 +33,22 @@ Look at the conversation. The user said one of:
 - **Implicit:** earlier in the conversation we generated 10 images → topic = "go over generated images"
 - **Vague:** "תפעיל שיחה קולית" → call AskUserQuestion (single Q) to clarify topic + mode
 
-### Step 2 — generate a session config
+### Step 2 — pick a runtime directory + generate the session config
 
-Pick a session id: `id=$(date +%Y%m%d-%H%M%S)`
+Each session has its own **runtime directory** holding `config.json`, `output.md`,
+`server.log`, `done.flag`. The runtime dir lives **outside the skill** so the
+skill itself stays code-only and project data stays with the project.
 
-Create `~/.claude/skills/quick-voice/runtime/<id>/config.json`:
+Pick a session id: `id=$(date +%Y%m%d-%H%M%S)`.
+
+Choose the runtime directory:
+- **Inside a project** (git repo / codebase you're working in):
+  put it at `<project-root>/.quick-voice/<id>/`. Add `.quick-voice/` to the
+  project's `.gitignore` so session data never gets committed.
+- **No project context:**
+  use `/tmp/quick-voice-$USER/<id>/`.
+
+Create the directory and write `config.json` into it:
 
 ```json
 {
@@ -69,8 +80,12 @@ Create `~/.claude/skills/quick-voice/runtime/<id>/config.json`:
 ### Step 3 — launch
 
 ```bash
-node ~/.claude/skills/quick-voice/scripts/launch.js <session-id>
+node ~/.claude/skills/quick-voice/scripts/launch.js <runtime-dir>
 ```
+
+`<runtime-dir>` is the absolute path to the directory you created in Step 2.
+The launcher reads `<runtime-dir>/config.json` and writes `output.md`,
+`server.log`, `done.flag` back into the same directory.
 
 Cross-platform (macOS / Linux / Windows). This:
 1. Verifies `OPENAI_API_KEY` (from env or `~/.claude/skills/quick-voice/.env`)
@@ -90,7 +105,10 @@ After the launcher returns, read `runtime/<id>/output.md` and present it to the 
 See `lib/tool-defs.js` for OpenAI Realtime tool definitions and `lib/tools.js` for implementations. Whitelist via `config.json.tools`.
 
 **Canvas (both modes):**
-- `canvas_show({ type, source, title?, content? })` — display in canvas. `type` ∈ `image|markdown|html|code|json|video|audio|text`. `source` = file path or URL for media; `content` = inline for text-like types.
+- `canvas_show({ type, source, title?, content? })` — display in canvas. `type` ∈ `image|markdown|html|code|json|video|audio|text|url`.
+  - For **media** (`image`, `video`, `audio`): pass `source` (file path or URL).
+  - For **text-like** (`markdown`, `html`, `code`, `json`, `text`): pass either `content` (inline string) OR `source` (file path — the client fetches the file via `/file` and renders it). If you have a long block already on disk, prefer `source`; if you're generating short content inline, use `content`.
+  - For `url`: pass `source` (iframe src).
 - `canvas_clear()` — clear canvas.
 
 **Output / control (both modes):**
@@ -157,9 +175,10 @@ Then build the config from the answer.
 
 ## Files in this skill
 
-- `server.js` — Express server, reads `runtime/<id>/config.json`, vends OpenAI ephemeral tokens, executes tool calls server-side, serves files.
-- `public/index.html`, `public/app.js` — WebRTC client + generic canvas renderer.
+- `server.js` — Express server. Reads `$QV_RUNTIME_DIR/config.json`, vends OpenAI ephemeral tokens, executes tool calls server-side, serves files via `/file?path=...`.
+- `public/index.html`, `public/app.js` — WebRTC client + generic canvas renderer (markdown/html/code/json/text can be loaded from `source` paths in addition to inline `content`).
 - `lib/tool-defs.js` — OpenAI Realtime tool schemas.
 - `lib/tools.js` — server-side tool implementations.
-- `scripts/launch.js` — cross-platform Node launcher: finds free port, spawns server, opens browser, waits for done.
-- `runtime/<id>/` — per-session: `config.json`, `output.md`, `server.log`, `done.flag`.
+- `scripts/launch.js` — cross-platform Node launcher: takes an absolute `<runtime-dir>` path, finds free port, spawns server, opens browser, waits for done.
+
+Per-session files (`config.json`, `output.md`, `server.log`, `done.flag`) live in the runtime directory you picked — typically `<project>/.quick-voice/<id>/` or `/tmp/quick-voice-$USER/<id>/`.

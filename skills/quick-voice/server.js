@@ -6,7 +6,11 @@ const { selectTools } = require("./lib/tool-defs");
 const { executeTool } = require("./lib/tools");
 
 const SESSION_ID = process.env.QV_SESSION_ID;
-const RUNTIME_DIR = path.join(__dirname, "runtime", SESSION_ID || "default");
+const RUNTIME_DIR = process.env.QV_RUNTIME_DIR;
+if (!RUNTIME_DIR) {
+  console.error("Missing QV_RUNTIME_DIR. The launcher must pass an absolute runtime-dir path.");
+  process.exit(1);
+}
 const CONFIG_PATH = path.join(RUNTIME_DIR, "config.json");
 const OUTPUT_PATH = path.join(RUNTIME_DIR, "output.md");
 const LOG_PATH = path.join(RUNTIME_DIR, "server.log");
