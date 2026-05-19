@@ -206,6 +206,29 @@ body {
   font-size: 0.85em;
   margin: 8px 0;
 }
+.canvas-markdown .md-table {
+  border-collapse: collapse;
+  margin: 12px 0;
+  width: 100%;
+  font-size: 0.9em;
+  overflow-x: auto;
+  display: table;
+}
+.canvas-markdown .md-table th,
+.canvas-markdown .md-table td {
+  border: 1px solid #2a2a3a;
+  padding: 6px 10px;
+  text-align: start;
+  vertical-align: top;
+}
+.canvas-markdown .md-table th {
+  background: #1a1a2e;
+  color: #fff;
+  font-weight: 600;
+}
+.canvas-markdown .md-table tbody tr:nth-child(even) {
+  background: #15151f;
+}
 
 .canvas-code {
   font-family: 'SF Mono', 'Fira Code', Consolas, monospace;

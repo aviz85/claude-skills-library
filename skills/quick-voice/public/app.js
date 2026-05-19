@@ -238,6 +238,27 @@ function escapeHtml(s) {
 
 function renderMarkdown(md) {
   let h = escapeHtml(md);
+  // GFM tables: header row + separator row + data rows
+  h = h.replace(
+    /(?:^\|.+\|[ \t]*\n)(?:^\|[\s\-:|]+\|[ \t]*\n)(?:^\|.+\|[ \t]*\n?)+/gm,
+    (block) => {
+      const lines = block.trim().split("\n").filter(Boolean);
+      const parseRow = (line) =>
+        line.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+      const header = parseRow(lines[0]);
+      const rows = lines.slice(2).map(parseRow);
+      let out = '<table class="md-table"><thead><tr>';
+      for (const c of header) out += "<th>" + c + "</th>";
+      out += "</tr></thead><tbody>";
+      for (const row of rows) {
+        out += "<tr>";
+        for (const c of row) out += "<td>" + c + "</td>";
+        out += "</tr>";
+      }
+      out += "</tbody></table>";
+      return out;
+    }
+  );
   h = h.replace(/^### (.*$)/gm, "<h3>$1</h3>");
   h = h.replace(/^## (.*$)/gm, "<h2>$1</h2>");
   h = h.replace(/^# (.*$)/gm, "<h1>$1</h1>");
