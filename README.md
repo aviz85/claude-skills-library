@@ -31,6 +31,7 @@ A collection of useful skills for Claude Code by aviz.
 | **learn** | Teach Claude any topic via web research — retains as permanent skill |
 | **tutorial-creator** | Create professional tutorials from screen recordings |
 | **tutorial-narration-writer** | Write narration scripts in casual, friendly style |
+| **x-bookmarks-fetcher** | Download X (Twitter) bookmarks via official X API v2 — text + images + videos. OAuth 2.0, no scraping |
 
 ## Installation
 
@@ -61,6 +62,7 @@ Some skills require additional setup:
 - **calendar**: Google Apps Script deployment (included)
 - **tutorial-creator**: Requires speech-generator, transcribe, music-generator, youtube-uploader skills
 - **tutorial-narration-writer**: No additional setup needed (text-only skill)
+- **x-bookmarks-fetcher**: X developer app with OAuth 2.0 enabled, callback `http://127.0.0.1:8765/callback`. See skill's SETUP.md
 
 ## License
 

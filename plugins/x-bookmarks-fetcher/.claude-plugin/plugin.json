@@ -1,0 +1,13 @@
+{
+  "name": "x-bookmarks-fetcher",
+  "version": "1.0.0",
+  "description": "Fetch X (Twitter) bookmarks via the official X API v2. Downloads recent bookmarks with text, images, and videos. Uses OAuth 2.0 user-context auth (one-time browser consent, then refresh-token forever).",
+  "author": {
+    "name": "aviz",
+    "url": "https://github.com/aviz85"
+  },
+  "homepage": "https://aviz85.github.io/claude-skills-library/skills/x-bookmarks-fetcher.html",
+  "repository": "https://github.com/aviz85/claude-skills-library",
+  "license": "MIT",
+  "skills": "./skills/"
+}

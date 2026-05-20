@@ -178,6 +178,12 @@
       "source": "./plugins/creative-seeds",
       "description": "Inject creative absurdity to break AI pattern-thinking before creative tasks. Randomly samples surreal micro-stories to ",
       "version": "1.0.0"
+    },
+    {
+      "name": "x-bookmarks-fetcher",
+      "source": "./plugins/x-bookmarks-fetcher",
+      "description": "Fetch X (Twitter) bookmarks via the official X API v2. Downloads recent bookmarks with text, images, and videos. OAuth 2.0 user-context, one-time browser consent, then refresh-token forever.",
+      "version": "1.0.0"
     }
   ]
 }

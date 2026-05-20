@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X Bookmarks Fetcher - מדריך התקנה</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-primary: #22C55E;
+      --green-soft: rgba(34, 197, 94, 0.1);
+      --bg-darkest: #0a0f0d;
+      --bg-card: #1a2332;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --blue: #3b82f6;
+      --yellow: #fbbf24;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Heebo', sans-serif; background: var(--bg-darkest); color: var(--text-primary); line-height: 1.8; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; margin-bottom: 32px; }
+    .back-link:hover { color: var(--green-primary); }
+    .hero { text-align: center; margin-bottom: 48px; }
+    .skill-icon { font-size: 4rem; margin-bottom: 16px; }
+    h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; }
+    h2 { font-size: 1.5rem; font-weight: 700; margin: 32px 0 16px; color: var(--green-primary); }
+    h3 { font-size: 1.15rem; font-weight: 700; margin: 20px 0 8px; }
+    .subtitle { color: var(--text-secondary); font-size: 1.25rem; }
+    .card { background: var(--bg-card); border-radius: 16px; padding: 24px; margin-bottom: 24px; border: 1px solid var(--border-subtle); }
+    .step { display: flex; gap: 16px; margin-bottom: 20px; }
+    .step:last-child { margin-bottom: 0; }
+    .step-num { background: var(--green-primary); color: #000; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+    .step strong { display: block; margin-bottom: 6px; }
+    code { background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px; font-size: 0.9em; direction: ltr; display: inline-block; }
+    pre { background: rgba(0,0,0,0.4); padding: 16px; border-radius: 8px; overflow-x: auto; margin: 12px 0; direction: ltr; text-align: left; }
+    pre code { background: transparent; padding: 0; }
+    .helper-box { background: rgba(59, 130, 246, 0.1); border: 1px solid var(--blue); border-radius: 12px; padding: 16px; margin: 24px 0; }
+    .helper-box h3 { color: var(--blue); margin: 0 0 8px; }
+    .warn-box { background: rgba(251, 191, 36, 0.1); border: 1px solid var(--yellow); border-radius: 12px; padding: 16px; margin: 24px 0; }
+    .warn-box h3 { color: var(--yellow); margin: 0 0 8px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+    th, td { text-align: right; padding: 8px 12px; border-bottom: 1px solid var(--border-subtle); }
+    th { color: var(--green-primary); font-weight: 600; }
+    ul, ol { padding-right: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    .download-btn { display: inline-block; background: var(--green-primary); color: #000; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">→ חזרה לספרייה</a>
+
+    <div class="hero">
+      <div class="skill-icon">🔖</div>
+      <h1>X Bookmarks Fetcher</h1>
+      <p class="subtitle">הורידו את ה-bookmarks שלכם מ-X (טוויטר) דרך ה-API הרשמי — טקסט, תמונות, סרטונים</p>
+    </div>
+
+    <div class="helper-box">
+      <h3>📡 API רשמי, לא scraping</h3>
+      <p>הסקיל משתמש בנקודת הקצה <code>GET /2/users/:id/bookmarks</code> של X API v2. אין session של Chrome, אין כלים של צד שלישי, אין סיכון להפרה של תנאי השימוש. אישור חד-פעמי בדפדפן (OAuth 2.0), ומכאן והלאה הכל דרך API עם refresh token שמתחדש אוטומטית.</p>
+    </div>
+
+    <h2>🎯 מה הסקיל עושה?</h2>
+    <div class="card">
+      <p>שואב את ה-bookmarks האחרונים שלכם מ-X ושומר אותם לתיקייה מקומית:</p>
+      <ul>
+        <li>קובץ <code>.txt</code> לכל bookmark עם המחבר, ה-URL והטקסט המלא</li>
+        <li>תמונות וסרטונים יורדים אוטומטית לתיקיית <code>media/</code> (MP4 באיכות הגבוהה ביותר)</li>
+        <li>סינון לפי חלון זמן: שעות אחרונות, או טווח תאריכים מדויק</li>
+        <li>קובץ <code>index.json</code> ו-<code>index.md</code> לסקירה כוללת</li>
+        <li>טיפול אוטומטי ב-rate limiting (429) ובחידוש access token</li>
+      </ul>
+    </div>
+
+    <h2>📋 דרישות מקדימות</h2>
+    <div class="card">
+      <ul>
+        <li>חשבון X (טוויטר) עם גישה ל-Developer Portal — <a href="https://developer.x.com" style="color: var(--green-primary);">developer.x.com</a> (Free tier מספיק)</li>
+        <li>Node.js 18+ (בלי תלויות npm — רק stdlib)</li>
+      </ul>
+    </div>
+
+    <h2>⚙️ הגדרה חד-פעמית (5 דקות)</h2>
+    <div class="card">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <strong>צרו אפליקציה ב-X Developer Portal</strong>
+          <p>היכנסו ל-<a href="https://developer.x.com/en/portal/dashboard" style="color: var(--green-primary);">developer.x.com/en/portal/dashboard</a>, צרו פרויקט (אם אין) ובתוכו צרו App חדש.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <strong>הפעילו OAuth 2.0</strong>
+          <p>בעמוד ה-App, גשו ל-<strong>User authentication settings</strong> ולחצו <strong>Set up</strong>. מלאו:</p>
+          <table>
+            <tr><th>שדה</th><th>ערך</th></tr>
+            <tr><td>App permissions</td><td><code>Read</code> או <code>Read and write</code></td></tr>
+            <tr><td>Type of App</td><td><code>Web App, Automated App or Bot</code></td></tr>
+            <tr><td>Callback URI / Redirect URL</td><td><code>http://127.0.0.1:8765/callback</code></td></tr>
+            <tr><td>Website URL</td><td>כל URL שלכם (לדוגמה הפרופיל ב-X)</td></tr>
+          </table>
+          <p style="margin-top: 12px;">שמרו. X יציג את ה-<strong>Client ID</strong> וה-<strong>Client Secret</strong> — העתיקו עכשיו (ה-secret יכול להופיע רק פעם אחת).</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <strong>הזינו את הפרטים ב-<code>.env</code></strong>
+          <pre><code>cd ~/.claude/skills/x-bookmarks-fetcher/scripts
+cp .env.example .env</code></pre>
+          <p>ערכו את <code>.env</code>:</p>
+          <pre><code>X_CLIENT_ID=your-client-id
+X_CLIENT_SECRET=your-client-secret</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <strong>הרצת אימות חד-פעמי</strong>
+          <pre><code>node auth.mjs</code></pre>
+          <p>הדפדפן ייפתח אוטומטית, תלחצו <strong>Authorize app</strong>, וה-tokens יישמרו ל-<code>.tokens.json</code> (chmod 600). מכאן והלאה כל קריאה מתחדשת לבדה.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>🚀 שימוש</h2>
+    <div class="card">
+      <pre><code># Bookmarks מ-48 השעות האחרונות (ברירת מחדל)
+node fetch.mjs
+
+# 24 שעות אחרונות
+node fetch.mjs --hours 24
+
+# שבוע אחרון
+node fetch.mjs --hours 168
+
+# מתאריך ספציפי
+node fetch.mjs --since 2026-05-19T00:00:00Z
+
+# תיקיית פלט מותאמת
+node fetch.mjs --out ~/Downloads/x-bookmarks
+
+# בלי הורדת media (רק טקסט — מהיר)
+node fetch.mjs --no-media</code></pre>
+    </div>
+
+    <h2>📁 מבנה הפלט</h2>
+    <div class="card">
+      <pre><code>/tmp/x-bookmarks-YYYYMMDD/
+├── bookmarks-raw.json     # תשובת API מלאה
+├── index.json             # פריטים מנותחים
+├── index.md               # סקירה קריאה
+├── @handle_tweetid.txt    # קובץ אחד לכל bookmark
+└── media/
+    ├── &lt;media_key&gt;.jpg
+    ├── &lt;media_key&gt;.mp4
+    └── &lt;media_key&gt;_poster.jpg</code></pre>
+    </div>
+
+    <h2>⚙️ אפשרויות <code>fetch.mjs</code></h2>
+    <div class="card">
+      <table>
+        <tr><th>אפשרות</th><th>ברירת מחדל</th><th>תיאור</th></tr>
+        <tr><td><code>--hours N</code></td><td><code>48</code></td><td>סינון לציוצים מ-N השעות האחרונות</td></tr>
+        <tr><td><code>--since ISO</code></td><td>—</td><td>חוצץ זמן מדויק (ISO 8601). דורס את <code>--hours</code></td></tr>
+        <tr><td><code>--out DIR</code></td><td><code>/tmp/x-bookmarks-YYYYMMDD</code></td><td>תיקיית פלט</td></tr>
+        <tr><td><code>--max-pages N</code></td><td><code>20</code></td><td>עצור אחרי N עמודי API (100 לעמוד)</td></tr>
+        <tr><td><code>--no-media</code></td><td>off</td><td>דלג על הורדת תמונות/סרטונים</td></tr>
+      </table>
+    </div>
+
+    <div class="warn-box">
+      <h3>⚠️ דקדוק לסינון זמן</h3>
+      <p>X API מחזיר bookmarks בסדר השמירה (החדש ראשון), אבל לא חושף את <strong>זמן השמירה</strong> עצמו — רק את <code>created_at</code> של הציוץ עצמו. הסינון לפי <code>--hours</code> חל על מתי <strong>הציוץ פורסם</strong>. אם שמרתם היום ציוץ ישן, הוא יסונן החוצה. רוב המקרים זה קירוב טוב מספיק.</p>
+    </div>
+
+    <h2>🔒 אבטחה</h2>
+    <div class="card">
+      <ul>
+        <li><code>.env</code> ו-<code>.tokens.json</code> ב-<code>.gitignore</code> — לא נדחפים ל-git</li>
+        <li>Tokens נשמרים עם <code>chmod 600</code></li>
+        <li>כל הקריאות ישירות ל-<code>api.twitter.com</code> ו-<code>api.x.com</code> — בלי צד שלישי</li>
+        <li>Refresh token מתחדש אוטומטית כל שעתיים</li>
+        <li>איבדתם tokens? הריצו <code>node auth.mjs</code> שוב — דקה ואתם חזרה</li>
+      </ul>
+    </div>
+
+    <h2>🐞 בעיות נפוצות</h2>
+    <div class="card">
+      <h3>"Something went wrong — you weren't able to give access to the App"</h3>
+      <p>ה-Callback URL לא רשום או לא תואם בדיוק. ודאו שב-X dev portal זה <strong>בדיוק</strong> <code>http://127.0.0.1:8765/callback</code> (בלי slash בסוף, http ולא https).</p>
+
+      <h3>"Unsupported Authentication" ב-<code>fetch.mjs</code></h3>
+      <p>ה-bookmarks endpoint דורש OAuth 2.0 User Context. ודאו ש-<code>node auth.mjs</code> סיים בהצלחה ושיש <code>.tokens.json</code> ב-<code>scripts/</code>. בדקו עם <code>cat .tokens.json</code> שהשדה <code>scope</code> כולל <code>bookmark.read</code>.</p>
+
+      <h3>Rate limit (429)</h3>
+      <p>Free tier ≈ 10 בקשות ל-15 דקות. הסקריפט קורא את <code>x-rate-limit-reset</code> וישן עד שהחלון נפתח.</p>
+
+      <h3>Port 8765 תפוס</h3>
+      <p>שחררו את הפורט (<code>lsof -i :8765</code>) או שנו את <code>PORT</code> בראש <code>auth.mjs</code> — אבל אז עדכנו גם את ה-Callback URI ב-X dev portal.</p>
+    </div>
+
+    <a href="../downloads/x-bookmarks-fetcher.zip" class="download-btn">⬇️ הורדת הסקיל</a>
+  </div>
+</body>
+</html>

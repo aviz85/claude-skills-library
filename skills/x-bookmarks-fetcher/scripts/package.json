@@ -1,0 +1,12 @@
+{
+  "name": "x-bookmarks-fetcher",
+  "version": "1.0.0",
+  "description": "Download X (Twitter) bookmarks via the official X API v2. Saves text + images + videos to a local folder.",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "auth": "node auth.mjs",
+    "fetch": "node fetch.mjs"
+  }
+}
