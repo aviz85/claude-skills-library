@@ -1,0 +1,13 @@
+{
+  "name": "live-transcribe",
+  "version": "1.0.0",
+  "description": "Real-time microphone transcription with ElevenLabs Scribe v2 Realtime. Start/stop/read live transcriptions with voice cues and fuzzy stop-phrase detection.",
+  "author": {
+    "name": "aviz",
+    "url": "https://github.com/aviz85"
+  },
+  "homepage": "https://github.com/aviz85/claude-skills-library",
+  "repository": "https://github.com/aviz85/claude-skills-library",
+  "license": "MIT",
+  "skills": "./skills/"
+}
