@@ -10,7 +10,7 @@ Stop a running real-time transcription session.
 ## Stop command
 
 ```bash
-bash <plugin-dir>/scripts/stop-transcribe.sh
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/stop-transcribe.sh
 ```
 
 Or simply:

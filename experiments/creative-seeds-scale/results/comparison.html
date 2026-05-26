@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Seeds — 4 Experiments, 480 Outputs</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e0e0e0; min-height: 100vh; padding: 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 1.8rem; margin-bottom: 0.3rem; color: #fff; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 2rem; font-size: 0.9rem; }
+
+  .experiments { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  @media (max-width: 768px) { .experiments { grid-template-columns: 1fr; } }
+
+  .exp-card { background: #13131a; border-radius: 16px; padding: 2rem; border: 1px solid #2a2a3a; text-align: center; }
+  .exp-card h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
+  .exp-card .result { font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0; }
+  .exp-card .detail { color: #888; font-size: 0.85rem; line-height: 1.8; }
+  .no-effect { color: #ff6b6b; }
+  .big-effect { color: #4ecdc4; }
+
+  .chart-container { background: #13131a; border-radius: 16px; padding: 2rem; margin-bottom: 2rem; border: 1px solid #2a2a3a; }
+  .chart-title { font-size: 1.2rem; margin-bottom: 1rem; color: #ccc; text-align: center; }
+
+  .bar-group { margin: 1.5rem 0; }
+  .bar-label { font-size: 0.9rem; color: #aaa; margin-bottom: 0.5rem; }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .bar-tag { width: 80px; font-size: 0.75rem; color: #888; text-align: left; flex-shrink: 0; }
+  .bar { height: 24px; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; font-size: 0.7rem; font-weight: 600; min-width: 30px; transition: width 0.5s; }
+  .bar.seeded { background: #4ecdc4; color: #0a0a0f; }
+  .bar.control { background: #ff6b6b; color: #0a0a0f; }
+  .bar.boosted { background: #ffd93d; color: #0a0a0f; }
+
+  .insight { background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 16px; padding: 2rem; border: 1px solid #2a2a4a; margin-bottom: 2rem; }
+  .insight h3 { margin-bottom: 1rem; color: #fff; }
+  .insight p { color: #aaa; line-height: 1.8; font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .insight .highlight { color: #4ecdc4; font-weight: 600; }
+  .insight .warning { color: #ffd93d; font-weight: 600; }
+  .insight .danger { color: #ff6b6b; font-weight: 600; }
+
+  .legend { display: flex; gap: 1.5rem; justify-content: center; margin: 1rem 0; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+  /* Pairwise win-rate bars */
+  .winrate-bar-bg { background: #2a2a3a; border-radius: 12px; height: 32px; position: relative; overflow: hidden; margin: 6px 0; }
+  .winrate-bar-fill { height: 100%; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; transition: width 0.6s ease; }
+  .winrate-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: #666; margin-top: 2px; }
+  .winrate-row { margin: 1rem 0; }
+  .winrate-row .task-name { font-size: 0.9rem; color: #aaa; margin-bottom: 4px; }
+  .winrate-row .sig { font-size: 0.7rem; color: #ffd93d; margin-right: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Creative Seeds A/B Test — Complete Results</h1>
+  <p class="subtitle">480 outputs total · Haiku 4.5 · 4 experiments · 3 rounds × 4 tasks × 5 trials each</p>
+
+  <div class="experiments">
+    <div class="exp-card">
+      <h3>Exp 1: Passive Exposure</h3>
+      <div class="detail">Seeds present without any instruction</div>
+      <div class="result no-effect">No Effect</div>
+      <div class="detail">
+        Seeded: 7.62 · Control: 7.64<br>
+        Delta: -0.02 · d = -0.017 · p = 0.925
+      </div>
+    </div>
+    <div class="exp-card">
+      <h3>Exp 2: Active Exposure</h3>
+      <div class="detail">Seeds + "use these to inspire your thinking"</div>
+      <div class="result big-effect">Huge Effect*</div>
+      <div class="detail">
+        Seeded: 7.99 · Control: 6.11<br>
+        Delta: +1.88 · d = 1.894 · p < 0.001<br>
+        <span style="color:#ffd93d">*Confounded — judge not truly blind</span>
+      </div>
+    </div>
+    <div class="exp-card">
+      <h3>Exp 3: Seeds vs "Be Creative!"</h3>
+      <div class="detail">Seeds + instruction vs "be creative!" instruction</div>
+      <div class="result" style="color:#ffd93d">"Be Creative!" Wins</div>
+      <div class="detail">
+        Seeds: 7.23 · "Be Creative!": 7.82<br>
+        Delta: -0.58 · d = -0.765 · p < 0.001<br>
+        <span style="color:#ff6b6b">Seeds LOSE to a simple instruction</span>
+      </div>
+    </div>
+    <div class="exp-card">
+      <h3>Exp 4: Seeds+Creative vs Creative</h3>
+      <div class="detail">Both get "be creative!" — one also gets seeds<br>Blind pairwise judging (forced choice)</div>
+      <div class="result" style="color:#4ecdc4">Task-Dependent</div>
+      <div class="detail">
+        Seeds win: 63.3% (38/60) · p = 0.052<br>
+        <span style="color:#ff6b6b">Brand Names: 27% (seeds hurt)</span><br>
+        <span style="color:#4ecdc4">Out-of-Office: 93% (seeds dominate, p=0.001)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exp 1-2: Passive vs Active bar charts -->
+  <div class="chart-container">
+    <div class="chart-title">Exp 1-2: Per-Task — Passive vs Active Exposure</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#4ecdc4"></div> Seeded</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ff6b6b"></div> Control</div>
+    </div>
+
+    <div class="bar-group">
+      <div class="bar-label">T1: Brand Names</div>
+      <div class="bar-row"><div class="bar-tag">Passive S</div><div class="bar seeded" style="width: calc(8.04 / 10 * 80%)">8.04</div></div>
+      <div class="bar-row"><div class="bar-tag">Passive C</div><div class="bar control" style="width: calc(7.47 / 10 * 80%)">7.47</div></div>
+      <div class="bar-row"><div class="bar-tag">Active S</div><div class="bar seeded" style="width: calc(7.85 / 10 * 80%)">7.85</div></div>
+      <div class="bar-row"><div class="bar-tag">Active C</div><div class="bar control" style="width: calc(6.20 / 10 * 80%)">6.20</div></div>
+    </div>
+
+    <div class="bar-group">
+      <div class="bar-label">T2: Describe Hope</div>
+      <div class="bar-row"><div class="bar-tag">Passive S</div><div class="bar seeded" style="width: calc(7.69 / 10 * 80%)">7.69</div></div>
+      <div class="bar-row"><div class="bar-tag">Passive C</div><div class="bar control" style="width: calc(7.78 / 10 * 80%)">7.78</div></div>
+      <div class="bar-row"><div class="bar-tag">Active S</div><div class="bar seeded" style="width: calc(8.29 / 10 * 80%)">8.29</div></div>
+      <div class="bar-row"><div class="bar-tag">Active C</div><div class="bar control" style="width: calc(7.01 / 10 * 80%)">7.01</div></div>
+    </div>
+
+    <div class="bar-group">
+      <div class="bar-label">T3: Out-of-Office</div>
+      <div class="bar-row"><div class="bar-tag">Passive S</div><div class="bar seeded" style="width: calc(7.24 / 10 * 80%)">7.24</div></div>
+      <div class="bar-row"><div class="bar-tag">Passive C</div><div class="bar control" style="width: calc(7.44 / 10 * 80%)">7.44</div></div>
+      <div class="bar-row"><div class="bar-tag">Active S</div><div class="bar seeded" style="width: calc(7.62 / 10 * 80%)">7.62</div></div>
+      <div class="bar-row"><div class="bar-tag">Active C</div><div class="bar control" style="width: calc(4.17 / 10 * 80%)">4.17</div></div>
+    </div>
+
+    <div class="bar-group">
+      <div class="bar-label">T4: New Ritual</div>
+      <div class="bar-row"><div class="bar-tag">Passive S</div><div class="bar seeded" style="width: calc(7.51 / 10 * 80%)">7.51</div></div>
+      <div class="bar-row"><div class="bar-tag">Passive C</div><div class="bar control" style="width: calc(7.87 / 10 * 80%)">7.87</div></div>
+      <div class="bar-row"><div class="bar-tag">Active S</div><div class="bar seeded" style="width: calc(8.19 / 10 * 80%)">8.19</div></div>
+      <div class="bar-row"><div class="bar-tag">Active C</div><div class="bar control" style="width: calc(7.05 / 10 * 80%)">7.05</div></div>
+    </div>
+  </div>
+
+  <!-- Exp 3: Seeds vs Be Creative -->
+  <div class="chart-container">
+    <div class="chart-title">Exp 3: Seeds vs "Be Creative!" — Per Task</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#4ecdc4"></div> Seeds</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ffd93d"></div> "Be Creative!"</div>
+    </div>
+    <div class="bar-group">
+      <div class="bar-label">T1: Brand Names (p=0.030*)</div>
+      <div class="bar-row"><div class="bar-tag">Seeds</div><div class="bar seeded" style="width: calc(6.91 / 10 * 80%)">6.91</div></div>
+      <div class="bar-row"><div class="bar-tag">Creative!</div><div class="bar boosted" style="width: calc(7.28 / 10 * 80%)">7.28</div></div>
+    </div>
+    <div class="bar-group">
+      <div class="bar-label">T2: Describe Hope (p=0.206)</div>
+      <div class="bar-row"><div class="bar-tag">Seeds</div><div class="bar seeded" style="width: calc(7.96 / 10 * 80%)">7.96</div></div>
+      <div class="bar-row"><div class="bar-tag">Creative!</div><div class="bar boosted" style="width: calc(8.19 / 10 * 80%)">8.19</div></div>
+    </div>
+    <div class="bar-group">
+      <div class="bar-label">T3: Out-of-Office (p=0.010*)</div>
+      <div class="bar-row"><div class="bar-tag">Seeds</div><div class="bar seeded" style="width: calc(6.73 / 10 * 80%)">6.73</div></div>
+      <div class="bar-row"><div class="bar-tag">Creative!</div><div class="bar boosted" style="width: calc(7.43 / 10 * 80%)">7.43</div></div>
+    </div>
+    <div class="bar-group">
+      <div class="bar-label">T4: New Ritual (p<0.001***)</div>
+      <div class="bar-row"><div class="bar-tag">Seeds</div><div class="bar seeded" style="width: calc(7.33 / 10 * 80%)">7.33</div></div>
+      <div class="bar-row"><div class="bar-tag">Creative!</div><div class="bar boosted" style="width: calc(8.36 / 10 * 80%)">8.36</div></div>
+    </div>
+  </div>
+
+  <!-- Exp 4: Pairwise win rates -->
+  <div class="chart-container">
+    <div class="chart-title">Exp 4: Blind Pairwise — Seeds Win Rate per Task</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#4ecdc4"></div> Seeds win %</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ff6b6b"></div> Control win %</div>
+      <div class="legend-item" style="color:#ffd93d; font-size:0.75rem">50% = no effect</div>
+    </div>
+
+    <div class="winrate-row">
+      <div class="task-name">T1: Brand Names — 4/15 (27%) <span class="sig">seeds hurt</span></div>
+      <div class="winrate-bar-bg">
+        <div class="winrate-bar-fill" style="width: 27%; background: linear-gradient(90deg, #ff6b6b, #ff6b6b);">27%</div>
+      </div>
+      <div class="winrate-label"><span>Seeds</span><span>Control</span></div>
+    </div>
+
+    <div class="winrate-row">
+      <div class="task-name">T2: Describe Hope — 9/15 (60%)</div>
+      <div class="winrate-bar-bg">
+        <div class="winrate-bar-fill" style="width: 60%; background: linear-gradient(90deg, #4ecdc4, #4ecdc4);">60%</div>
+      </div>
+      <div class="winrate-label"><span>Seeds</span><span>Control</span></div>
+    </div>
+
+    <div class="winrate-row">
+      <div class="task-name">T3: Out-of-Office — 14/15 (93%) <span class="sig">p=0.001 ***</span></div>
+      <div class="winrate-bar-bg">
+        <div class="winrate-bar-fill" style="width: 93%; background: linear-gradient(90deg, #4ecdc4, #4ecdc4);">93%</div>
+      </div>
+      <div class="winrate-label"><span>Seeds</span><span>Control</span></div>
+    </div>
+
+    <div class="winrate-row">
+      <div class="task-name">T4: New Ritual — 11/15 (73%)</div>
+      <div class="winrate-bar-bg">
+        <div class="winrate-bar-fill" style="width: 73%; background: linear-gradient(90deg, #4ecdc4, #4ecdc4);">73%</div>
+      </div>
+      <div class="winrate-label"><span>Seeds</span><span>Control</span></div>
+    </div>
+
+    <div style="text-align:center; margin-top:1.5rem; padding-top:1rem; border-top:1px solid #2a2a3a;">
+      <div style="font-size:1.4rem; font-weight:800; color:#4ecdc4;">Overall: 38/60 (63.3%)</div>
+      <div style="color:#888; font-size:0.85rem;">p = 0.052 (borderline) · Position bias: 30/30 (none)</div>
+    </div>
+  </div>
+
+  <!-- Final Verdict -->
+  <div class="insight">
+    <h3>Final Verdict — 4 Experiments</h3>
+    <p><span class="highlight">Exp 1 — Passive seeds:</span> Zero effect (d=-0.02, p=0.925). Seeds as silent context do nothing.</p>
+    <p><span class="highlight">Exp 2 — Active seeds vs plain:</span> Huge effect (d=1.89, p<0.001) but confounded — judge not truly blind, outputs reference seed content directly.</p>
+    <p><span class="warning">Exp 3 — Seeds vs "Be Creative!":</span> "Be creative!" BEATS seeds (d=-0.77, p<0.001). Seeds lose on 4/4 tasks.</p>
+    <p><span class="highlight">Exp 4 — Seeds+Creative vs Creative (blind pairwise):</span> Seeds win 63.3% overall (p=0.052, borderline). <span class="danger">Strongly task-dependent:</span> seeds hurt brand names (27%) but dominate out-of-office emails (93%, p=0.001).</p>
+    <p style="color: #fff; font-weight: 600; margin-top: 1rem; border-top: 1px solid #2a2a4a; padding-top: 1rem;">
+      Bottom line: Creative seeds have a <span class="highlight">task-dependent effect</span>. They help most on tasks that benefit from unexpected metaphors and narrative framing (emails, descriptions), but hurt on tasks needing focused precision (naming). For generic creative tasks, simply saying "be wildly creative" is equally effective and much simpler.
+    </p>
+    <p style="color: #888; font-size: 0.85rem; margin-top: 1rem; background: rgba(78,205,196,0.08); padding: 1rem; border-radius: 8px; border-right: 3px solid #4ecdc4;">
+      <span class="highlight">Signal worth noting:</span> The tasks were ordered by output length — Brand Names (shortest, list) → Describe Hope (paragraph) → New Ritual (paragraph+) → Out-of-Office (full email). Seeds' win rate increases almost perfectly with output length: 27% → 60% → 73% → 93%. This suggests seeds may be most effective on longer, narrative-heavy tasks where there's more "room" for unexpected metaphors to shape the output. All 4 tasks were still relatively short — seeds might have even stronger effects on long-form creative writing.
+    </p>
+  </div>
+</div>
+</body>
+</html>

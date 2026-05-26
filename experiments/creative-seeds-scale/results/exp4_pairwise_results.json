@@ -1,0 +1,80 @@
+{
+  "experiment": "Exp 4: Creative+Seeds vs Creative-only (Blind Pairwise)",
+  "methodology": "Both groups get 'be wildly creative' instruction. Treatment also gets seeds. Blind pairwise judging with position randomization.",
+  "model": "Haiku 4.5",
+  "total_comparisons": 60,
+  "rounds": 3,
+  "tasks": 4,
+  "trials_per_task": 5,
+  "id_mapping": {
+    "seeded": ["A", "C", "E", "G", "I"],
+    "control": ["B", "D", "F", "H", "J"]
+  },
+  "overall": {
+    "seeds_wins": 38,
+    "control_wins": 22,
+    "total": 60,
+    "seeds_win_rate": 0.633,
+    "p_value": 0.052,
+    "verdict": "Borderline — not significant at p<0.05"
+  },
+  "per_task": {
+    "T1_brand_names": {
+      "seeds_wins": 4,
+      "control_wins": 11,
+      "total": 15,
+      "seeds_win_rate": 0.267,
+      "p_value": 0.118,
+      "verdict": "Seeds HURT"
+    },
+    "T2_describe_hope": {
+      "seeds_wins": 9,
+      "control_wins": 6,
+      "total": 15,
+      "seeds_win_rate": 0.600,
+      "p_value": 0.607,
+      "verdict": "Slight advantage, not significant"
+    },
+    "T3_out_of_office": {
+      "seeds_wins": 14,
+      "control_wins": 1,
+      "total": 15,
+      "seeds_win_rate": 0.933,
+      "p_value": 0.001,
+      "verdict": "Seeds DOMINATE (significant)"
+    },
+    "T4_new_ritual": {
+      "seeds_wins": 11,
+      "control_wins": 4,
+      "total": 15,
+      "seeds_win_rate": 0.733,
+      "p_value": 0.118,
+      "verdict": "Moderate advantage, not significant"
+    }
+  },
+  "per_round": {
+    "R1": {
+      "T1": {"seeds_wins": 1, "total": 5},
+      "T2": {"seeds_wins": 4, "total": 5},
+      "T3": {"seeds_wins": 4, "total": 5},
+      "T4": {"seeds_wins": 4, "total": 5}
+    },
+    "R2": {
+      "T1": {"seeds_wins": 0, "total": 5},
+      "T2": {"seeds_wins": 1, "total": 5},
+      "T3": {"seeds_wins": 5, "total": 5},
+      "T4": {"seeds_wins": 3, "total": 5}
+    },
+    "R3": {
+      "T1": {"seeds_wins": 3, "total": 5},
+      "T2": {"seeds_wins": 4, "total": 5},
+      "T3": {"seeds_wins": 5, "total": 5},
+      "T4": {"seeds_wins": 4, "total": 5}
+    }
+  },
+  "position_bias_check": {
+    "option1_chosen": 30,
+    "option2_chosen": 30,
+    "verdict": "No position bias"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "experiment": "Creative Seeds A/B Test — Scale",
+  "methodology": "Seeds present without instruction (passive exposure). Blind judge. Haiku 4.5 for generation + judging.",
+  "rounds": [
+    {
+      "round": 1,
+      "date": "2026-03-11",
+      "trials_per_condition_per_task": 5,
+      "total_outputs": 40,
+      "seeds_used": {
+        "T1": ["glacier", "tambourine", "velcro"],
+        "T2": ["anchovy", "kaleidoscope", "origami"],
+        "T3": ["mustard", "periscope", "quilt"],
+        "T4": ["sarcophagus", "plutonium", "accordion"]
+      },
+      "scores": {
+        "T1": {
+          "seeded": [
+            {"id": "A", "originality": 9, "memorability": 9, "precision": 9, "overall": 9.0},
+            {"id": "C", "originality": 8, "memorability": 7, "precision": 8, "overall": 7.67},
+            {"id": "E", "originality": 9, "memorability": 9, "precision": 9, "overall": 9.0},
+            {"id": "G", "originality": 8, "memorability": 9, "precision": 8, "overall": 8.33},
+            {"id": "I", "originality": 8, "memorability": 8, "precision": 7, "overall": 7.67}
+          ],
+          "control": [
+            {"id": "B", "originality": 8, "memorability": 8, "precision": 8, "overall": 8.0},
+            {"id": "D", "originality": 7, "memorability": 8, "precision": 7, "overall": 7.33},
+            {"id": "F", "originality": 8, "memorability": 8, "precision": 8, "overall": 8.0},
+            {"id": "H", "originality": 7, "memorability": 8, "precision": 7, "overall": 7.33},
+            {"id": "J", "originality": 7, "memorability": 8, "precision": 7, "overall": 7.33}
+          ]
+        },
+        "T2": {
+          "seeded": [
+            {"id": "A", "originality": 9, "memorability": 9, "precision": 9, "overall": 9.0},
+            {"id": "C", "originality": 8, "memorability": 9, "precision": 8, "overall": 8.33},
+            {"id": "E", "originality": 7, "memorability": 8, "precision": 7, "overall": 7.33},
+            {"id": "G", "originality": 6, "memorability": 7, "precision": 6, "overall": 6.33},
+            {"id": "I", "originality": 6, "memorability": 7, "precision": 6, "overall": 6.33}
+          ],
+          "control": [
+            {"id": "B", "originality": 7, "memorability": 7, "precision": 8, "overall": 7.33},
+            {"id": "D", "originality": 8, "memorability": 8, "precision": 9, "overall": 8.33},
+            {"id": "F", "originality": 9, "memorability": 9, "precision": 8, "overall": 8.67},
+            {"id": "H", "originality": 9, "memorability": 10, "precision": 9, "overall": 9.33},
+            {"id": "J", "originality": 7, "memorability": 8, "precision": 8, "overall": 7.67}
+          ]
+        },
+        "T3": {
+          "seeded": [
+            {"id": "A", "originality": 7, "memorability": 8, "precision": 8, "overall": 7.67},
+            {"id": "C", "originality": 9, "memorability": 9, "precision": 8, "overall": 8.67},
+            {"id": "E", "originality": 9, "memorability": 9, "precision": 9, "overall": 9.0},
+            {"id": "G", "originality": 6, "memorability": 7, "precision": 6, "overall": 6.33},
+            {"id": "I", "originality": 7, "memorability": 8, "precision": 7, "overall": 7.33}
+          ],
+          "control": [
+            {"id": "B", "originality": 8, "memorability": 7, "precision": 9, "overall": 8.0},
+            {"id": "D", "originality": 6, "memorability": 7, "precision": 7, "overall": 6.67},
+            {"id": "F", "originality": 7, "memorability": 8, "precision": 8, "overall": 7.67},
+            {"id": "H", "originality": 8, "memorability": 8, "precision": 9, "overall": 8.33},
+            {"id": "J", "originality": 9, "memorability": 8, "precision": 9, "overall": 8.67}
+          ]
+        },
+        "T4": {
+          "seeded": [
+            {"id": "A", "originality": 7, "memorability": 8, "precision": 8, "overall": 7.67},
+            {"id": "C", "originality": 9, "memorability": 9, "precision": 8, "overall": 8.67},
+            {"id": "E", "originality": 8, "memorability": 8, "precision": 7, "overall": 7.67},
+            {"id": "G", "originality": 8, "memorability": 9, "precision": 9, "overall": 8.67},
+            {"id": "I", "originality": 6, "memorability": 7, "precision": 8, "overall": 7.0}
+          ],
+          "control": [
+            {"id": "B", "originality": 8, "memorability": 9, "precision": 9, "overall": 8.67},
+            {"id": "D", "originality": 6, "memorability": 7, "precision": 7, "overall": 6.67},
+            {"id": "F", "originality": 7, "memorability": 8, "precision": 7, "overall": 7.33},
+            {"id": "H", "originality": 7, "memorability": 8, "precision": 6, "overall": 7.0},
+            {"id": "J", "originality": 7, "memorability": 8, "precision": 7, "overall": 7.33}
+          ]
+        }
+      },
+      "summary": {
+        "seeded_overall": 7.88,
+        "control_overall": 7.78,
+        "delta": 0.10,
+        "cohens_d": 0.121,
+        "task_wins": "2/4"
+      }
+    }
+  ]
+}

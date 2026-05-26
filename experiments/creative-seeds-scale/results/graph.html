@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Seeds Experiment — Results</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e0e0e0; min-height: 100vh; padding: 2rem; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 1.8rem; margin-bottom: 0.3rem; color: #fff; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 2rem; font-size: 0.9rem; }
+
+  .chart-container { background: #13131a; border-radius: 16px; padding: 2rem; margin-bottom: 2rem; border: 1px solid #2a2a3a; }
+  .chart-title { font-size: 1.2rem; margin-bottom: 1.5rem; color: #ccc; text-align: center; }
+
+  canvas { width: 100%; }
+
+  .verdict { background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 16px; padding: 2rem; text-align: center; border: 1px solid #2a2a4a; margin-bottom: 2rem; }
+  .verdict h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+  .verdict .result { font-size: 3rem; font-weight: 800; margin: 1rem 0; }
+  .verdict .null { color: #ff6b6b; }
+  .verdict .detail { color: #888; font-size: 0.9rem; line-height: 1.8; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card { background: #13131a; border-radius: 12px; padding: 1.5rem; text-align: center; border: 1px solid #2a2a3a; }
+  .stat-card .value { font-size: 2rem; font-weight: 700; margin: 0.5rem 0; }
+  .stat-card .label { color: #888; font-size: 0.8rem; }
+  .seeded-color { color: #4ecdc4; }
+  .control-color { color: #ff6b6b; }
+  .neutral-color { color: #ffd93d; }
+
+  .task-bars { background: #13131a; border-radius: 16px; padding: 2rem; border: 1px solid #2a2a3a; margin-bottom: 2rem; }
+  .task-row { display: flex; align-items: center; margin: 1rem 0; gap: 1rem; }
+  .task-label { width: 130px; font-size: 0.85rem; color: #aaa; text-align: left; flex-shrink: 0; }
+  .bar-container { flex: 1; display: flex; gap: 4px; align-items: center; }
+  .bar { height: 28px; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; font-size: 0.75rem; font-weight: 600; min-width: 40px; }
+  .bar.seeded { background: #4ecdc4; color: #0a0a0f; }
+  .bar.control { background: #ff6b6b; color: #0a0a0f; }
+  .sig-marker { color: #ffd93d; font-weight: 700; font-size: 1.2rem; }
+
+  .legend { display: flex; gap: 2rem; justify-content: center; margin-bottom: 1rem; }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+  .methodology { background: #13131a; border-radius: 16px; padding: 2rem; border: 1px solid #2a2a3a; }
+  .methodology h3 { margin-bottom: 1rem; color: #ccc; }
+  .methodology ul { list-style: none; color: #888; line-height: 2; font-size: 0.85rem; }
+  .methodology ul li::before { content: "→ "; color: #4ecdc4; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Creative Seeds A/B Test</h1>
+  <p class="subtitle">120 outputs · 3 rounds · Haiku 4.5 · Passive exposure · Blind judging</p>
+
+  <div class="verdict">
+    <h2>Experiment Verdict</h2>
+    <div class="result null">No Effect Detected</div>
+    <div class="detail">
+      Δ = -0.02 &nbsp;|&nbsp; Cohen's d = -0.017 (negligible) &nbsp;|&nbsp; p = 0.925<br>
+      With 120 outputs across 3 rounds, passive seed exposure shows no statistically significant effect on creative output quality.
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="label">Seeded Mean</div>
+      <div class="value seeded-color">7.62</div>
+      <div class="label">n = 60</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Control Mean</div>
+      <div class="value control-color">7.64</div>
+      <div class="label">n = 60</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Delta</div>
+      <div class="value neutral-color">-0.02</div>
+      <div class="label">negligible</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">p-value</div>
+      <div class="value" style="color: #888;">0.925</div>
+      <div class="label">not significant</div>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">Cumulative Effect by Experiment Size</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#4ecdc4"></div> Seeded</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ff6b6b"></div> Control</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ffd93d"></div> Delta</div>
+    </div>
+    <canvas id="mainChart" height="300"></canvas>
+  </div>
+
+  <div class="task-bars">
+    <div class="chart-title">Per-Task Results (All Rounds Combined, n=15 each)</div>
+    <div class="legend" style="margin-bottom: 1.5rem;">
+      <div class="legend-item"><div class="legend-dot" style="background:#4ecdc4"></div> Seeded</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ff6b6b"></div> Control</div>
+      <div class="legend-item" style="color:#ffd93d">* = p &lt; 0.05</div>
+    </div>
+    <div class="task-row">
+      <div class="task-label">T1: Brand Names</div>
+      <div class="bar-container">
+        <div class="bar seeded" style="width: calc(8.04 / 10 * 100%)">8.04</div>
+        <div class="bar control" style="width: calc(7.47 / 10 * 100%)">7.47</div>
+        <span class="sig-marker">*</span>
+      </div>
+    </div>
+    <div class="task-row">
+      <div class="task-label">T2: Describe Hope</div>
+      <div class="bar-container">
+        <div class="bar seeded" style="width: calc(7.69 / 10 * 100%)">7.69</div>
+        <div class="bar control" style="width: calc(7.78 / 10 * 100%)">7.78</div>
+      </div>
+    </div>
+    <div class="task-row">
+      <div class="task-label">T3: Out-of-Office</div>
+      <div class="bar-container">
+        <div class="bar seeded" style="width: calc(7.24 / 10 * 100%)">7.24</div>
+        <div class="bar control" style="width: calc(7.44 / 10 * 100%)">7.44</div>
+      </div>
+    </div>
+    <div class="task-row">
+      <div class="task-label">T4: New Ritual</div>
+      <div class="bar-container">
+        <div class="bar seeded" style="width: calc(7.51 / 10 * 100%)">7.51</div>
+        <div class="bar control" style="width: calc(7.87 / 10 * 100%)">7.87</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">Score Distributions</div>
+    <canvas id="distChart" height="250"></canvas>
+  </div>
+
+  <div class="methodology">
+    <h3>Methodology</h3>
+    <ul>
+      <li>3 rounds × 4 tasks × 5 trials × 2 conditions = 120 total outputs</li>
+      <li>Seeds placed in prompt WITHOUT any instruction (passive exposure only)</li>
+      <li>Each round used different random seeds from the 50 available</li>
+      <li>Judge was blind — outputs shuffled with no condition labels</li>
+      <li>Same model (Haiku 4.5) for generation AND judging</li>
+      <li>Scoring: Originality + Memorability + Precision (1-10), averaged</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// ── Main Chart: Cumulative means + delta ──
+const mainCanvas = document.getElementById('mainChart');
+const ctx = mainCanvas.getContext('2d');
+
+const data = [
+  { label: 'R1 (N=40)', seeded: 7.88, control: 7.78, delta: 0.10 },
+  { label: 'R1+R2 (N=80)', seeded: 7.70, control: 7.64, delta: 0.06 },
+  { label: 'R1+R2+R3 (N=120)', seeded: 7.62, control: 7.64, delta: -0.02 },
+];
+
+function drawMainChart() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = mainCanvas.getBoundingClientRect();
+  mainCanvas.width = rect.width * dpr;
+  mainCanvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+
+  const W = rect.width, H = rect.height;
+  const pad = { top: 30, right: 80, bottom: 50, left: 60 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+
+  // Y-axis range for means
+  const yMin = 7.0, yMax = 8.2;
+  const toY = v => pad.top + ch * (1 - (v - yMin) / (yMax - yMin));
+
+  // Clear
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid
+  ctx.strokeStyle = '#2a2a3a';
+  ctx.lineWidth = 1;
+  for (let v = yMin; v <= yMax; v += 0.2) {
+    const y = toY(v);
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = '#666'; ctx.font = '11px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(v.toFixed(1), pad.left - 8, y + 4);
+  }
+
+  // X positions
+  const xs = data.map((_, i) => pad.left + (i / (data.length - 1)) * cw);
+
+  // Lines
+  function drawLine(values, color) {
+    ctx.strokeStyle = color; ctx.lineWidth = 3;
+    ctx.beginPath();
+    values.forEach((v, i) => {
+      const x = xs[i], y = toY(v);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    // Dots
+    values.forEach((v, i) => {
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(xs[i], toY(v), 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(v.toFixed(2), xs[i], toY(v) - 14);
+    });
+  }
+
+  drawLine(data.map(d => d.seeded), '#4ecdc4');
+  drawLine(data.map(d => d.control), '#ff6b6b');
+
+  // Delta annotations
+  data.forEach((d, i) => {
+    ctx.fillStyle = '#ffd93d'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+    const midY = (toY(d.seeded) + toY(d.control)) / 2;
+    ctx.fillText(`Δ=${d.delta >= 0 ? '+' : ''}${d.delta.toFixed(2)}`, xs[i] + 45, midY);
+  });
+
+  // X labels
+  ctx.fillStyle = '#888'; ctx.font = '12px sans-serif'; ctx.textAlign = 'center';
+  data.forEach((d, i) => ctx.fillText(d.label, xs[i], H - pad.bottom + 25));
+
+  // Right labels
+  ctx.fillStyle = '#4ecdc4'; ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('Seeded', W - pad.right + 10, toY(data[2].seeded) + 4);
+  ctx.fillStyle = '#ff6b6b';
+  ctx.fillText('Control', W - pad.right + 10, toY(data[2].control) + 4);
+}
+
+// ── Distribution Chart ──
+const distCanvas = document.getElementById('distChart');
+const ctx2 = distCanvas.getContext('2d');
+
+const seededDist = { 5: 2, 6: 10, 7: 9, 8: 25, 9: 14 };
+const controlDist = { 5: 1, 6: 6, 7: 17, 8: 26, 9: 9, 10: 1 };
+
+function drawDistChart() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = distCanvas.getBoundingClientRect();
+  distCanvas.width = rect.width * dpr;
+  distCanvas.height = rect.height * dpr;
+  ctx2.scale(dpr, dpr);
+
+  const W = rect.width, H = rect.height;
+  const pad = { top: 20, right: 30, bottom: 40, left: 50 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+
+  ctx2.clearRect(0, 0, W, H);
+
+  const scores = [5, 6, 7, 8, 9, 10];
+  const maxCount = 26;
+  const barW = cw / scores.length;
+  const gap = barW * 0.15;
+  const halfBar = (barW - gap * 3) / 2;
+
+  // Grid
+  ctx2.strokeStyle = '#2a2a3a'; ctx2.lineWidth = 1;
+  for (let c = 0; c <= 30; c += 5) {
+    const y = pad.top + ch * (1 - c / 30);
+    ctx2.beginPath(); ctx2.moveTo(pad.left, y); ctx2.lineTo(W - pad.right, y); ctx2.stroke();
+    ctx2.fillStyle = '#666'; ctx2.font = '11px sans-serif'; ctx2.textAlign = 'right';
+    ctx2.fillText(c, pad.left - 8, y + 4);
+  }
+
+  scores.forEach((score, i) => {
+    const x = pad.left + i * barW;
+    const sCount = seededDist[score] || 0;
+    const cCount = controlDist[score] || 0;
+
+    // Seeded bar
+    const sH = (sCount / 30) * ch;
+    ctx2.fillStyle = '#4ecdc4';
+    ctx2.fillRect(x + gap, pad.top + ch - sH, halfBar, sH);
+    if (sCount) {
+      ctx2.fillStyle = '#4ecdc4'; ctx2.font = '10px sans-serif'; ctx2.textAlign = 'center';
+      ctx2.fillText(sCount, x + gap + halfBar / 2, pad.top + ch - sH - 5);
+    }
+
+    // Control bar
+    const cH = (cCount / 30) * ch;
+    ctx2.fillStyle = '#ff6b6b';
+    ctx2.fillRect(x + gap * 2 + halfBar, pad.top + ch - cH, halfBar, cH);
+    if (cCount) {
+      ctx2.fillStyle = '#ff6b6b'; ctx2.font = '10px sans-serif'; ctx2.textAlign = 'center';
+      ctx2.fillText(cCount, x + gap * 2 + halfBar + halfBar / 2, pad.top + ch - cH - 5);
+    }
+
+    // X label
+    ctx2.fillStyle = '#888'; ctx2.font = '12px sans-serif'; ctx2.textAlign = 'center';
+    ctx2.fillText(score, x + barW / 2, H - pad.bottom + 20);
+  });
+}
+
+drawMainChart();
+drawDistChart();
+window.addEventListener('resize', () => { drawMainChart(); drawDistChart(); });
+</script>
+</body>
+</html>

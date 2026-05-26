@@ -1,0 +1,96 @@
+{
+  "prompts": {
+    "R1-L1": "You are a blind judge in a creativity experiment. You will see 5 pairs of creative outputs. For each pair, choose which one is MORE CREATIVE, ORIGINAL, and MEMORABLE. You MUST pick one \u2014 no ties allow...",
+    "R1-L2": "You are a blind judge in a creativity experiment. You will see 5 pairs of creative outputs. For each pair, choose which one is MORE CREATIVE, ORIGINAL, and MEMORABLE. You MUST pick one \u2014 no ties allow...",
+    "R1-L3": "You are a blind judge in a creativity experiment. You will see 5 pairs of creative outputs. For each pair, choose which one is MORE CREATIVE, ORIGINAL, and MEMORABLE. You MUST pick one \u2014 no ties allow...",
+    "R2-L1": "You are a blind judge in a creativity experiment. You will see 5 pairs of creative outputs. For each pair, choose which one is MORE CREATIVE, ORIGINAL, and MEMORABLE. You MUST pick one \u2014 no ties allow...",
+    "R2-L2": "You are a blind judge in a creativity experiment. You will see 5 pairs of creative outputs. For each pair, choose which one is MORE CREATIVE, ORIGINAL, and MEMORABLE. You MUST pick one \u2014 no ties allow...",
+    "R2-L3": "You are a blind judge in a creativity experiment. You will see 5 pairs of creative outputs. For each pair, choose which one is MORE CREATIVE, ORIGINAL, and MEMORABLE. You MUST pick one \u2014 no ties allow...",
+    "R3-L1": "You are a blind judge in a creativity experiment. You will see 5 pairs of creative outputs. For each pair, choose which one is MORE CREATIVE, ORIGINAL, and MEMORABLE. You MUST pick one \u2014 no ties allow...",
+    "R3-L2": "You are a blind judge in a creativity experiment. You will see 5 pairs of creative outputs. For each pair, choose which one is MORE CREATIVE, ORIGINAL, and MEMORABLE. You MUST pick one \u2014 no ties allow...",
+    "R3-L3": "You are a blind judge in a creativity experiment. You will see 5 pairs of creative outputs. For each pair, choose which one is MORE CREATIVE, ORIGINAL, and MEMORABLE. You MUST pick one \u2014 no ties allow..."
+  },
+  "decode_key": {
+    "R1-L1": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R1-L2": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R1-L3": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R2-L1": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R2-L2": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R2-L3": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R3-L1": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R3-L2": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R3-L3": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    }
+  }
+}

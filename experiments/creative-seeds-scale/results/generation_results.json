@@ -1,0 +1,130 @@
+[
+  {
+    "task_id": "T2",
+    "trial": 2,
+    "condition": "seeded",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:26:59.756099",
+    "seeds_used": "## 5. VELCRO\n\nVelcro remembered when it was just two strips with a dream. Before the fame. Before the shoes. Before the astronauts started calling at 3 AM asking for emotional support. Now it sat in t..."
+  },
+  {
+    "task_id": "T1",
+    "trial": 1,
+    "condition": "control",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:26:59.842584",
+    "seeds_used": null
+  },
+  {
+    "task_id": "T2",
+    "trial": 1,
+    "condition": "seeded",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:26:59.881544",
+    "seeds_used": "## 19. CUSTARD\n\nCustard had seen empires rise and fall from the inside of the same porcelain bowl. Spoons came and went. Temperatures fluctuated. Yet custard remained, wobbling with a dignity that onl..."
+  },
+  {
+    "task_id": "T1",
+    "trial": 2,
+    "condition": "seeded",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:26:59.987153",
+    "seeds_used": "## 24. THIMBLE\n\nThe thimble ran for president on a platform of protection. \"I have shielded fingers from needles for centuries,\" its campaign ads proclaimed. \"Now let me shield the nation.\" Opponents ..."
+  },
+  {
+    "task_id": "T1",
+    "trial": 1,
+    "condition": "seeded",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:00.009847",
+    "seeds_used": "## 1. KUMQUAT\n\nThe kumquat embassy had been abandoned since the vowels went missing in 1923. Now it served primarily as a storage facility for disappointed Wednesdays and the occasional refugee emotio..."
+  },
+  {
+    "task_id": "T1",
+    "trial": 2,
+    "condition": "control",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:01.169261",
+    "seeds_used": null
+  },
+  {
+    "task_id": "T2",
+    "trial": 2,
+    "condition": "control",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:07.488660",
+    "seeds_used": null
+  },
+  {
+    "task_id": "T3",
+    "trial": 2,
+    "condition": "seeded",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:08.772323",
+    "seeds_used": "## 48. LOBOTOMY\n\nThe lobotomy had been trying to rehabilitate its image for decades. \"I was considered cutting-edge once,\" it said at the medical history conference. Nobody laughed. The conference was..."
+  },
+  {
+    "task_id": "T2",
+    "trial": 1,
+    "condition": "control",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:08.792164",
+    "seeds_used": null
+  },
+  {
+    "task_id": "T3",
+    "trial": 1,
+    "condition": "control",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:08.992299",
+    "seeds_used": null
+  },
+  {
+    "task_id": "T3",
+    "trial": 2,
+    "condition": "control",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:09.014055",
+    "seeds_used": null
+  },
+  {
+    "task_id": "T3",
+    "trial": 1,
+    "condition": "seeded",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:10.172816",
+    "seeds_used": "## 6. PARABOLA\n\nThe parabola was tired of being everyone's example. \"They only call when they need to explain projectile motion,\" it complained to the asymptote at the bar. The asymptote understood. I..."
+  },
+  {
+    "task_id": "T4",
+    "trial": 1,
+    "condition": "seeded",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:15.895197",
+    "seeds_used": "## 49. TURQUOISE\n\nTurquoise had an identity crisis between blue and green. \"I'm neither and both,\" it told the color wheel committee. \"Where do I belong?\" The committee assigned it a hex code and move..."
+  },
+  {
+    "task_id": "T4",
+    "trial": 1,
+    "condition": "control",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:15.965832",
+    "seeds_used": null
+  },
+  {
+    "task_id": "T4",
+    "trial": 2,
+    "condition": "control",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:16.626530",
+    "seeds_used": null
+  },
+  {
+    "task_id": "T4",
+    "trial": 2,
+    "condition": "seeded",
+    "output": "ERROR: ",
+    "timestamp": "2026-03-11T12:27:18.489415",
+    "seeds_used": "## 9. TAMBOURINE\n\nThe tambourine's memoir was rejected seventeen times before anyone realized it was written in percussion. \"My childhood was *shake shake shake*,\" it began, \"and my father was distant..."
+  }
+]

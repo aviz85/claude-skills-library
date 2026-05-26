@@ -11,7 +11,7 @@ Start real-time microphone transcription via ElevenLabs Scribe v2 Realtime WebSo
 
 ```bash
 ELEVENLABS_API_KEY="$ELEVENLABS_API_KEY" \
-  nohup python3 <plugin-dir>/scripts/realtime-transcribe.py > /tmp/realtime-transcribe.log 2>&1 &
+  nohup python3 ${CLAUDE_PLUGIN_ROOT}/scripts/realtime-transcribe.py > /tmp/realtime-transcribe.log 2>&1 &
 ```
 
 The API key must be set in the environment. Check `~/.claude/skills/transcribe/scripts/.env` or the user's env.

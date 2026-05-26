@@ -1,0 +1,210 @@
+{
+  "experiment": "Exp 5: Output Length vs Seed Effectiveness",
+  "methodology": "Same task (Out-of-Office), 3 lengths, both groups get 'be creative', treatment also gets seeds, blind pairwise",
+  "model": "haiku",
+  "timestamp": "2026-03-11T14:08:53.994056",
+  "results": {
+    "per_length": {
+      "L1": {
+        "seeds_wins": 8,
+        "total": 15
+      },
+      "L2": {
+        "seeds_wins": 8,
+        "total": 15
+      },
+      "L3": {
+        "seeds_wins": 10,
+        "total": 15
+      }
+    },
+    "per_round_length": {
+      "R1-L1": {
+        "seeds_wins": 2,
+        "total": 5
+      },
+      "R1-L2": {
+        "seeds_wins": 4,
+        "total": 5
+      },
+      "R2-L1": {
+        "seeds_wins": 4,
+        "total": 5
+      },
+      "R3-L1": {
+        "seeds_wins": 2,
+        "total": 5
+      },
+      "R2-L2": {
+        "seeds_wins": 1,
+        "total": 5
+      },
+      "R3-L2": {
+        "seeds_wins": 3,
+        "total": 5
+      },
+      "R2-L3": {
+        "seeds_wins": 3,
+        "total": 5
+      },
+      "R1-L3": {
+        "seeds_wins": 3,
+        "total": 5
+      },
+      "R3-L3": {
+        "seeds_wins": 4,
+        "total": 5
+      }
+    },
+    "total_seeds_wins": 26,
+    "total_comparisons": 45
+  },
+  "judge_raw": {
+    "R1-L1": {
+      "pair1": 2,
+      "pair2": 2,
+      "pair3": 2,
+      "pair4": 2,
+      "pair5": 2
+    },
+    "R1-L2": {
+      "pair1": 2,
+      "pair2": 2,
+      "pair3": 1,
+      "pair4": 2,
+      "pair5": 1
+    },
+    "R2-L1": {
+      "pair1": 1,
+      "pair2": 2,
+      "pair3": 1,
+      "pair4": 2,
+      "pair5": 2
+    },
+    "R3-L1": {
+      "pair1": 1,
+      "pair2": 1,
+      "pair3": 2,
+      "pair4": 1,
+      "pair5": 1
+    },
+    "R2-L2": {
+      "pair1": 2,
+      "pair2": 1,
+      "pair3": 2,
+      "pair4": 1,
+      "pair5": 1
+    },
+    "R3-L2": {
+      "pair1": 2,
+      "pair2": 2,
+      "pair3": 1,
+      "pair4": 2,
+      "pair5": 2
+    },
+    "R2-L3": {
+      "pair1": 1,
+      "pair2": 1,
+      "pair3": 1,
+      "pair4": 1,
+      "pair5": 1
+    },
+    "R1-L3": {
+      "pair1": 1,
+      "pair2": 1,
+      "pair3": 2,
+      "pair4": 2,
+      "pair5": 1
+    },
+    "R3-L3": {
+      "pair1": 1,
+      "pair2": 2,
+      "pair3": 1,
+      "pair4": 2,
+      "pair5": 2
+    }
+  },
+  "decode_key": {
+    "R1-L1": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R1-L2": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R1-L3": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R2-L1": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R2-L2": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R2-L3": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R3-L1": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R3-L2": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    "R3-L3": {
+      "seeded_positions": [
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    }
+  }
+}

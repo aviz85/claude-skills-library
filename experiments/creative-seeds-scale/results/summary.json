@@ -1,0 +1,97 @@
+{
+  "date": "2026-03-11T12:27:18.491234",
+  "n_seeded": 0,
+  "n_control": 0,
+  "seeded_avg": {
+    "originality": 0,
+    "memorability": 0,
+    "precision": 0,
+    "overall": 0
+  },
+  "control_avg": {
+    "originality": 0,
+    "memorability": 0,
+    "precision": 0,
+    "overall": 0
+  },
+  "effect_size_d": 0,
+  "task_win_rate": "0/4",
+  "per_task": {
+    "T1": {
+      "name": "Brand Names",
+      "seeded": {
+        "originality": 0,
+        "memorability": 0,
+        "precision": 0,
+        "overall": 0
+      },
+      "control": {
+        "originality": 0,
+        "memorability": 0,
+        "precision": 0,
+        "overall": 0
+      },
+      "delta": 0,
+      "winner": "control",
+      "n_seeded": 0,
+      "n_control": 0
+    },
+    "T2": {
+      "name": "Describe Hope",
+      "seeded": {
+        "originality": 0,
+        "memorability": 0,
+        "precision": 0,
+        "overall": 0
+      },
+      "control": {
+        "originality": 0,
+        "memorability": 0,
+        "precision": 0,
+        "overall": 0
+      },
+      "delta": 0,
+      "winner": "control",
+      "n_seeded": 0,
+      "n_control": 0
+    },
+    "T3": {
+      "name": "Out-of-Office",
+      "seeded": {
+        "originality": 0,
+        "memorability": 0,
+        "precision": 0,
+        "overall": 0
+      },
+      "control": {
+        "originality": 0,
+        "memorability": 0,
+        "precision": 0,
+        "overall": 0
+      },
+      "delta": 0,
+      "winner": "control",
+      "n_seeded": 0,
+      "n_control": 0
+    },
+    "T4": {
+      "name": "New Ritual",
+      "seeded": {
+        "originality": 0,
+        "memorability": 0,
+        "precision": 0,
+        "overall": 0
+      },
+      "control": {
+        "originality": 0,
+        "memorability": 0,
+        "precision": 0,
+        "overall": 0
+      },
+      "delta": 0,
+      "winner": "control",
+      "n_seeded": 0,
+      "n_control": 0
+    }
+  }
+}

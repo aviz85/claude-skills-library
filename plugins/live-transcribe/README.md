@@ -24,42 +24,39 @@ Your AI agent becomes a live transcription assistant — start recording, keep w
 
 ## Installation
 
-### 1. Clone the repo
+### Option A: Plugin install (recommended)
+
+```bash
+/plugin marketplace add aviz85/claude-skills-library
+/plugin install live-transcribe@aviz-skills-library
+```
+
+This installs the skills, scripts, and audio assets as a plugin. Everything lives under `~/.claude/plugins/`.
+
+### Option B: Manual install
 
 ```bash
 git clone https://github.com/aviz85/claude-skills-library.git
-```
-
-### 2. Copy the skills to your Claude Code skills directory
-
-```bash
 cp -r claude-skills-library/plugins/live-transcribe/skills/* ~/.claude/skills/
-```
-
-### 3. Copy scripts and audio assets
-
-```bash
-cp claude-skills-library/plugins/live-transcribe/scripts/realtime-transcribe.py ~/.claude/scripts/
-cp claude-skills-library/plugins/live-transcribe/scripts/stop-transcribe.sh ~/.claude/scripts/
-chmod +x ~/.claude/scripts/stop-transcribe.sh
-
+cp claude-skills-library/plugins/live-transcribe/scripts/* ~/.claude/scripts/
 mkdir -p ~/.claude/scripts/transcribe-sounds
 cp claude-skills-library/plugins/live-transcribe/assets/*.mp3 ~/.claude/scripts/transcribe-sounds/
+chmod +x ~/.claude/scripts/stop-transcribe.sh
 ```
 
-### 4. Set your ElevenLabs API key
+### Set your ElevenLabs API key
 
-Add to your shell profile (`~/.zshrc` or `~/.bashrc`):
 ```bash
-export ELEVENLABS_API_KEY="sk_your_key_here"
+export ELEVENLABS_API_KEY="sk_your_key_here"  # add to ~/.zshrc
 ```
 
-Or create a `.env` file that the skill can source:
+### Install Python dependencies
+
 ```bash
-echo 'ELEVENLABS_API_KEY=sk_your_key_here' > ~/.claude/skills/transcribe/scripts/.env
+pip install sounddevice websockets numpy rapidfuzz
 ```
 
-### 5. Generate your own voice cues (optional)
+### Generate your own voice cues (optional)
 
 The included audio files use a cloned voice. To generate your own:
 
