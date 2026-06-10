@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10x10 Skill - מדריך</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-primary: #22C55E;
+      --green-soft: rgba(34, 197, 94, 0.1);
+      --bg-darkest: #0a0f0d;
+      --bg-card: #1a2332;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Heebo', sans-serif; background: var(--bg-darkest); color: var(--text-primary); line-height: 1.8; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; margin-bottom: 32px; }
+    .back-link:hover { color: var(--green-primary); }
+    .hero { text-align: center; margin-bottom: 48px; }
+    .skill-icon { font-size: 4rem; margin-bottom: 16px; }
+    h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; }
+    h2 { font-size: 1.5rem; font-weight: 700; margin: 32px 0 16px; color: var(--green-primary); }
+    .subtitle { color: var(--text-secondary); font-size: 1.25rem; }
+    .card { background: var(--bg-card); border-radius: 16px; padding: 24px; margin-bottom: 24px; border: 1px solid var(--border-subtle); }
+    .step { display: flex; gap: 16px; margin-bottom: 16px; }
+    .step-num { background: var(--green-primary); color: #000; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+    code { background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px; font-size: 0.9em; }
+    pre { background: rgba(0,0,0,0.4); padding: 16px; border-radius: 8px; overflow-x: auto; margin: 16px 0; direction: ltr; text-align: left; }
+    .helper-box { background: rgba(59, 130, 246, 0.1); border: 1px solid #3b82f6; border-radius: 12px; padding: 16px; margin: 24px 0; }
+    .helper-box h3 { color: #3b82f6; margin-bottom: 8px; }
+    .download-btn { display: inline-block; background: var(--green-primary); color: #000; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 24px; }
+    ul { padding-right: 20px; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">← חזרה לספרייה</a>
+
+    <div class="hero">
+      <div class="skill-icon">🔟</div>
+      <h1>שיטת 10x10</h1>
+      <p class="subtitle">רוחב, ואז התכנסות בשיקול דעת אנושי</p>
+    </div>
+
+    <div class="helper-box">
+      <h3>💡 הרעיון בשורה אחת</h3>
+      <p>במקום להילחם בפלט בינוני סבב אחרי סבב של תיקונים (איטי ומתסכל) — מייצרים <strong>10 וריאציות שונות</strong>, אדם <strong>בוחר</strong> מהר את המנצח, ואז <strong>מתכנסים</strong>. את המודל מבזבזים על אופציות, לא על ויכוחים.</p>
+    </div>
+
+    <h2>🎯 מתי להשתמש</h2>
+    <div class="card">
+      <p>בכל פעם שירייה אחת לא תקלע ואיכות חשובה: עיצוב, קופי, שמות, פוסטרים, מסרים, אפשרויות אסטרטגיה, גישות קוד. גם כשאומרים "תן לי 10 אופציות", "10 על 10", או "תחדד לי את זה".</p>
+    </div>
+
+    <h2>🔄 הלולאה</h2>
+    <div class="card">
+      <div class="step">
+        <div class="step-num">0</div>
+        <div>
+          <strong>Sandbox קודם</strong>
+          <p>הווריאציות נוצרות תמיד בסביבה מבודדת, אף פעם לא בעריכת היעד האמיתי. רק אחרי שנבחר מנצח — מחילים את השינוי האחד על הקובץ/הדק/ה-DB החי.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <strong>Diverge — 10 כיוונים שונים באמת</strong>
+          <p>הסוכן מציע את הכיוונים (לא שואל את המשתמש). שונים בזווית/טון/מבנה — לא 10 עותקים עם מילה אחת שונה.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <strong>Select — אדם בוחר מהר דרך בורר רשת</strong>
+          <p>בונים sheet HTML עם רשת אופציות, מריצים את הבורר המצורף ברקע, ובוחרים בקליק (ראשי) ו-Shift+קליק (משניות לבנק):</p>
+          <pre>python3 &lt;skill-dir&gt;/scripts/pick-server.py sheet.html
+open http://localhost:8777</pre>
+          <p>הבורר כותב את התוצאה, נסגר, והסוכן מקבל <code>PICK_RESULT</code> אוטומטית.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <strong>Converge — 10 מהנבחר</strong>
+          <p>עוד 10 וריאציות של הכיוון שנבחר, לחידוד. אפשר לצמצם הלאה (10 ← 4 ← 3 ← 2 ← 1).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3b</div>
+        <div>
+          <strong>Keep bank — לא לתת לרוחב להתאדות</strong>
+          <p>פנינים שלא ניצחו אך שוות למשהו אחר → לבנק שמור קבוע (snapshot + שורת "מה טוב פה" + תגית איפה זה יתאים).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <strong>Lock — להפוך את המנצח לדטרמיניסטי</strong>
+          <p>כשצריך בדיוק אותו דבר כל פעם — להמיר את המנצח לקוד (HTML→PDF, SVG, סקריפט עם פרמטרים), כדי שלא יהיה דריפט ברה-גנרציה.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>⚙️ דרישות</h2>
+    <div class="card">
+      <p>Python 3 בלבד (לבורר הרשת). אין צורך ב-API keys או התקנות נוספות. הבורר עובד מקומית על <code>localhost</code>.</p>
+    </div>
+
+    <h2>🧠 למה זה עובד</h2>
+    <div class="card">
+      <ul>
+        <li><strong>בלי גיהינום תיקונים</strong> — רוחב + בחירה מגיע ל"מצוין" הרבה יותר מהר.</li>
+        <li><strong>שיקול דעת אנושי מהיר</strong> — אנשים מצוינים ב<em>בחירה</em> ואיטיים ב<em>ניסוח</em>. השיטה נשענת על המהיר.</li>
+        <li><strong>מפצה על אי-שלמות</strong> — 10 + בחירה הופכים ירייה לא-אמינה לבחירה אמינה.</li>
+      </ul>
+    </div>
+
+    <a href="../downloads/ten-by-ten.zip" class="download-btn">⬇️ הורדת הסקיל</a>
+  </div>
+</body>
+</html>

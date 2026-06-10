@@ -190,6 +190,30 @@
       "source": "./plugins/live-transcribe",
       "description": "Real-time microphone transcription with ElevenLabs Scribe v2 Realtime. Start/stop/read live transcriptions with voice cues and fuzzy stop-phrase detection.",
       "version": "1.0.0"
+    },
+    {
+      "name": "quick-voice",
+      "source": "./plugins/quick-voice",
+      "description": "Spin up an instant browser voice session (OpenAI Realtime gpt-realtime-2) to close a topic in a short conversation inste",
+      "version": "1.0.0"
+    },
+    {
+      "name": "reality-check",
+      "source": "./plugins/reality-check",
+      "description": "Deep code audit that detects misleading patterns — fake tests, mock abuse, shallow health checks, overly optimistic erro",
+      "version": "1.0.0"
+    },
+    {
+      "name": "search-history",
+      "source": "./plugins/search-history",
+      "description": "Search across all Claude Code conversation history (JSONL files) across all projects.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "ten-by-ten",
+      "source": "./plugins/ten-by-ten",
+      "description": "The 10x10 method — generate breadth, then converge with human judgment. Use whenever a single AI output won't nail it an",
+      "version": "1.0.0"
     }
   ]
 }

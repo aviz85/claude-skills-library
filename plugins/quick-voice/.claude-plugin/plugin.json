@@ -1,0 +1,13 @@
+{
+  "name": "quick-voice",
+  "version": "1.0.0",
+  "description": "Spin up an instant browser voice session (OpenAI Realtime gpt-realtime-2) to close a topic in a short conversation instead of working through documents. Generic & white-label - works for any process. Supports live data work (read/update files, JSON, run commands), and distill mode (no tools, ends with a structured deliverable). Has a generic canvas that can display images, markdown, code, html, json, video, audio - perfect for "let's go over X" flows where the agent shows you items one by one and you react in real time. Use when user says "let's close this in a voice call", "run a quick voice session about X", "תפעיל שיחה קולית", "let's go over the [images/leads/PRs/files/notes]", or when a task is faster as a 3-minute conversation than as a document edit.",
+  "author": {
+    "name": "aviz",
+    "url": "https://github.com/aviz85"
+  },
+  "homepage": "https://aviz.github.io/claude-skills-library/skills/quick-voice.html",
+  "repository": "https://github.com/aviz85/claude-skills-library",
+  "license": "MIT",
+  "skills": "./skills/"
+}

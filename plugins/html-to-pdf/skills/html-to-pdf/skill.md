@@ -10,13 +10,9 @@ tags:
   - rtl
   - hebrew
 allowed-tools: Bash, Read, Write, Glob
-setup_complete: false
-setup: "./SETUP.md"
 ---
 
 # HTML to PDF Converter
-
-> **First time?** If `setup_complete: false` above, run `./SETUP.md` first, then set `setup_complete: true`.
 
 Pixel-perfect HTML to PDF conversion using Puppeteer (Chrome headless). Provides excellent support for Hebrew, Arabic, and other RTL languages with automatic direction detection.
 
@@ -27,6 +23,16 @@ Pixel-perfect HTML to PDF conversion using Puppeteer (Chrome headless). Provides
 - **JavaScript execution**: Renders dynamic content
 - **Automatic RTL detection**: Detects Hebrew/Arabic and sets direction
 - **Web font support**: Loads custom fonts properly
+
+## Auto-Fit (Built-in, No Flag Needed)
+
+The script automatically handles content overflow:
+
+- **Small overflow (up to ~18%)** → auto-shrinks font size to fit the page
+- **Large content** → flows cleanly across multiple pages with smart page-break rules (no cutting headers, table rows, or images in half)
+- **Fits perfectly** → does nothing
+
+This runs automatically on every PDF generation. No flags needed.
 
 ## CRITICAL: Fit Content to Single Page
 
@@ -110,6 +116,28 @@ echo "<h1>שלום עולם</h1>" | node ~/.claude/skills/html-to-pdf/scripts/ht
 | `--footer=<html>` | Footer HTML template | - |
 | `--wait=<ms>` | Wait time for fonts/JS | 1000 |
 | `--rtl` | Force RTL direction | auto-detect |
+| `--expect-pages=<N>` | Expected page count (warns if different) | 1 |
+| `--no-page-check` | Disable page count warning | - |
+
+## Automatic Overflow Detection
+
+The script automatically checks page count after generating the PDF. By default, it expects 1 page and warns if the output has more:
+
+```
+⚠️  WARNING: PAGE OVERFLOW DETECTED!
+   Expected: 1 page(s)
+   Actual:   2 page(s)
+
+   Fix: Reduce content, margins, or font sizes in HTML
+   Use --no-page-check to disable this warning
+```
+
+**Usage:**
+- Default: expects 1 page, warns on overflow
+- `--expect-pages=3`: expects 3 pages (for multi-page documents)
+- `--no-page-check`: disables the check entirely
+
+**Note:** Requires `pdfinfo` to be installed (part of poppler-utils). If not available, the check is silently skipped.
 
 ## Examples
 
@@ -183,6 +211,32 @@ For best Hebrew rendering in your HTML:
 </body>
 </html>
 ```
+
+## CRITICAL: Always Use scale=1.0 for Multi-Page PDFs
+
+**NEVER use `--scale` < 1.0 for multi-page documents.** It causes:
+- Content offset (not centered on page)
+- RTL text overflow/clipping in grid layouts
+- Unpredictable viewport width calculations
+
+**Instead: reduce CSS font sizes and spacing to fit content at scale=1.0.**
+
+```css
+.page {
+  width: 210mm;         /* Matches A4 exactly at scale=1.0 */
+  height: 297mm;        /* Matches A4 exactly at scale=1.0 */
+  padding: 8mm 10mm 12mm;
+  page-break-after: always;
+  position: relative;
+  background: #f7f8fa;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+```
+
+**If content overflows at scale=1.0:** reduce font sizes (10-11px base), padding, margins — NOT the scale. This keeps 1:1 mapping between CSS and PDF, eliminating all layout artifacts.
+
+**Color tip:** Pure white (#fff) backgrounds wash out colored accents. Use #f7f8fa or #f8fafb for subtle contrast that makes colors pop.
 
 ## Troubleshooting
 

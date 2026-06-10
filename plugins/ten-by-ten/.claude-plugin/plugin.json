@@ -1,0 +1,13 @@
+{
+  "name": "ten-by-ten",
+  "version": "1.0.0",
+  "description": "The 10x10 method — generate breadth, then converge with human judgment. Use whenever a single AI output won't nail it and quality matters (design, copy, naming, posters, messaging, strategy options, code approaches), OR when the user says '10x10', 'ten by ten', 'give me 10 options', 'show me variations', or asks to refine/tighten an output instead of round-after-round corrections.",
+  "author": {
+    "name": "aviz",
+    "url": "https://github.com/aviz85"
+  },
+  "homepage": "https://aviz.github.io/claude-skills-library/skills/ten-by-ten.html",
+  "repository": "https://github.com/aviz85/claude-skills-library",
+  "license": "MIT",
+  "skills": "./skills/"
+}

@@ -59,9 +59,21 @@ gh api repos/{owner}/{repo}/pages
 gh api repos/{owner}/{repo}/pages/builds/latest
 ```
 
-### 5. Get Site URL
+### 5. Set Homepage URL in Repo Settings
+
+**Always do this** — sets the live URL in the GitHub repo's About panel (top-right on the repo page):
+
+```bash
+OWNER=$(gh api user --jq '.login')
+PAGES_URL=$(gh api repos/$OWNER/$REPO_NAME/pages --jq '.html_url')
+gh api --method PATCH repos/$OWNER/$REPO_NAME --field homepage="$PAGES_URL" --jq '.homepage'
+```
+
+### 6. Get Site URL
 
 The site will be available at: `https://<username>.github.io/<repo-name>/`
+
+> Auto-deploy is active: every push to `main` triggers a rebuild. No GitHub Actions needed for legacy build.
 
 ## Quick Deploy Script
 
@@ -79,13 +91,16 @@ git commit -m "Initial commit"
 # Create repo and push
 gh repo create $REPO_NAME --public --source=. --push
 
-# Wait for push to complete, then enable pages
+# Enable pages
 sleep 2
 OWNER=$(gh api user --jq '.login')
 gh api repos/$OWNER/$REPO_NAME/pages -X POST -f build_type=legacy -f source='{"branch":"main","path":"/"}'
 
-# Get the URL
-echo "Site will be at: https://$OWNER.github.io/$REPO_NAME/"
+# Set homepage URL in repo About panel
+PAGES_URL="https://$OWNER.github.io/$REPO_NAME/"
+gh api --method PATCH repos/$OWNER/$REPO_NAME --field homepage="$PAGES_URL" --jq '.homepage'
+
+echo "✓ Site live at: $PAGES_URL"
 ```
 
 ## Troubleshooting

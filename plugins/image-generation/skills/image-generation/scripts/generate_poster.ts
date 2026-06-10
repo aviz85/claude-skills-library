@@ -12,10 +12,11 @@ import {
 } from '@google/genai';
 import { fal } from '@fal-ai/client';
 import mime from 'mime';
-import { writeFile, copyFileSync, existsSync, readFileSync } from 'fs';
+import { writeFile, writeFileSync, copyFileSync, existsSync, readFileSync, mkdirSync, unlinkSync } from 'fs';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { randomBytes } from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,18 +24,32 @@ const __dirname = path.dirname(__filename);
 // Load environment variables
 dotenv.config();
 
+// Generate a unique temp filename to avoid collisions when running in parallel
+function uniqueTempPath(ext: string): string {
+  const uid = randomBytes(6).toString('hex');
+  const ts = Date.now();
+  return path.join(__dirname, `_tmp_${ts}_${uid}.${ext}`);
+}
+
 function saveBinaryFile(fileName: string, content: Buffer) {
-  writeFile(fileName, content, (err) => {
-    if (err) {
-      console.error(`Error writing file ${fileName}:`, err);
-      return;
-    }
-    console.log(`File ${fileName} saved to file system.`);
-  });
+  writeFileSync(fileName, content);
+  console.log(`File ${fileName} saved to file system.`);
+}
+
+function deleteTempFile(filePath: string) {
+  try {
+    if (existsSync(filePath)) unlinkSync(filePath);
+  } catch (_) { /* ignore cleanup errors */ }
 }
 
 // Copy file to destination with collision avoidance
 function copyToDestination(sourcePath: string, destPath: string): string {
+  // Ensure destination directory exists
+  const destDir = path.dirname(destPath);
+  if (!existsSync(destDir)) {
+    mkdirSync(destDir, { recursive: true });
+  }
+
   let finalPath = destPath;
 
   if (existsSync(destPath)) {
@@ -209,7 +224,7 @@ async function generateWithFal(
       const response = await fetch(imageUrl);
       const buffer = Buffer.from(await response.arrayBuffer());
 
-      const localFile = `poster_${i}.jpg`;
+      const localFile = uniqueTempPath('jpg');
       saveBinaryFile(localFile, buffer);
 
       // Copy to destination if specified
@@ -222,6 +237,7 @@ async function generateWithFal(
           console.error(`Error copying to destination:`, err);
         }
       }
+      deleteTempFile(localFile);
     }
   } else {
     console.error('No images generated');
@@ -279,7 +295,7 @@ async function generateWithGemini(
     },
   };
 
-  const model = 'gemini-3-pro-image-preview';
+  const model = 'gemini-3.1-flash-image-preview';
 
   // Build content parts - include uploaded assets first, then prompt
   const contentParts: Array<any> = [];
@@ -307,11 +323,11 @@ async function generateWithGemini(
       continue;
     }
     if (chunk.candidates?.[0]?.content?.parts?.[0]?.inlineData) {
-      const fileName = `poster_${fileIndex++}`;
+      fileIndex++;
       const inlineData = chunk.candidates[0].content.parts[0].inlineData;
-      const fileExtension = mime.getExtension(inlineData.mimeType || '');
+      const fileExtension = mime.getExtension(inlineData.mimeType || '') || 'jpg';
       const buffer = Buffer.from(inlineData.data || '', 'base64');
-      const localFile = `${fileName}.${fileExtension}`;
+      const localFile = uniqueTempPath(fileExtension);
       saveBinaryFile(localFile, buffer);
 
       // Copy to destination if specified
@@ -325,6 +341,7 @@ async function generateWithGemini(
           console.error(`Error copying to destination:`, err);
         }
       }
+      deleteTempFile(localFile);
     }
     else {
       console.log(chunk.text);

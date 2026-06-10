@@ -1,145 +1,100 @@
 ---
 name: translate-video
 description: "Translate video subtitles to any language with native-quality refinement. Full pipeline: transcribe → translate → refine → embed RTL-safe subtitles. Use for: translate video, תרגם סרטון, video translation, foreign subtitles, Hebrew subtitles, translated captions."
-argument-hint: "[video-path] [target-language]"
+argument-hint: "[video-path] [target-language] [--shorts|--regular]"
 ---
 
 # Translate Video
 
-End-to-end video translation pipeline. Takes a video, transcribes it, translates to target language with native-speaker refinement, and burns subtitles onto the video.
+End-to-end video translation pipeline: transcribe → translate → refine subtitles → embed.
 
 ## Usage
 
 ```
-/translate-video /path/to/video.mp4 he
-/translate-video /path/to/video.mp4 ar
-/translate-video /path/to/video.mp4 es
+/translate-video /path/to/video.mp4 he --regular
+/translate-video /path/to/video.mp4 he --shorts
 ```
 
-**Arguments:**
-- `$1` - Path to video file (required)
-- `$2` - Target language code (default: `he`). Codes: he, ar, es, fr, de, ru, zh, ja, etc.
+- `$1` — video file path (required)
+- `$2` — target language code (default: `he`). See [references/languages.md](references/languages.md)
+- `$3` — `--shorts` (TikTok/Reels) or `--regular` (YouTube/tutorials). **If omitted, ask the user.**
+
+---
 
 ## Pipeline
 
-### Step 1: Transcribe (via `/transcribe` skill)
+### Step 1: Transcribe
 
-Extract audio if video is too large (>25MB audio), then transcribe:
-
+If audio > 25MB, extract first:
 ```bash
-# Extract audio if needed (reduces upload size)
-ffmpeg -i "$VIDEO" -vn -acodec libmp3lame -ab 128k "$AUDIO_PATH" -y
-
-# Transcribe using the transcribe skill's script
-cd ~/.claude/skills/transcribe/scripts && [ -d node_modules ] || npm install --silent
-npx ts-node transcribe.ts -i "$INPUT" -o "$SRT_PATH"
+ffmpeg -i "$VIDEO" -vn -acodec libmp3lame -ab 128k "$AUDIO.mp3" -y
 ```
 
-This generates:
-- `{basename}.srt` - Raw SRT file
-- `{basename}.md` - Readable text
+Transcribe with word-level JSON (always include `--json`):
+```bash
+cd ~/.claude/skills/transcribe/scripts && [ -d node_modules ] || npm install --silent
+npx ts-node transcribe.ts -i "$INPUT" -o "$BASENAME.srt" --json
+```
+
+Produces: `{basename}.srt`, `{basename}.md`, `{basename}_transcript.json`
 
 ### Step 2: Translate
 
-Read the `.md` file to understand full context, then translate the `.srt` file.
+Read `.md` for full context. Translate the `.srt` — preserve all timestamps and index numbers exactly. See translation rules in [references/modes.md](references/modes.md).
 
-**Translation rules:**
-- Translate ALL subtitle text entries, preserving SRT index numbers and timestamps exactly
-- Do NOT translate proper nouns (product names, people's names, brand names)
-- Keep technical terms that are commonly used untranslated in the target language (API, CLI, SaaS, etc.)
-- Adapt idioms and expressions to natural equivalents in the target language
-- Match the speaker's register (casual/formal) in the translation
+### Step 3: Refine Subtitles
 
-### Step 3: Semantic Refinement
+Read [references/modes.md](references/modes.md) for full rules.
 
-The raw transcription chunks by time, not meaning. Regroup for the target language:
+**--shorts:** Fix text only, preserve all timestamps. No merging.
 
-1. **Read all translated text** as continuous prose
-2. **Identify natural sentence/clause boundaries** in the target language
-3. **Regroup words** into semantically coherent subtitle entries (max 2 lines per entry, ~40 chars per line)
-4. **Adjust timestamps**: each entry starts at first word's original time, ends at last word's time
-5. **Merge fragmented entries** - aim for 150-250 entries for a ~15min video (vs 500-600 raw)
-6. **Native speaker test** - read each subtitle aloud. If it sounds awkward, rephrase
+**--regular:** Merge into full sentences using word-level timestamps.
+1. Plan subtitle groups from `.md` (word counts per group)
+2. Fill `GROUP_SIZES` in [scripts/build-timestamps.py](scripts/build-timestamps.py) and run it
+3. Replace English text in output SRT with translated text
 
-**Quality checklist:**
-- [ ] No sentence split mid-clause
-- [ ] No orphaned words (single word carrying over from previous thought)
-- [ ] Punctuation at natural break points
-- [ ] Reading pace is comfortable (not too much text per subtitle)
-- [ ] Sounds like a native speaker wrote it, not a translation
+### Step 4: Post-process (both modes)
 
-### Step 4: Embed Subtitles (via `/embed-subtitles` skill)
-
-**RTL is handled automatically** by the `embed-subtitles` skill - it detects RTL content and applies Unicode directional marks before embedding. No need to handle RTL here.
-
-Burn the translated SRT onto the video:
-
+Enforces MAX 2 lines, MAX chars/line (38 for --shorts, 42 for --regular):
 ```bash
-cd ~/.claude/skills/embed-subtitles/scripts
-npx ts-node embed-subtitles.ts \
-  -i "$VIDEO" \
-  -s "$TRANSLATED_SRT" \
-  -o "$OUTPUT" \
-  --font-size 24 --margin 30
+python3 ~/.claude/skills/translate-video/scripts/postprocess.py "$SRT" 42
 ```
 
-Or directly with FFmpeg:
+### Step 5: RTL Fix (Hebrew / Arabic / Farsi only)
 
 ```bash
-ffmpeg -i "$VIDEO" \
-  -vf "subtitles='$TRANSLATED_SRT':force_style='FontName=Arial,FontSize=24,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=2,Shadow=1,Alignment=2,MarginV=30'" \
-  -c:v libx264 -preset fast -crf 23 -c:a copy \
-  "$OUTPUT" -y
+python3 ~/.claude/skills/translate-video/scripts/rtl-fix.py "$SRT"
 ```
 
-### Step 5: Open Result
+### Step 6: Embed & Open
 
 ```bash
-open "$OUTPUT"  # macOS
+~/.local/bin/ffmpeg-ass -i "$VIDEO" \
+  -vf "subtitles=$SRT:force_style='FontSize=24,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=2,Shadow=1,Alignment=2,MarginV=30'" \
+  -c:v libx264 -preset fast -crf 23 -c:a copy "$OUTPUT" -y
+open "$OUTPUT"
 ```
+
+> ⚠️ Do NOT use Docker ffmpeg for long videos on ARM Mac — x86 emulation is ~100x slower.
+
+---
 
 ## Output Files
-
-All files saved next to the original video:
 
 | File | Description |
 |------|-------------|
 | `{name}.srt` | Original language SRT |
-| `{name}.md` | Original readable transcript |
-| `{name}_{lang}.srt` | Translated + refined SRT (with RTL marks if applicable) |
-| `{name}_{lang}_subtitled.mp4` | Final video with burned-in subtitles |
+| `{name}.md` | Readable transcript |
+| `{name}_transcript.json` | Word-level timestamps |
+| `{name}_{lang}.srt` | Translated + refined SRT |
+| `{name}_{lang}_subtitled.mp4` | Final video |
 
-## Language Codes
+## Supporting Files
 
-| Code | Language | RTL? |
-|------|----------|------|
-| `he` | Hebrew | Yes |
-| `ar` | Arabic | Yes |
-| `fa` | Farsi | Yes |
-| `en` | English | No |
-| `es` | Spanish | No |
-| `fr` | French | No |
-| `de` | German | No |
-| `ru` | Russian | No |
-| `zh` | Chinese | No |
-| `ja` | Japanese | No |
-| `pt` | Portuguese | No |
-| `it` | Italian | No |
-
-## Examples
-
-**Hebrew translation (most common use):**
-```
-/translate-video ~/Desktop/tutorial.mp4 he
-```
-Produces: `tutorial_he.srt` + `tutorial_he_subtitled.mp4`
-
-**Spanish translation:**
-```
-/translate-video ~/Desktop/talk.mp4 es
-```
-
-**Default (Hebrew):**
-```
-/translate-video ~/Desktop/video.mp4
-```
+| File | Purpose |
+|------|---------|
+| [references/modes.md](references/modes.md) | Detailed --shorts and --regular rules |
+| [references/languages.md](references/languages.md) | Language codes + RTL flags |
+| [scripts/build-timestamps.py](scripts/build-timestamps.py) | Word-index cursor for --regular timestamps |
+| [scripts/postprocess.py](scripts/postprocess.py) | Enforce line limits on any SRT |
+| [scripts/rtl-fix.py](scripts/rtl-fix.py) | Apply RTL Unicode markers |

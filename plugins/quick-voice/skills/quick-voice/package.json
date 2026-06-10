@@ -1,0 +1,13 @@
+{
+  "name": "quick-voice",
+  "version": "1.0.0",
+  "description": "Instant browser voice session generator (OpenAI Realtime v2) - white-label, per-invocation config",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^4.21.0"
+  }
+}

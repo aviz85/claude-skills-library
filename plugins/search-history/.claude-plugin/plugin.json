@@ -1,0 +1,13 @@
+{
+  "name": "search-history",
+  "version": "1.0.0",
+  "description": "Search across all Claude Code conversation history (JSONL files) across all projects.",
+  "author": {
+    "name": "aviz",
+    "url": "https://github.com/aviz85"
+  },
+  "homepage": "https://aviz.github.io/claude-skills-library/skills/search-history.html",
+  "repository": "https://github.com/aviz85/claude-skills-library",
+  "license": "MIT",
+  "skills": "./skills/"
+}

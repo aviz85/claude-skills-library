@@ -33,6 +33,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 // Parse command line arguments
 function parseArgs(args) {
@@ -49,7 +50,8 @@ function parseArgs(args) {
     displayHeaderFooter: false,
     waitTime: 1000,
     forceRtl: false,
-    additionalFonts: []
+    additionalFonts: [],
+    expectPages: 1  // Expected page count (0 = no check)
   };
 
   const positional = [];
@@ -106,6 +108,12 @@ function parseArgs(args) {
         case 'font':
           options.additionalFonts.push(value);
           break;
+        case 'expect-pages':
+          options.expectPages = parseInt(value, 10);
+          break;
+        case 'no-page-check':
+          options.expectPages = 0;
+          break;
       }
     } else {
       positional.push(arg);
@@ -116,6 +124,31 @@ function parseArgs(args) {
   options.output = positional[1];
 
   return options;
+}
+
+// Check PDF page count using pdfinfo
+function checkPdfPageCount(pdfPath, expectedPages) {
+  if (expectedPages <= 0) return { ok: true, pages: 0 };
+
+  try {
+    const output = execSync(`pdfinfo "${pdfPath}" 2>&1`, { encoding: 'utf8' });
+    const match = output.match(/Pages:\s*(\d+)/);
+    const pages = match ? parseInt(match[1], 10) : 0;
+
+    if (pages === 0) {
+      // Could not parse, skip check
+      return { ok: true, pages: 0, skipped: true };
+    }
+
+    return {
+      ok: pages === expectedPages,
+      pages,
+      expected: expectedPages
+    };
+  } catch (e) {
+    // pdfinfo not available, skip check
+    return { ok: true, pages: 0, skipped: true };
+  }
 }
 
 // Detect if content contains RTL characters (Hebrew, Arabic)
@@ -257,6 +290,18 @@ async function convertHtmlToPdf(options) {
       await new Promise(resolve => setTimeout(resolve, options.waitTime));
     }
 
+    // Add clean page-break rules for all documents
+    await page.evaluate(() => {
+      const style = document.createElement('style');
+      style.textContent = `
+        h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+        tr, img, figure, blockquote, pre, .no-break { page-break-inside: avoid; }
+        table { page-break-inside: auto; }
+        p { orphans: 3; widows: 3; }
+      `;
+      document.head.appendChild(style);
+    });
+
     // Generate PDF
     const pdfOptions = {
       path: options.output,
@@ -274,7 +319,62 @@ async function convertHtmlToPdf(options) {
     await page.pdf(pdfOptions);
 
     console.log(`PDF generated successfully: ${options.output}`);
-    return true;
+
+    // Auto-fit: if PDF has 2 pages but expected 1, try CSS zoom to fit
+    const pageCheck = checkPdfPageCount(options.output, options.expectPages);
+    if (!pageCheck.skipped && pageCheck.pages === 2 && options.expectPages === 1) {
+      // Use CSS zoom (affects layout reflow in Chromium, RTL-safe)
+      const zoomLevels = [0.92, 0.88, 0.84, 0.80, 0.75];
+      for (const z of zoomLevels) {
+        await page.evaluate((zoom) => {
+          // Remove previous auto-fit
+          const prev = document.getElementById('autofit-zoom');
+          if (prev) prev.remove();
+          const style = document.createElement('style');
+          style.id = 'autofit-zoom';
+          style.textContent = `
+            html { zoom: ${zoom}; }
+            body { max-width: 100%; overflow: hidden; box-sizing: border-box; }
+          `;
+          document.head.appendChild(style);
+        }, z);
+        await page.pdf(pdfOptions);
+        const recheck = checkPdfPageCount(options.output, 1);
+        if (!recheck.skipped && recheck.pages === 1) {
+          console.log(`Auto-fit: shrunk to ${Math.round(z * 100)}% (CSS zoom) to fit 1 page`);
+          return { success: true, pages: 1, overflow: false };
+        }
+      }
+      // If still 2 pages, reset zoom and keep original
+      await page.evaluate(() => {
+        const prev = document.getElementById('autofit-zoom');
+        if (prev) prev.remove();
+      });
+      await page.pdf(pdfOptions);
+      console.log('Auto-fit: could not fit to 1 page (content too large), kept at 2 pages');
+    }
+
+    // Check page count for warnings
+    if (pageCheck.skipped) {
+      // pdfinfo not available, skip
+    } else if (!pageCheck.ok) {
+      console.log('');
+      if (pageCheck.pages > pageCheck.expected) {
+        console.log('⚠️  WARNING: PAGE OVERFLOW DETECTED!');
+        console.log(`   Expected: ${pageCheck.expected} page(s)`);
+        console.log(`   Actual:   ${pageCheck.pages} page(s)`);
+        console.log('');
+        console.log('   Fix: Reduce content, margins, or font sizes in HTML');
+      } else {
+        console.log('⚠️  WARNING: Page count mismatch');
+        console.log(`   Expected: ${pageCheck.expected} page(s)`);
+        console.log(`   Actual:   ${pageCheck.pages} page(s)`);
+      }
+      console.log('   Use --no-page-check to disable this warning');
+      console.log('');
+    }
+
+    return { success: true, pages: pageCheck.pages, overflow: !pageCheck.ok };
 
   } finally {
     await browser.close();
@@ -313,6 +413,8 @@ Options:
   --footer=<html>         Footer HTML template
   --wait=<ms>             Additional wait time for fonts/JS (default: 1000)
   --rtl                   Force RTL direction for entire document
+  --expect-pages=<N>      Expected page count, warns if different (default: 1)
+  --no-page-check         Disable page count warning
 
 Examples:
   # Convert local HTML file
