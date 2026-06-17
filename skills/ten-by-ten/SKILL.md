@@ -41,18 +41,26 @@ without waiting to be asked**; it raises a local server and opens the UI in the 
 1. Build a **sandbox sheet** — one HTML doc with the N options as a grid of `.wrap` >
    `.cell` elements (in order = option 1..N). For visuals, render each option faithfully;
    for text, a labeled card is enough.
-2. Run the picker as a **background process**:
-   `npx tsx <skill-dir>/scripts/pick-server.ts <sheet.html>` — it **opens the browser
-   automatically** and prints `PICKER_READY <url>`. If the default port (8777) is busy it
-   **auto-picks the next free port** and reports that one — always use the URL it prints,
-   never assume 8777. (`<skill-dir>` is wherever this skill is installed. Needs Node + `npx`;
-   `tsx` runs the TypeScript directly — no Python required.)
+2. **Launch the picker** — run it as a normal terminal command:
+   `npx tsx <skill-dir>/scripts/pick-server.ts <sheet.html>`
+   It **opens the browser automatically** and prints `PICKER_READY <url>`. If port 8777 is
+   busy it **auto-picks the next free port** and reports it — always use the URL it prints,
+   never assume 8777. (`<skill-dir>` = where this skill is installed. Needs Node + `npx`;
+   `tsx` runs the TypeScript directly — no Python.)
 3. In the browser: **click = primary pick** (exactly one, solid cyan), **Shift+click =
    secondary picks** (many, dashed amber — these go to the keep bank), then **"Confirm"**.
-4. Confirm **writes the result, shuts the server down, and the process exits** — the agent
-   is notified on exit and reads `PICK_RESULT {"primary": N, "secondaries": [...]}` from
-   stdout (also `pick-result.json`). Run it in the background so the exit notification
-   closes the loop; no manual polling.
+4. **How the choice comes back to you — read this, it's the part agents miss.** The command
+   **stays running** the whole time the human is picking. The moment they click **Confirm**,
+   the server **shuts itself down and the process exits on its own**, and its **final stdout
+   line is the answer**:
+   `PICK_RESULT {"primary": N, "secondaries": [...]}`
+   That line *is* the selection — read it straight from the command's own output. (It's also
+   written to `<sheet dir>/pick-result.json`, which you can `cat` as a fallback.)
+   **Do not ask the user what they picked — you already have it from PICK_RESULT.**
+   - **Codex / a terminal that blocks until exit:** just run the command and wait; when it
+     returns, read the `PICK_RESULT` line it printed. That's the whole round-trip.
+   - **Claude Code:** run it in the background; you're notified when it exits, then read its
+     stdout (or `pick-result.json`). No manual polling.
 5. Apply the **primary** to the real data; route the **secondaries** to the keep bank (3b).
 
 Human judgment here takes seconds — that's the whole efficiency gain. (Falling back to "just
