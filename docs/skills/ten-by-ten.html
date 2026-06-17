@@ -77,9 +77,8 @@
         <div>
           <strong>Select — אדם בוחר מהר דרך בורר רשת</strong>
           <p>בונים sheet HTML עם רשת אופציות, מריצים את הבורר המצורף ברקע, ובוחרים בקליק (ראשי) ו-Shift+קליק (משניות לבנק):</p>
-          <pre>python3 &lt;skill-dir&gt;/scripts/pick-server.py sheet.html
-open http://localhost:8777</pre>
-          <p>הבורר כותב את התוצאה, נסגר, והסוכן מקבל <code>PICK_RESULT</code> אוטומטית.</p>
+          <pre>npx tsx &lt;skill-dir&gt;/scripts/pick-server.ts sheet.html</pre>
+          <p>הבורר <strong>נפתח בדפדפן אוטומטית</strong> ומדפיס <code>PICKER_READY &lt;url&gt;</code>. אם הפורט תפוס הוא <strong>מוצא פורט פנוי לבד</strong> ונותן את הקישור הנכון. בסיום הוא כותב את התוצאה, נסגר, והסוכן מקבל <code>PICK_RESULT</code> אוטומטית.</p>
         </div>
       </div>
       <div class="step">
@@ -107,7 +106,7 @@ open http://localhost:8777</pre>
 
     <h2>⚙️ דרישות</h2>
     <div class="card">
-      <p>Python 3 בלבד (לבורר הרשת). אין צורך ב-API keys או התקנות נוספות. הבורר עובד מקומית על <code>localhost</code>.</p>
+      <p>Node + <code>npx</code> בלבד (לבורר הרשת — <code>tsx</code> מריץ את ה-TypeScript ישירות, בלי Python). אין צורך ב-API keys או התקנות נוספות. הבורר נפתח אוטומטית, מוצא פורט פנוי לבד, ועובד מקומית על <code>localhost</code>.</p>
     </div>
 
     <h2>🧠 למה זה עובד</h2>

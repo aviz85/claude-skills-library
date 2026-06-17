@@ -35,15 +35,18 @@ point. Keep each lightweight so all 10 are cheap to scan.
 
 **2. Select — human picks the winner (fast), via the grid picker.**
 Present all N together for a quick side-by-side scan. **The default selection UI is the
-interactive grid picker** bundled with this skill — offer it immediately, and open it
-automatically:
+interactive grid picker** bundled with this skill — offer it immediately and **launch it
+without waiting to be asked**; it raises a local server and opens the UI in the browser for you:
 
 1. Build a **sandbox sheet** — one HTML doc with the N options as a grid of `.wrap` >
    `.cell` elements (in order = option 1..N). For visuals, render each option faithfully;
    for text, a labeled card is enough.
 2. Run the picker as a **background process**:
-   `python3 <skill-dir>/scripts/pick-server.py <sheet.html>` then `open http://localhost:8777`.
-   (`<skill-dir>` is wherever this skill is installed.)
+   `npx tsx <skill-dir>/scripts/pick-server.ts <sheet.html>` — it **opens the browser
+   automatically** and prints `PICKER_READY <url>`. If the default port (8777) is busy it
+   **auto-picks the next free port** and reports that one — always use the URL it prints,
+   never assume 8777. (`<skill-dir>` is wherever this skill is installed. Needs Node + `npx`;
+   `tsx` runs the TypeScript directly — no Python required.)
 3. In the browser: **click = primary pick** (exactly one, solid cyan), **Shift+click =
    secondary picks** (many, dashed amber — these go to the keep bank), then **"Confirm"**.
 4. Confirm **writes the result, shuts the server down, and the process exits** — the agent
