@@ -214,6 +214,12 @@
       "source": "./plugins/ten-by-ten",
       "description": "The 10x10 method — generate breadth, then converge with human judgment. Use whenever a single AI output won't nail it an",
       "version": "1.0.0"
+    },
+    {
+      "name": "teach-by-doing",
+      "source": "./plugins/teach-by-doing",
+      "description": "Never teach a principle without an immediate rep. When designing ANY teaching content — a workshop, a lesson plan, a dec",
+      "version": "1.0.0"
     }
   ]
 }

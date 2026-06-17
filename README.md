@@ -6,6 +6,7 @@ A collection of useful skills for Claude Code by aviz.
 
 | Skill | Description |
 |-------|-------------|
+| **teach-by-doing** | Never teach a principle without an immediate rep — pairs every teaching unit with a hands-on exercise via a research-based ladder (Kolb · Generation Effect · Embodied Cognition) |
 | **find-my-project** | Find your first agentic project by identifying daily pain points |
 | **whatsapp** | WhatsApp automation - send messages, get group members, send images/voice |
 | **speech-generator** | Generate speech audio with ElevenLabs TTS |

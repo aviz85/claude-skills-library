@@ -1,0 +1,13 @@
+{
+  "name": "teach-by-doing",
+  "version": "1.0.0",
+  "description": "Never teach a principle without an immediate rep. When designing ANY teaching content — a workshop, a lesson plan, a deck, a course module, a webinar, an explainer video, an educational post — pair every theoretical unit with an embodiment the learner does right now. Use whenever building or reviewing teaching material, lesson plans, workshop flows, course outlines, or training content, OR when the user says 'teach-by-doing', 'add an exercise', 'make it hands-on', 'don't leave it abstract', 'תרגיל לכל עיקרון', 'הטמעה מיידית'.",
+  "author": {
+    "name": "aviz",
+    "url": "https://github.com/aviz85"
+  },
+  "homepage": "https://aviz.github.io/claude-skills-library/skills/teach-by-doing.html",
+  "repository": "https://github.com/aviz85/claude-skills-library",
+  "license": "MIT",
+  "skills": "./skills/"
+}

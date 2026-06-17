@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>teach-by-doing — אין תיאוריה בלי תרגיל</title>
+  <meta name="description" content="סקיל עיצוב-תוכן: אף עיקרון לא נלמד עד שעשו איתו משהו עכשיו. סולם הטמעה מבוסס מחקר — מהטמעה אמיתית ועד תרגיל רגשי.">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-primary: #22C55E;
+      --green-soft: rgba(34, 197, 94, 0.1);
+      --cyan: #11CFD0;
+      --amber: #F59E0B;
+      --bg-darkest: #0a0f0d;
+      --bg-card: #1a2332;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Heebo', sans-serif; background: var(--bg-darkest); color: var(--text-primary); line-height: 1.8; min-height: 100vh; }
+    .container { max-width: 920px; margin: 0 auto; padding: 40px 24px; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; margin-bottom: 32px; }
+    .back-link:hover { color: var(--green-primary); }
+    .hero { text-align: center; margin-bottom: 48px; padding: 48px 24px; background: radial-gradient(120% 120% at 50% 0%, rgba(34,197,94,0.14), transparent 60%); border-radius: 24px; border: 1px solid var(--border-subtle); }
+    .skill-icon { font-size: 4.5rem; margin-bottom: 12px; }
+    h1 { font-size: 2.6rem; font-weight: 900; margin-bottom: 14px; letter-spacing: -0.5px; }
+    h1 code { font-family: 'SF Mono', ui-monospace, monospace; font-size: 1.5rem; color: var(--green-primary); background: rgba(0,0,0,0.3); padding: 2px 12px; border-radius: 8px; }
+    h2 { font-size: 1.5rem; font-weight: 800; margin: 40px 0 16px; color: var(--green-primary); }
+    .subtitle { color: var(--text-secondary); font-size: 1.3rem; }
+    .card { background: var(--bg-card); border-radius: 16px; padding: 24px 28px; margin-bottom: 20px; border: 1px solid var(--border-subtle); }
+    .one-liner { background: linear-gradient(135deg, var(--green-soft), transparent); border: 1px solid var(--green-primary); border-radius: 16px; padding: 22px 26px; margin: 24px 0; font-size: 1.2rem; }
+    .one-liner strong { color: var(--green-primary); }
+    code { background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px; font-size: 0.9em; }
+    pre { background: rgba(0,0,0,0.4); padding: 16px; border-radius: 8px; overflow-x: auto; margin: 16px 0; direction: ltr; text-align: left; }
+    ul { padding-right: 22px; margin-top: 10px; }
+    li { margin-bottom: 8px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.96rem; }
+    th, td { text-align: right; padding: 12px 14px; border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
+    th { color: var(--green-primary); font-weight: 700; }
+    /* the ladder */
+    .ladder { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+    .rung { display: flex; gap: 16px; align-items: flex-start; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 18px 20px; }
+    .rung-num { flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.3rem; }
+    .r1 .rung-num { background: var(--green-primary); color: #042; }
+    .r2 .rung-num { background: var(--cyan); color: #023; }
+    .r3 .rung-num { background: var(--amber); color: #321; }
+    .r4 .rung-num { background: #A855F7; color: #210; }
+    .rung-body strong { display: block; font-size: 1.08rem; margin-bottom: 2px; }
+    .rung-body .when { color: var(--text-secondary); font-size: 0.86rem; }
+    .anchor-tag { display: inline-block; margin-top: 6px; font-size: 0.78rem; color: var(--text-secondary); background: rgba(255,255,255,0.04); padding: 2px 10px; border-radius: 20px; }
+    .story { border-right: 3px solid var(--cyan); padding-right: 18px; color: var(--text-secondary); }
+    .story strong { color: var(--text-primary); }
+    .gate { background: rgba(245, 158, 11, 0.08); border: 1px solid var(--amber); border-radius: 14px; padding: 18px 22px; margin: 20px 0; }
+    .gate h3 { color: var(--amber); margin-bottom: 6px; }
+    .download-btn { display: inline-block; background: var(--green-primary); color: #042; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; margin-top: 28px; font-size: 1.05rem; }
+    .download-btn:hover { filter: brightness(1.08); }
+    .muscle { color: var(--cyan); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">← חזרה לספרייה</a>
+
+    <div class="hero">
+      <div class="skill-icon">🏋️</div>
+      <h1>teach-by-doing</h1>
+      <p class="subtitle">אין תיאוריה בלי תרגיל. אף עיקרון לא נלמד עד שעשו איתו משהו — עכשיו.</p>
+    </div>
+
+    <div class="one-liner">
+      💡 <strong>הכלל היחיד:</strong> כל יחידת הוראה תיאורטית חייבת להגיע מצומדת ל<strong>הטמעה מיידית</strong> — משהו שהלומד עושה ברגע. דיבור מופשט מתאדה. רפ נשאר.
+    </div>
+
+    <h2>🎯 מה זה</h2>
+    <div class="card">
+      <p>סקיל <strong>עיצוב-תוכן</strong> (design-time): הוא רץ כשבונים חומר הוראה — סדנה, מצגת, תוכנית שיעור, מודול קורס, וובינר, סרטון הסבר, פוסט חינוכי — לא כשמעבירים אותו. התפקיד שלו: לוודא שאף עיקרון לא יוצא ערום. לכל עיקרון הוא מצמיד <strong>רפ</strong> (תרגיל קצר, 2–5 דק׳) שהלומד מבצע מיד.</p>
+    </div>
+
+    <h2>🧠 למה זה עובד (המחקר, בנשימה אחת)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>מעגל קולב</strong> נסגר רק ב<em>ניסוי פעיל</em> — וכשאי אפשר לנסות עדיין, "בונים תוכנית מתי ואיך כן". שיטות חווייתיות מעלות שימור עד ~75% מול הרצאה פסיבית.</li>
+        <li><strong>Generation Effect:</strong> מי שמייצר דוגמה <em>משלו</em> זוכר הרבה יותר ממי שקיבל דוגמה מוכנה — והייצור מגייס חוויה אישית ורגש כעוגני שליפה.</li>
+        <li><strong>Embodied Cognition:</strong> פעולה מוטורית בממשק מחזקת את אות הלמידה ומכינה אותו לשליפה. "פתח את הכלי ועשה צעד 1" מנצח את "ככה זה היה עובד".</li>
+      </ul>
+      <p style="margin-top:14px;">שלושה מדעים שונים, הוראה אחת: <strong>תגרום להם לעשות את זה עכשיו.</strong></p>
+    </div>
+
+    <h2>🪜 הסולם — הרובד הכי גבוה שהרגע מאפשר</h2>
+    <p>לכל עיקרון מטפסים לרובד הכי גבוה שאפשר. אף פעם לא יורדים מתחת לרובד 4.</p>
+    <div class="ladder">
+      <div class="rung r1">
+        <div class="rung-num">1</div>
+        <div class="rung-body">
+          <strong>הטמעה אמיתית</strong>
+          <span class="when">כשהפעולה ישימה היום על המערכת האמיתית</span>
+          <p>עושים אותה עכשיו על הסוכן / המחשב / החשבון החי. נכס אמיתי, פידבק אמיתי.</p>
+          <span class="anchor-tag">Kolb · חוויה קונקרטית</span>
+        </div>
+      </div>
+      <div class="rung r2">
+        <div class="rung-num">2</div>
+        <div class="rung-body">
+          <strong>אימון בממשק</strong>
+          <span class="when">כשהפעולה רלוונטית שבועות קדימה (תהליך איטי)</span>
+          <p>נכנסים לממשק ועושים צעד <em>חלקי</em> — ניווט, הקמת פיגום לצעד 1, חזרה יבשה.</p>
+          <span class="anchor-tag">Embodied cognition</span>
+        </div>
+      </div>
+      <div class="rung r3">
+        <div class="rung-num">3</div>
+        <div class="rung-body">
+          <strong>תרגיל כתיבה</strong>
+          <span class="when">כשאי אפשר לגעת במערכת בכלל</span>
+          <p>על נייר / במסמך: מייצרים דוגמה <em>משלך</em>, ממלאים חוסר, כותבים התחייבות.</p>
+          <span class="anchor-tag">Generation effect</span>
+        </div>
+      </div>
+      <div class="rung r4">
+        <div class="rung-num">4</div>
+        <div class="rung-body">
+          <strong>תרגיל מפעיל / רגשי</strong>
+          <span class="when">כשגם כתיבה לא מתאימה</span>
+          <p>החלטה מורגשת, ויזואליזציה, אמירת כוונה — להזיז תהליך רגשי.</p>
+          <span class="anchor-tag">רגש כעוגן שליפה</span>
+        </div>
+      </div>
+    </div>
+    <p>רובד 1 הוא המטרה. רבדים 2–4 קיימים כדי שעיקרון "שאי אפשר לבצע עדיין" לא יהפוך לתירוץ להישאר מופשט. <strong>תהליך בזמן עתיד עדיין מקבל רפ בזמן הווה.</strong></p>
+
+    <h2>⚙️ מה הסקיל עושה כשמפעילים אותו</h2>
+    <div class="card">
+      <ul>
+        <li><strong>מפלח</strong> את החומר ליחידות הוראה בדידות — עיקרון אחד / צעד קטן אחד לכל יחידה.</li>
+        <li><strong>מסווג</strong> כל יחידה: ישימה על המערכת היום? → משבץ לרובד הכי גבוה שאפשר.</li>
+        <li><strong>מייצר</strong> רפ מוחשי לכל אחת — ספציפי ובר-ביצוע. לא "הרהר ב-X" אלא "פתח את הכלי ושאל אותו Y".</li>
+        <li><strong>מסמן</strong> כל יחידה בלי רפ כ<strong>לא-שלמה</strong> — שער שהחומר לא עובר בלעדיו.</li>
+      </ul>
+      <p style="margin-top:12px;">פלט: טבלה <code>עיקרון ← רובד ← רפ ← שריר מנטלי</code>, מוכנה להיכנס לתוכנית השיעור.</p>
+    </div>
+
+    <h2>📋 הדוגמה הקנונית</h2>
+    <div class="card story">
+      הסקיל נולד בלייב, בסדנת סוכני AI (בנימין טק, מפגש 2), תוך כדי הוראת עיקרון אחד: <strong>הסוכן שלך הוא ה-source of truth — לא רק איפה המידע יושב, אלא הממשק האחד שדרכו אתה ממשיך לעבוד.</strong> לעיקרון יש חמישה צעדים. ערומים — זו הרצאה. עם הסקיל — כל צעד הופך לרפ שעושים בחדר:
+    </div>
+    <table>
+      <tr><th>#</th><th>הצעד</th><th>הרפ (במחשב)</th><th>השריר</th></tr>
+      <tr><td>1</td><td>בנוח בסביבה / "המשרד הערום"</td><td>סיור בבית: <em>"ספר לי מה אתה יודע על העסק שלי, ומה חסר לך כדי לעזור לי בהכל."</em></td><td class="muscle">לדבר בלי לחץ + לראות את הפער</td></tr>
+      <tr><td>2</td><td>שער אחד / source of truth</td><td>ההפניה: שאלה שהיית שולח לגוגל — שאל בתוך התיקייה במקום.</td><td class="muscle">לנתב הכל למקור אחד</td></tr>
+      <tr><td>3</td><td>מאבזרים את המשרד</td><td>ריהוט אחד: פריט אחד מה-backlog — הכנס עכשיו.</td><td class="muscle">לסגור פער מיד</td></tr>
+      <tr><td>4</td><td>מעורבות בחשיבה, לא רק ביצוע</td><td>שותף לחשיבה: <em>"אני שוקל X, מה כדאי לשקול?"</em> + בקש את הצד ההפוך.</td><td class="muscle">להתייעץ, לא לפקד</td></tr>
+      <tr><td>5</td><td>להרגיש בבית</td><td>לעשות את זה שלי: ספר לסוכן מי אתה → הוא כותב <code>AGENTS.md</code>.</td><td class="muscle">להפוך את המקום לאישי</td></tr>
+    </table>
+    <p>הקשת: <strong>סיור ← הפניה ← ריהוט ← התייעצות ← להפוך לשלי.</strong></p>
+
+    <div class="gate">
+      <h3>🚪 המבחן לפני שחומר הוראה יוצא</h3>
+      <p>עבור על כל עיקרון בחומר. לכל אחד — אפשר להצביע על הרפ שהלומד עושה <em>ברגע</em>? אם אפילו עיקרון אחד הוא רק מילים — הוא עוד לא נלמד. ואם עיקרון מתנגד ל<em>כל</em> הרבדים, זה סימן שהוא מופשט מדי — חדד אותו או חתוך.</p>
+    </div>
+
+    <h2>⚙️ דרישות</h2>
+    <div class="card">
+      <p>אין. סקיל טקסטואלי טהור — בלי API keys, בלי התקנות. עובד בכל סוכן (Claude Code, Codex, וכו׳).</p>
+    </div>
+
+    <a href="../downloads/teach-by-doing.zip" class="download-btn">⬇️ הורדת הסקיל</a>
+  </div>
+</body>
+</html>
