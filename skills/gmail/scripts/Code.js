@@ -2,7 +2,7 @@
  * Gmail API - Google Apps Script
  * Deploy as Web App: Execute as "Me", Access "Anyone"
  *
- * Actions: send, inbox, draft, markRead
+ * Actions: send, inbox, draft, drafts, editDraft, deleteDraft, markRead
  */
 
 // Set your secret token here before deploying
@@ -34,6 +34,12 @@ function handleRequest(e) {
         return getInbox(params);
       case 'draft':
         return createDraft(params);
+      case 'drafts':
+        return listDrafts(params);
+      case 'editDraft':
+        return editDraft(params);
+      case 'deleteDraft':
+        return deleteDraft(params);
       case 'markRead':
         return markAsRead(params);
       default:
@@ -54,9 +60,10 @@ function sendEmail(params) {
   const html = params.html;
   const cc = params.cc;
   const bcc = params.bcc;
+  const replyTo = params.replyTo; // message ID to reply to
   const name = params.name || Session.getActiveUser().getEmail().split('@')[0];
 
-  if (!to) {
+  if (!to && !replyTo) {
     return jsonResponse({ success: false, error: 'Missing "to" parameter' });
   }
 
@@ -65,11 +72,19 @@ function sendEmail(params) {
   if (bcc) options.bcc = bcc;
   if (html) options.htmlBody = html;
 
-  GmailApp.sendEmail(to, subject, body, options);
+  if (replyTo) {
+    const message = GmailApp.getMessageById(replyTo);
+    if (!message) {
+      return jsonResponse({ success: false, error: 'Message not found: ' + replyTo });
+    }
+    message.reply(body, options);
+  } else {
+    GmailApp.sendEmail(to, subject, body, options);
+  }
 
   return jsonResponse({
     success: true,
-    email: { to, subject, cc: cc || null, bcc: bcc || null }
+    email: { to: to || '(reply)', subject, cc: cc || null, bcc: bcc || null }
   });
 }
 
@@ -81,24 +96,29 @@ function getInbox(params) {
   const hours = parseInt(params.hours) || 24;
   const query = params.query || '';
 
-  // Build search query
-  let searchQuery = 'is:unread';
+  // Build search query.
+  // A custom query is honored verbatim — no implicit filters bolted on, so
+  // callers can reliably search sent mail, archived threads, etc. The default
+  // unread+time window only applies when no query is supplied.
+  let searchQuery;
   if (query) {
     searchQuery = query;
-  }
-
-  // Add time filter
-  if (hours > 0) {
-    const cutoffDate = new Date(Date.now() - hours * 60 * 60 * 1000);
-    const dateStr = Utilities.formatDate(cutoffDate, 'GMT', 'yyyy/MM/dd');
-    searchQuery += ' after:' + dateStr;
+  } else {
+    searchQuery = 'is:unread';
+    if (hours > 0) {
+      const cutoffDate = new Date(Date.now() - hours * 60 * 60 * 1000);
+      const dateStr = Utilities.formatDate(cutoffDate, 'GMT', 'yyyy/MM/dd');
+      searchQuery += ' after:' + dateStr;
+    }
   }
 
   const threads = GmailApp.search(searchQuery, 0, maxResults);
   const emails = [];
 
   for (const thread of threads) {
-    const messages = thread.getMessages();
+    // Newest message first within each thread, so a small maxResults surfaces
+    // the most recent mail rather than the oldest (which silently hid replies).
+    const messages = thread.getMessages().reverse();
     for (const msg of messages) {
       // Skip if not matching unread filter (unless custom query)
       if (!query && !msg.isUnread()) continue;
@@ -172,6 +192,96 @@ function createDraft(params) {
       subject: subject
     }
   });
+}
+
+/**
+ * List existing drafts (so a caller can find a draftId to edit/send).
+ */
+function listDrafts(params) {
+  const maxResults = parseInt(params.maxResults) || 20;
+  const drafts = GmailApp.getDrafts();
+  const out = [];
+
+  for (const d of drafts) {
+    const m = d.getMessage();
+    out.push({
+      id: d.getId(),
+      to: m.getTo(),
+      subject: m.getSubject(),
+      date: m.getDate().toISOString(),
+      snippet: m.getPlainBody().substring(0, 200)
+    });
+    if (out.length >= maxResults) break;
+  }
+
+  return jsonResponse({ success: true, count: out.length, drafts: out });
+}
+
+/**
+ * Edit (update) an existing draft in place.
+ *
+ * GmailDraft.update() REPLACES the whole draft, so any field not supplied is
+ * re-filled from the draft's current message — callers can change just the
+ * body (or just the subject) without clobbering the rest. Pass html to set an
+ * HTML body. The draftId stays the same; the same draft is edited, not cloned.
+ */
+function editDraft(params) {
+  const draftId = params.draftId;
+  if (!draftId) {
+    return jsonResponse({ success: false, error: 'Missing "draftId" parameter' });
+  }
+
+  let draft;
+  try {
+    draft = GmailApp.getDraft(draftId);
+  } catch (err) {
+    return jsonResponse({ success: false, error: 'Draft not found: ' + draftId });
+  }
+  if (!draft) {
+    return jsonResponse({ success: false, error: 'Draft not found: ' + draftId });
+  }
+
+  const msg = draft.getMessage();
+  const to = (params.to != null) ? params.to : msg.getTo();
+  const subject = (params.subject != null) ? params.subject : msg.getSubject();
+  const body = (params.body != null) ? params.body : msg.getPlainBody();
+
+  const options = {};
+  if (params.html) options.htmlBody = params.html;
+  if (params.cc) options.cc = params.cc;
+  if (params.bcc) options.bcc = params.bcc;
+
+  draft.update(to, subject, body, options);
+
+  return jsonResponse({
+    success: true,
+    draft: { id: draft.getId(), to: to, subject: subject }
+  });
+}
+
+/**
+ * Delete a draft permanently.
+ *
+ * GmailApp has no native draft-delete, so this uses the advanced Gmail service
+ * (Gmail.Users.Drafts.remove). The draftId is the SAME id returned by
+ * createDraft / listDrafts / GmailDraft.getId() — same namespace, pass it
+ * straight through. Requires the Gmail advanced service declared in
+ * appsscript.json (dependencies.enabledAdvancedServices). The full
+ * `https://mail.google.com/` scope GmailApp already uses covers drafts.remove.
+ */
+function deleteDraft(params) {
+  const draftId = params.draftId;
+  if (!draftId) {
+    return jsonResponse({ success: false, error: 'Missing "draftId" parameter' });
+  }
+
+  try {
+    Gmail.Users.Drafts.remove('me', draftId);
+  } catch (err) {
+    return jsonResponse({ success: false, error: 'Could not delete draft ' + draftId + ': ' + err.toString() });
+  }
+
+  return jsonResponse({ success: true, draftId: draftId, deleted: true });
 }
 
 /**
