@@ -131,7 +131,7 @@ See `lib/tool-defs.js` for OpenAI Realtime tool definitions and `lib/tools.js` f
 {
   "mode": "distill",
   "topic": "סקירת תמונות",
-  "instructions": "אתה מציג לאביץ תמונות אחת אחת. עבור כל תמונה: 1) קרא ל-canvas_show עם הנתיב מ-canvas_hints, 2) שאל 'מה דעתך?', 3) הקשב לתגובה, 4) קרא ל-save_note עם heading='[שם תמונה]' ו-content=[התגובה של אביץ]. כשמסיימים את כל התמונות — קרא ל-end_session.",
+  "instructions": "אתה מציג למשתמש תמונות אחת אחת. עבור כל תמונה: 1) קרא ל-canvas_show עם הנתיב מ-canvas_hints, 2) שאל 'מה דעתך?', 3) הקשב לתגובה, 4) קרא ל-save_note עם heading='[שם תמונה]' ו-content=[תגובת המשתמש]. כשמסיימים את כל התמונות — קרא ל-end_session.",
   "voice": "ash",
   "tools": ["canvas_show", "canvas_clear", "save_note", "end_session"],
   "canvas_hints": [

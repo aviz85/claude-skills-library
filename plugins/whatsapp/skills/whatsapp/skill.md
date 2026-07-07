@@ -55,6 +55,20 @@ npx ts-node send-image.ts --phone "972501234567" --image "/path/image.jpg" --cap
 npx ts-node send-message.ts --phone "972501234567" --message "Test" --dry-run
 ```
 
+## Sending Video & Audio — encode to AAC
+
+WhatsApp (and Facebook) play a video **silently** if its audio track is MP3 muxed into an MP4 — the file is valid and has sound in desktop players, but the mobile app drops it. Always ship video with **AAC** audio:
+
+```bash
+# Re-encode ONLY the audio to AAC, leave the video untouched; +faststart for streaming
+ffmpeg -y -i in.mp4 -c:v copy -c:a aac -b:a 192k -movflags +faststart out.mp4
+
+# Verify it isn't silent before sending
+ffmpeg -i out.mp4 -af volumedetect -f null /dev/null 2>&1 | grep mean_volume
+```
+
+Voice notes: convert the source to OGG/Opus first (`send-voice.ts` handles this) — raw MP3 in a container is unreliable in the app.
+
 ## Phone Formats
 
 | Input | Normalized |

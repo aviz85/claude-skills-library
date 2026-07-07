@@ -274,7 +274,7 @@ npx ts-node youtube-upload.ts \
 ```bash
 cd ~/.claude/skills/whatsapp/scripts
 npx ts-node send-message.ts \
-  --to 972503973736 \
+  --to 972501234567 \
   --video final.mp4 \
   --caption "New tutorial - please review"
 ```
