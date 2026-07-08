@@ -15,6 +15,7 @@ const API_TOKEN = process.env.GREEN_API_TOKEN;
 
 interface Args {
   phone?: string;
+  group?: string;
   imagePath?: string;
   caption?: string;
   dryRun: boolean;
@@ -30,6 +31,9 @@ function parseArgs(): Args {
     switch (args[i]) {
       case "--phone":
         result.phone = args[++i];
+        break;
+      case "--group":
+        result.group = args[++i];
         break;
       case "--image":
         result.imagePath = args[++i];
@@ -104,13 +108,14 @@ async function main() {
 
   const args = parseArgs();
 
-  if (!args.phone || !args.imagePath) {
+  if ((!args.phone && !args.group) || !args.imagePath) {
     console.error("Usage:");
     console.error('  npx ts-node send-image.ts --phone "972501234567" --image "/path/to/image.jpg"');
-    console.error('  npx ts-node send-image.ts --phone "972501234567" --image "/path/to/image.jpg" --caption "Check this out!"');
+    console.error('  npx ts-node send-image.ts --group "120363xxx@g.us" --image "/path/to/image.jpg" --caption "Check this out!"');
     console.error("");
     console.error("Options:");
     console.error("  --phone <NUMBER>   Phone number (international format, no +)");
+    console.error("  --group <ID>       Group ID (format: 120363xxx@g.us)");
     console.error("  --image <PATH>     Path to image file");
     console.error("  --caption <TEXT>   Optional caption for the image");
     console.error("  --dry-run          Preview without sending");
@@ -124,7 +129,7 @@ async function main() {
   }
 
   try {
-    const chatId = formatChatId(args.phone);
+    const chatId = args.group ? args.group : formatChatId(args.phone!);
     const fileName = path.basename(args.imagePath);
     const fileSize = fs.statSync(args.imagePath).size;
 
