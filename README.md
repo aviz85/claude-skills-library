@@ -6,7 +6,7 @@ A collection of useful skills for Claude Code by aviz.
 
 | Skill | Description |
 |-------|-------------|
-| **teach-by-doing** | Never teach a principle without an immediate rep — pairs every teaching unit with a hands-on exercise via a research-based ladder (Kolb · Generation Effect · Embodied Cognition) |
+| **teach-by-doing** | Never teach a principle without an immediate rep - pairs every teaching unit with a hands-on exercise via a research-based ladder (Kolb · Generation Effect · Embodied Cognition) |
 | **find-my-project** | Find your first agentic project by identifying daily pain points |
 | **whatsapp** | WhatsApp automation - send messages, get group members, send images/voice |
 | **speech-generator** | Generate speech audio with ElevenLabs TTS |
@@ -29,10 +29,11 @@ A collection of useful skills for Claude Code by aviz.
 | **claudability-analyzer** | Analyze any profession for Claude automation opportunities |
 | **deep-interview** | Adaptive interview to extract and organize expertise |
 | **creative-seeds** | Inject creative absurdity before brainstorming tasks |
-| **learn** | Teach Claude any topic via web research — retains as permanent skill |
+| **learn** | Teach Claude any topic via web research - retains as permanent skill |
 | **tutorial-creator** | Create professional tutorials from screen recordings |
 | **tutorial-narration-writer** | Write narration scripts in casual, friendly style |
-| **x-bookmarks-fetcher** | Download X (Twitter) bookmarks via official X API v2 — text + images + videos. OAuth 2.0, no scraping |
+| **x-bookmarks-fetcher** | Download X (Twitter) bookmarks via official X API v2 - text + images + videos. OAuth 2.0, no scraping |
+| **hermes-tweet** | Hermes Agent X/Twitter automation through Xquik with read-first workflows and approval-gated actions. Not affiliated with X Corp. |
 
 ## Installation
 
@@ -64,6 +65,7 @@ Some skills require additional setup:
 - **tutorial-creator**: Requires speech-generator, transcribe, music-generator, youtube-uploader skills
 - **tutorial-narration-writer**: No additional setup needed (text-only skill)
 - **x-bookmarks-fetcher**: X developer app with OAuth 2.0 enabled, callback `http://127.0.0.1:8765/callback`. See skill's SETUP.md
+- **hermes-tweet**: Hermes Agent plus an Xquik API key; action tools require `HERMES_TWEET_ENABLE_ACTIONS=true`
 
 ## License
 

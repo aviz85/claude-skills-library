@@ -63,7 +63,7 @@ for skill_dir in "$SKILLS_DIR"/*/; do
   "skills": "./skills/"
 }
 EOF
-        ((created++))
+        ((created += 1))
     fi
 
     # --- Step 2: Sync skill files to plugin ---
@@ -78,7 +78,7 @@ EOF
         # Fallback to cp if rsync not available
         cp -r "$skill_dir/"* "$plugin_skills/"
     fi
-    ((synced++))
+    ((synced += 1))
 
     # --- Step 3: Add to marketplace.json if missing ---
     if ! grep -q "\"name\": \"$skill_name\"" "$MARKETPLACE"; then
@@ -108,7 +108,7 @@ with open('$MARKETPLACE', 'w') as f:
     json.dump(data, f, indent=2, ensure_ascii=False)
     f.write('\n')
 "
-        ((registered++))
+        ((registered += 1))
     fi
 done
 
