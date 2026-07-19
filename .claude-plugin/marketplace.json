@@ -200,7 +200,7 @@
     {
       "name": "reality-check",
       "source": "./plugins/reality-check",
-      "description": "Deep code audit that detects misleading patterns — fake tests, mock abuse, shallow health checks, overly optimistic erro",
+      "description": "Deep code audit that detects misleading patterns - fake tests, mock abuse, shallow health checks, overly optimistic erro",
       "version": "1.0.0"
     },
     {
@@ -212,14 +212,20 @@
     {
       "name": "ten-by-ten",
       "source": "./plugins/ten-by-ten",
-      "description": "The 10x10 method — generate breadth, then converge with human judgment. Use whenever a single AI output won't nail it an",
+      "description": "The 10x10 method - generate breadth, then converge with human judgment. Use whenever a single AI output won't nail it an",
       "version": "1.0.0"
     },
     {
       "name": "teach-by-doing",
       "source": "./plugins/teach-by-doing",
-      "description": "Never teach a principle without an immediate rep. When designing ANY teaching content — a workshop, a lesson plan, a dec",
+      "description": "Never teach a principle without an immediate rep. When designing ANY teaching content - a workshop, a lesson plan, a dec",
       "version": "1.0.0"
+    },
+    {
+      "name": "hermes-tweet",
+      "source": "./plugins/hermes-tweet",
+      "description": "Native Hermes Agent X/Twitter plugin for Xquik automation with read-first workflows and approval-gated actions. Not affiliated with X Corp.",
+      "version": "0.1.8"
     }
   ]
 }
